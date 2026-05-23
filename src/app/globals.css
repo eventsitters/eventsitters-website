@@ -234,8 +234,7 @@
   display: block;
 }
 
-/* react-datepicker – imported here so it's bundled as a global, not inside a client chunk */
-@import "react-datepicker/dist/react-datepicker.css";
+/* react-datepicker CSS is imported directly in layout.tsx for parallel loading */
 
 /* react-datepicker layout overrides */
 .react-datepicker-wrapper { width: 100%; }
