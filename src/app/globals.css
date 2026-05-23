@@ -289,7 +289,10 @@
   flex: 1 !important;
   min-width: 0;
 }
-.event-date-wrapper .react-datepicker__input-container,
+.event-date-wrapper .react-datepicker__input-container {
+  display: block !important;
+  width: 100% !important;
+}
 .form-field-input.with-icon.event-date {
   display: block;
   width: 100%;
