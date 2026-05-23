@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 const parallaxEls: ElConfig[] = [
-  { selector: '.confetti-header-pink',      mx: -24, my: -24 },
-  { selector: '.confetti-header-turquoise', mx:  24, my:  24 },
-  { selector: '.confetti-header-yellow',    mx: -64, my: -64 },
-  { selector: '.confetti-header-red',       mx:  16, my:  16 },
+  { selector: '.confetti-header-pink',      mx: -24, my: -24, repulse: 120, repulseRadius: 150 },
+  { selector: '.confetti-header-turquoise', mx:  24, my:  24, repulse: 120, repulseRadius: 150 },
+  { selector: '.confetti-header-yellow',    mx: -64, my: -64, repulse: 120, repulseRadius: 150 },
+  { selector: '.confetti-header-red',       mx:  16, my:  16, repulse: 120, repulseRadius: 150 },
   { selector: '.confetti-footer-yellow',    mx: -40, my: -32 },
   { selector: '.confetti-footer-red',       mx:  40, my: -24 },
   { selector: '.confetti-caption-blue',     sx: -80, sy:  40 },

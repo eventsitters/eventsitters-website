@@ -8,6 +8,8 @@ export interface ElConfig {
   my?: number; // max translateY at full mouse Y deviation from centre
   sx?: number; // max translateX at 100% scroll progress
   sy?: number; // max translateY at 100% scroll progress
+  repulse?: number;       // max pixels to jump away when cursor is close
+  repulseRadius?: number; // proximity threshold in px (default 120)
 }
 
 export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) {
@@ -16,15 +18,19 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
   useEffect(() => {
     const configs = elsRef.current;
 
-    // Instantaneous targets driven by events
+    // Per-selector spring state (parallax)
     const mouseX = new Map<string, number>();
     const mouseY = new Map<string, number>();
     const scrollX = new Map<string, number>();
     const scrollY = new Map<string, number>();
-
-    // Spring-interpolated current values
     const curX = new Map<string, number>();
     const curY = new Map<string, number>();
+
+    // Per-element spring state (repulsion)
+    const repulseTargetX = new WeakMap<HTMLElement, number>();
+    const repulseTargetY = new WeakMap<HTMLElement, number>();
+    const repulseCurX    = new WeakMap<HTMLElement, number>();
+    const repulseCurY    = new WeakMap<HTMLElement, number>();
 
     for (const cfg of configs) {
       mouseX.set(cfg.selector, 0);
@@ -44,6 +50,12 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
       for (const el of getNodes(cfg.selector)) {
         el.style.transition = 'none';
         el.style.willChange = 'transform';
+        if (cfg.repulse != null) {
+          repulseTargetX.set(el, 0);
+          repulseTargetY.set(el, 0);
+          repulseCurX.set(el, 0);
+          repulseCurY.set(el, 0);
+        }
       }
     }
 
@@ -72,11 +84,31 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
         curX.set(cfg.selector, nx);
         curY.set(cfg.selector, ny);
 
-        // Subtle rotation: circles tilt slightly in the direction they drift
-        const rot = nx * 0.04;
-
         for (const el of getNodes(cfg.selector)) {
-          el.style.transform = `translate(${nx}px, ${ny}px) rotate(${rot}deg)`;
+          let finalX = nx;
+          let finalY = ny;
+
+          if (cfg.repulse != null) {
+            const rtx = repulseTargetX.get(el) ?? 0;
+            const rty = repulseTargetY.get(el) ?? 0;
+            const rcx = repulseCurX.get(el) ?? 0;
+            const rcy = repulseCurY.get(el) ?? 0;
+
+            const rnx = rcx + (rtx - rcx) * LERP;
+            const rny = rcy + (rty - rcy) * LERP;
+
+            if (Math.abs(rnx - rcx) > 0.005 || Math.abs(rny - rcy) > 0.005) dirty = true;
+
+            repulseCurX.set(el, rnx);
+            repulseCurY.set(el, rny);
+
+            finalX += rnx;
+            finalY += rny;
+          }
+
+          // Subtle rotation: circles tilt slightly in the direction they drift
+          const rot = finalX * 0.04;
+          el.style.transform = `translate(${finalX}px, ${finalY}px) rotate(${rot}deg)`;
         }
       }
 
@@ -93,9 +125,31 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
       // Map cursor to ±1 relative to viewport centre so movement is bidirectional
       const rx = (e.clientX / window.innerWidth  - 0.5) * 2;
       const ry = (e.clientY / window.innerHeight - 0.5) * 2;
+
       for (const cfg of configs) {
         if (cfg.mx != null) mouseX.set(cfg.selector, cfg.mx * rx);
         if (cfg.my != null) mouseY.set(cfg.selector, cfg.my * ry);
+
+        if (cfg.repulse != null) {
+          const radius = cfg.repulseRadius ?? 120;
+          for (const el of getNodes(cfg.selector)) {
+            const rect = el.getBoundingClientRect();
+            const ecx  = (rect.left + rect.right)  / 2;
+            const ecy  = (rect.top  + rect.bottom) / 2;
+            const dx   = ecx - e.clientX;
+            const dy   = ecy - e.clientY;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < radius && dist > 1) {
+              const strength = 1 - dist / radius;
+              repulseTargetX.set(el, (dx / dist) * cfg.repulse * strength);
+              repulseTargetY.set(el, (dy / dist) * cfg.repulse * strength);
+            } else {
+              repulseTargetX.set(el, 0);
+              repulseTargetY.set(el, 0);
+            }
+          }
+        }
       }
       wake();
     }
@@ -105,6 +159,12 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
       for (const cfg of configs) {
         mouseX.set(cfg.selector, 0);
         mouseY.set(cfg.selector, 0);
+        if (cfg.repulse != null) {
+          for (const el of getNodes(cfg.selector)) {
+            repulseTargetX.set(el, 0);
+            repulseTargetY.set(el, 0);
+          }
+        }
       }
       wake();
     }
@@ -144,6 +204,12 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
           mouseY.set(cfg.selector, 0);
           scrollX.set(cfg.selector, 0);
           scrollY.set(cfg.selector, 0);
+          if (cfg.repulse != null) {
+            for (const el of getNodes(cfg.selector)) {
+              repulseTargetX.set(el, 0);
+              repulseTargetY.set(el, 0);
+            }
+          }
         }
         wake();
       }

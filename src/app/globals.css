@@ -106,7 +106,7 @@
     width: 100%;
     text-align: center;
     padding: 1em;
-    font-size: 1.5em;
+    font-size: 1.35em;
   }
 
   /* Social icons: larger, centered */
@@ -436,13 +436,17 @@
   .services-masonry { grid-template-columns: 1fr 1fr; }
   .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
 
-  /* Gallery: halve to 6-col */
+  /* Gallery: halve to 6-col.
+     Spans must add to exactly 6 per row so no wrapping occurs:
+     Row 1: one(cell-3=2) + two(cell-6=2) + three(cell-3=2) = 6
+     Row 2: four(cell-4=2) + five(cell-4=2) + six(cell-4=2)  = 6
+     Row 3: seven(cell-7=3) + eight(cell-5=3)                = 6 */
   .gallery { grid-template-columns: repeat(6, 1fr); }
   .gallery-cell-3 { grid-column: span 2; }
-  .gallery-cell-4 { grid-column: span 3; }
-  .gallery-cell-5 { grid-column: span 4; }
-  .gallery-cell-6 { grid-column: span 3; }
-  .gallery-cell-7 { grid-column: span 4; }
+  .gallery-cell-4 { grid-column: span 2; }
+  .gallery-cell-5 { grid-column: span 3; }
+  .gallery-cell-6 { grid-column: span 2; }
+  .gallery-cell-7 { grid-column: span 3; }
 
   /* Footer: 3-col stays same */
   .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
@@ -461,12 +465,39 @@
   /* Contact: stays side-by-side */
 }
 
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  /* At ~900px the webflow positions (pink: 8%, turquoise: -4%) still land inside
+     the content area. Use more aggressive negative values to push to edges. */
+  .confetti-header-pink      { left:  -12%; }
+  .confetti-header-red       { right: -12%; }
+  .confetti-header-turquoise { left:  -15%; }
+  .confetti-header-yellow    { right: -15%; }
+}
+
+@media screen and (min-width: 992px) {
+  /* On desktop the base webflow positions (16%/4%) sit inside the content area.
+     Push all four circles close to the viewport edges so they frame the hero text. */
+  .confetti-header-pink      { left:  -5%; }
+  .confetti-header-red       { right: -5%; }
+  .confetti-header-turquoise { left:  -8%; }
+  .confetti-header-yellow    { right: -8%; }
+}
+
+@media screen and (min-width: 1440px) {
+  /* Large desktop: the container margin (~250px+) is wide enough to show circles
+     fully without any text overlap, so move them back in from the edge. */
+  .confetti-header-pink      { left:  2%; }
+  .confetti-header-red       { right: 2%; }
+  .confetti-header-turquoise { left:  0%; }
+  .confetti-header-yellow    { right: 0%; }
+}
+
 @media screen and (max-width: 767px) {
-  /* Hero confetti: push to edges so they don't collide with text */
-  .confetti-header-pink      { left: -30%; width: 10em; height: 10em; }
-  .confetti-header-red       { right: -28%; width: 10em; height: 10em; }
-  .confetti-header-turquoise { left: -30%; width: 11em; height: 11em; }
-  .confetti-header-yellow    { right: -28%; width: 11em; height: 11em; }
+  /* Hero confetti: smaller circles, pushed to viewport edges */
+  .confetti-header-pink      { left: -24%; width: 8em; height: 8em; }
+  .confetti-header-red       { right: -24%; width: 8em; height: 8em; }
+  .confetti-header-turquoise { left: -28%; width: 9em; height: 9em; }
+  .confetti-header-yellow    { right: -28%; width: 9em; height: 9em; }
 
   /* Hero header: single column */
   .header-grid { grid-template-columns: 1fr; }
@@ -504,6 +535,15 @@
 
   /* Contact: single column */
   .contact-wrapper { grid-template-columns: 1fr; }
+}
+
+@media screen and (min-width: 530px) and (max-width: 767px) {
+  /* At ~650px the -24%/-28% offsets exceed circle width (128px/144px) so circles
+     go fully off-screen. Pull them back in to keep edge-decoration visible. */
+  .confetti-header-pink      { left: -14%; }
+  .confetti-header-red       { right: -14%; }
+  .confetti-header-turquoise { left: -17%; }
+  .confetti-header-yellow    { right: -17%; }
 }
 
 @media screen and (max-width: 479px) {
