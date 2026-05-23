@@ -138,20 +138,26 @@
     background-color: transparent !important;
   }
 
-  /* Date picker: full-width when stacked in column layout.
-     webflow.css gives .event-date zero right-radius for the side-by-side desktop
-     layout; restore rounded corners and full width on mobile. */
-  .event-date-wrapper {
-    width: 100%;
-  }
-  .event-date-wrapper .react-datepicker-wrapper,
-  .event-date-wrapper .react-datepicker__input-container {
-    width: 100%;
-  }
+  /* Date picker: restore full right-radius when stacked (desktop has 0 because
+     it butts against the duration dropdown) */
   .form-field-input.with-icon.event-date {
     border-top-right-radius: .75em;
     border-bottom-right-radius: .75em;
+  }
+
+  /* Form step buttons: stack vertically, each full width */
+  .form-step-button-wrapper {
+    flex-direction: column;
+    gap: .75em;
+  }
+  .form-step-button-wrapper .button.in-form,
+  .form-step-button-wrapper.first .button.in-form {
     width: 100%;
+    text-align: center;
+  }
+  .form-step-button-wrapper .form-back-button-wrapper {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -275,18 +281,17 @@
   min-width: 0;
 }
 
-/* React-datepicker ships with display:inline-block on its wrapper, which
-   prevents width:100% from resolving inside a flex container (especially
-   on mobile Safari). Force block so the full chain fills the cell. */
+/* React-datepicker ships with display:inline-block on its wrapper.
+   Use flex:1 (not width:100%) so it reliably fills the flex cell
+   on all browsers including mobile Safari. */
 .react-datepicker-wrapper {
   display: block !important;
-  width: 100%;
+  flex: 1 !important;
+  min-width: 0;
 }
-.event-date-wrapper .react-datepicker__input-container {
-  display: block;
-  width: 100%;
-}
+.event-date-wrapper .react-datepicker__input-container,
 .form-field-input.with-icon.event-date {
+  display: block;
   width: 100%;
   box-sizing: border-box;
 }
