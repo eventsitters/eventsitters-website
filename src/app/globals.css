@@ -1,0 +1,476 @@
+/* ─── Rainbow colour animation ───────────────────────────────────────────────
+   Replicates the original GSAP timeline:
+     gsap.timeline({ repeat:-1, defaults:{ duration:4, ease:"none" } })
+       .to(root, { "--rainbow": purple })
+       .to(root, { "--rainbow": red    })
+       .to(root, { "--rainbow": pink   })
+       .to(root, { "--rainbow": yellow })
+       .to(root, { "--rainbow": turquoise })
+       .to(root, { "--rainbow": blue   })
+   6 steps × 4 s = 24 s total, linear, infinite.
+   @property makes the custom property smoothly interpolable in all modern browsers.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@property --rainbow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #849ed1;
+}
+
+@keyframes rainbow-cycle {
+  0%     { --rainbow: #849ed1; }  /* blue      */
+  16.67% { --rainbow: #cab6d7; }  /* purple    */
+  33.33% { --rainbow: #fd6a4c; }  /* red       */
+  50%    { --rainbow: #f2aebe; }  /* pink      */
+  66.67% { --rainbow: #fcc951; }  /* yellow    */
+  83.33% { --rainbow: #94ccb8; }  /* turquoise */
+  100%   { --rainbow: #849ed1; }  /* blue      */
+}
+
+:root {
+  animation: rainbow-cycle 24s linear infinite;
+}
+
+/* React-managed interactive states – supplements the Webflow base stylesheet */
+
+/* ─── Mobile nav keyframes ───────────────────────────────────────────────── */
+@keyframes menu-panel-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-12px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+@keyframes menu-item-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Mobile nav (≤767px) ───────────────────────────────────────────────────
+   On desktop the full nav-menu is always visible and the hamburger is hidden
+   (webflow.css sets .w-nav-button { display: none }).
+   On mobile we flip: hide the menu by default, show the hamburger.
+   When menuOpen is toggled, .menu-open on .nav-menu reveals the panel.
+   ───────────────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  /* Hide full nav by default */
+  .nav-menu { display: none; }
+
+  /* Show hamburger/close button – always above the nav-menu overlay */
+  .menu-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1002; /* beats nav-menu's 999 within nav-bar stacking context */
+  }
+
+  /* Logo must also sit above the nav-menu overlay within the nav-bar
+     stacking context – without a z-index it paints below z-index:999 */
+  .logo {
+    position: relative;
+    z-index: 1000;
+  }
+
+  /* Nav bar: switch to pale-blue when menu is open */
+  .nav-bar.menu-open {
+    background-color: var(--pale-blue);
+    position: relative;
+    z-index: 1001;
+  }
+
+  /* Open panel – full-screen overlay behind the nav bar */
+  .nav-menu.menu-open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: fixed;
+    inset: 0;
+    background-color: var(--pale-blue);
+    padding: 2.5em 1.5em;
+    z-index: 999;
+    animation: menu-panel-in 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* Staggered item entrance */
+  .nav-menu.menu-open > * {
+    animation: menu-item-in 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .nav-menu.menu-open > *:nth-child(1) { animation-delay: 60ms; }
+  .nav-menu.menu-open > *:nth-child(2) { animation-delay: 120ms; }
+  .nav-menu.menu-open > *:nth-child(3) { animation-delay: 180ms; }
+  .nav-menu.menu-open > *:nth-child(4) { animation-delay: 240ms; }
+
+  /* Nav links: large, centered */
+  .nav-menu.menu-open .nav-item {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    padding: 1em;
+    font-size: 1.5em;
+  }
+
+  /* Social icons: larger, centered */
+  .nav-menu.menu-open .nav-socials-wrapper {
+    justify-content: center;
+    gap: 1.5em;
+    padding: 0.75em 0;
+  }
+  .nav-menu.menu-open .nav-socials-wrapper svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Contact Us button: full width */
+  .nav-menu.menu-open .nav-button-wrapper {
+    width: 100%;
+    padding-top: 1.5em;
+  }
+  .nav-menu.menu-open .nav-button-wrapper .w-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+  /* Close button: no white background box (webflow.css sets background: white
+     on .menu-button at this breakpoint — clear it) */
+  .menu-button.menu-open {
+    background-color: transparent !important;
+  }
+
+  /* Date picker: full-width when stacked in column layout.
+     webflow.css gives .event-date zero right-radius for the side-by-side desktop
+     layout; restore rounded corners and full width on mobile. */
+  .event-date-wrapper {
+    width: 100%;
+  }
+  .event-date-wrapper .react-datepicker-wrapper,
+  .event-date-wrapper .react-datepicker__input-container {
+    width: 100%;
+  }
+  .form-field-input.with-icon.event-date {
+    border-top-right-radius: .75em;
+    border-bottom-right-radius: .75em;
+    width: 100%;
+  }
+}
+
+/* FAQ accordion */
+.accordion-item { overflow: hidden; }
+.dropdown-list { display: none; }
+.accordion-item.is-open .dropdown-list { display: block; }
+.accordion-item.is-open .accordion-icon { transform: rotate(180deg); }
+
+/* Multi-step form: hide all steps then show active.
+   Must restore display:flex (not block) so the flex gap and justify-content:center
+   from webflow.css still apply, giving the correct spacing to the button. */
+.form-step { display: none; }
+.form-step.is-active { display: flex; }
+
+/* Remove native select arrows so only the custom background-image chevron shows */
+.event-duration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Placeholder state: when "Add Duration" is still selected the select is :invalid
+   (it has required + an empty-value first option). Match the muted-blue colour
+   used by ::placeholder on the other form inputs. */
+.event-duration:invalid {
+  color: #c1cfe8;
+}
+
+/* The .w-select base rule resets padding; this restores the icon gap */
+.event-duration.w-select {
+  padding-left: 4em;
+}
+
+/* Form field icons sit above the input/select background and above
+   react-datepicker's position:relative container */
+.form-icon.form-field {
+  z-index: 2;
+}
+
+/* Activities masonry – 6-column grid with semantic span classes */
+.services-masonry {
+  grid-template-columns: repeat(6, 1fr);
+}
+.services-cell-2 { grid-column: span 2; }
+.services-cell-3 { grid-column: span 3; }
+.services-cell-4 { grid-column: span 4; }
+
+/* Footer – 3-column grid: branding (2fr) + nav links (1fr) + socials (1fr) */
+.footer-grid {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+/* Gallery – 12-column grid */
+.gallery {
+  grid-template-columns: repeat(12, 1fr);
+}
+.gallery-cell-3 { grid-column: span 3; }
+.gallery-cell-4 { grid-column: span 4; }
+.gallery-cell-5 { grid-column: span 5; }
+.gallery-cell-6 { grid-column: span 6; }
+.gallery-cell-7 { grid-column: span 7; }
+/* Cells must fill their row so background-image containers get a real height */
+.gallery .w-layout-cell { height: 100%; }
+
+/* Services tile needs a positioning context for absolutely-placed icons */
+.services-tile { position: relative; }
+
+/* Event thumbnail images – constrain to 3:2 and crop */
+.event-thumbnail {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+/* react-datepicker – imported here so it's bundled as a global, not inside a client chunk */
+@import "react-datepicker/dist/react-datepicker.css";
+
+/* react-datepicker layout overrides */
+.react-datepicker-wrapper { width: 100%; }
+.react-datepicker__input-container { width: 100%; }
+.react-datepicker__input-container input { width: 100%; }
+
+/* react-datepicker portal – used by withPortal on mobile; z-index above everything */
+#datepicker-portal {
+  position: relative;
+  z-index: 9999;
+}
+.react-datepicker__portal {
+  background-color: rgba(235, 239, 248, 0.92); /* --pale-blue with slight transparency */
+}
+.react-datepicker__portal .react-datepicker {
+  border-radius: 1em;
+  border: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+}
+
+/* react-datepicker style overrides – match site palette */
+.react-datepicker__header {
+  background-color: var(--pale-blue);
+  border-bottom-color: var(--pale-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.react-datepicker__current-month {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nav logo – pointer cursor on the link and every descendant */
+.logo, .logo *, .event-sitters-logo { cursor: pointer !important; }
+
+/* Date/duration row: both cells grow equally on desktop side-by-side layout */
+.event-date-wrapper,
+.event-duration-wrapper {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* React-datepicker ships with display:inline-block on its wrapper, which
+   prevents width:100% from resolving inside a flex container (especially
+   on mobile Safari). Force block so the full chain fills the cell. */
+.react-datepicker-wrapper {
+  display: block !important;
+  width: 100%;
+}
+.event-date-wrapper .react-datepicker__input-container {
+  display: block;
+  width: 100%;
+}
+.form-field-input.with-icon.event-date {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ─── About Us + Packages: hero header (2 equal columns) ─── */
+.header-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ─── About Us: What We Offer (3 cols; header and negative card span full width) ─── */
+.about-offer-grid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.about-offer-grid > .w-layout-cell:first-child,
+.about-offer-grid > .w-layout-cell:last-child {
+  grid-column: span 3;
+}
+
+/* ─── About Us: portrait bio + Hawke's Bay location (2fr 3fr split) ─── */
+.portrait-grid,
+.hawkes-bay-grid {
+  grid-template-columns: 2fr 3fr;
+}
+
+/* ─── About Us + Packages: process steps (3 equal columns) ─── */
+.process-grid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* ─── Packages: add-ons grid (3 cols; intro header spans full width) ─── */
+.pricing-addon-grid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.pricing-addon-grid > .w-layout-cell:first-child {
+  grid-column: span 3;
+}
+
+/* ─── Packages: add-on card image – fill column width at natural ratio ─── */
+.add-ons-thumbnail {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── Packages: add-on card text area – grow to fill remaining card height,
+       not 100% of card (which inflates the blue area with empty space) ─── */
+.paragraph-wrapper-tile.pricing {
+  flex-grow: 1;
+  height: auto;
+}
+
+/* ─── Contact Us: contact info (3fr) + quote form (5fr) ─── */
+.contact-wrapper {
+  grid-template-columns: 3fr 5fr;
+}
+
+/* ─── About Us: portrait image – natural aspect ratio (circular crop is baked
+   into the image file, so no object-fit needed; height auto prevents distortion) ─── */
+.image-portrait {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE OVERRIDES
+   All class-based grids in this file need explicit breakpoint overrides because
+   webflow.css only has responsive rules for node-ID selectors (w-node-*), not
+   for the class aliases defined above.
+   Breakpoints match Webflow: 991px (tablet), 767px (landscape mobile),
+   479px (portrait mobile).
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@media screen and (max-width: 991px) {
+  /* Hero header: stays 2-col at tablet */
+  .header-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Services: 2-col at tablet */
+  .services-masonry { grid-template-columns: 1fr 1fr; }
+  .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
+
+  /* Gallery: halve to 6-col */
+  .gallery { grid-template-columns: repeat(6, 1fr); }
+  .gallery-cell-3 { grid-column: span 2; }
+  .gallery-cell-4 { grid-column: span 3; }
+  .gallery-cell-5 { grid-column: span 4; }
+  .gallery-cell-6 { grid-column: span 3; }
+  .gallery-cell-7 { grid-column: span 4; }
+
+  /* Footer: 3-col stays same */
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+
+  /* About: offer grid stays 3-col */
+  /* Portrait / Hawke's Bay: stays 2fr 3fr */
+
+  /* Process: 2-col at tablet (991px only; drops to 1-col at 767px) */
+  .process-grid { grid-template-columns: 1fr 1fr; }
+
+
+  /* Add-ons: stays 3-col */
+  /* Pricing add-ons header still spans all */
+  .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 3; }
+
+  /* Contact: stays side-by-side */
+}
+
+@media screen and (max-width: 767px) {
+  /* Hero confetti: push to edges so they don't collide with text */
+  .confetti-header-pink      { left: -30%; width: 10em; height: 10em; }
+  .confetti-header-red       { right: -28%; width: 10em; height: 10em; }
+  .confetti-header-turquoise { left: -30%; width: 11em; height: 11em; }
+  .confetti-header-yellow    { right: -28%; width: 11em; height: 11em; }
+
+  /* Hero header: single column */
+  .header-grid { grid-template-columns: 1fr; }
+
+  /* Services: 2-col at 767px (matches original) */
+  .services-masonry { grid-template-columns: 1fr 1fr; }
+  .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
+
+  /* Gallery: 2-col at 767px */
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery-cell-3, .gallery-cell-4, .gallery-cell-5,
+  .gallery-cell-6, .gallery-cell-7 { grid-column: span 1; }
+
+  /* Footer: 2-col; branding cell spans full width, nav + socials share the row below */
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid > .w-layout-cell:first-child { grid-column: span 2; }
+
+  /* About: offer grid 1-col (items stack) */
+  .about-offer-grid { grid-template-columns: 1fr; }
+  .about-offer-grid > .w-layout-cell:first-child,
+  .about-offer-grid > .w-layout-cell:last-child { grid-column: span 1; }
+
+  /* Portrait: single column – portrait above text */
+  .portrait-grid { grid-template-columns: 1fr; }
+
+  /* Hawke's Bay: 1-col at 767px — image stacks above text (matches original) */
+  .hawkes-bay-grid { grid-template-columns: 1fr; }
+
+  /* Process: 1-col at 767px (matches original) */
+  .process-grid { grid-template-columns: 1fr; }
+
+  /* Add-ons: 2-col, header spans 2 */
+  .pricing-addon-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 2; }
+
+  /* Contact: single column */
+  .contact-wrapper { grid-template-columns: 1fr; }
+}
+
+@media screen and (max-width: 479px) {
+  /* Hero header: single column */
+  .header-grid { grid-template-columns: 1fr; }
+
+  /* Services: single column */
+  .services-masonry { grid-template-columns: 1fr; }
+
+  /* Gallery: 2 columns at mobile */
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery-cell-3, .gallery-cell-4, .gallery-cell-5,
+  .gallery-cell-6, .gallery-cell-7 { grid-column: span 1; }
+
+  /* Footer: single column */
+  .footer-grid { grid-template-columns: 1fr; }
+
+  /* About: everything single column */
+  .about-offer-grid { grid-template-columns: 1fr; }
+  .about-offer-grid > .w-layout-cell:first-child,
+  .about-offer-grid > .w-layout-cell:last-child { grid-column: span 1; }
+
+  /* Portrait: single column */
+  .portrait-grid { grid-template-columns: 1fr; }
+
+  /* Hawke's Bay: single column */
+  .hawkes-bay-grid { grid-template-columns: 1fr; }
+
+  /* Process: single column */
+  .process-grid { grid-template-columns: 1fr; }
+
+  /* Add-ons: single column, header spans 1 */
+  .pricing-addon-grid { grid-template-columns: 1fr; }
+  .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 1; }
+
+  /* Contact: single column */
+  .contact-wrapper { grid-template-columns: 1fr; }
+}
