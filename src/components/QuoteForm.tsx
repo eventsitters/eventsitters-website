@@ -237,21 +237,20 @@ export default function QuoteForm() {
                   </label>
                 ))}
               </div>
-              <div className="age-range-wrapper">
-                {counter("under3", "Under 3 Years")}
-                {counter("age3to6", "3 – 6 Years")}
-                {counter("age7to12", "7 – 12 Years")}
-              </div>
+              {form.attendees === "Already know" && (
+                <div className="age-range-wrapper">
+                  {counter("under3", "Under 3 Years")}
+                  {counter("age3to6", "3 – 6 Years")}
+                  {counter("age7to12", "7 – 12 Years")}
+                </div>
+              )}
             </div>
           </div>
           <div className="form-step-button-wrapper">
+            <button type="button" className="button in-form w-button" onClick={() => setStep(2)}>Next</button>
             <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => setStep(0)}>
-              <div className="form-back-button-icon w-embed">
-                <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5.5H1M1 5.5L5 9.5M1 5.5L5 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
               <div className="form-back-button">Back</div>
             </button>
-            <button type="button" className="button in-form w-button" onClick={() => setStep(2)}>Next</button>
           </div>
         </div>
 
@@ -271,12 +270,6 @@ export default function QuoteForm() {
             </div>
           </div>
           <div className="form-step-button-wrapper">
-            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => setStep(1)}>
-              <div className="form-back-button-icon w-embed">
-                <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5.5H1M1 5.5L5 9.5M1 5.5L5 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div className="form-back-button">Back</div>
-            </button>
             <button
               type="button"
               className="button in-form w-button"
@@ -284,6 +277,9 @@ export default function QuoteForm() {
               onClick={handleSubmit}
             >
               {status === "submitting" ? "Please wait..." : "Submit"}
+            </button>
+            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => setStep(1)}>
+              <div className="form-back-button">Back</div>
             </button>
           </div>
         </div>

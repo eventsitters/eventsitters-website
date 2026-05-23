@@ -138,13 +138,6 @@
     background-color: transparent !important;
   }
 
-  /* Date picker: restore full right-radius when stacked (desktop has 0 because
-     it butts against the duration dropdown) */
-  .form-field-input.with-icon.event-date {
-    border-top-right-radius: .75em;
-    border-bottom-right-radius: .75em;
-  }
-
   /* Form step buttons: stack vertically, each full width */
   .form-step-button-wrapper {
     flex-direction: column;
@@ -186,15 +179,51 @@
   color: #c1cfe8;
 }
 
-/* The .w-select base rule resets padding; this restores the icon gap */
-.event-duration.w-select {
-  padding-left: 4em;
-}
-
-/* Form field icons sit above the input/select background and above
-   react-datepicker's position:relative container */
+/* Form field icons sit above the input/select background */
 .form-icon.form-field {
   z-index: 2;
+}
+
+/* Duration select: color + unified corner radius */
+.event-duration.w-select {
+  color: var(--dark-blue);
+  border-radius: .75em;
+}
+
+/* Back button: <button> UA stylesheet gives it background-color:buttonface (grey).
+   webflow.css resets border but not background. */
+.form-back-button-wrapper {
+  background: none;
+  padding: 0;
+}
+
+/* webflow.css sets display:none on .age-range-wrapper (originally toggled by
+   Webflow JS). We control visibility via React conditional rendering instead,
+   so override to flex when the element is present in the DOM. */
+.age-range-wrapper {
+  display: flex;
+}
+
+/* Counter input: webflow.css's .w-input[readonly] rule sets background:#eee —
+   the counter is read-only by design (controlled by +/- buttons) so clear it.
+   Also suppress the native number-input spinner arrows.
+   .w-input sets color:#333 — override to match surrounding dark-blue text. */
+.counter-input[readonly] {
+  background-color: transparent;
+}
+.counter-input {
+  color: var(--dark-blue);
+}
+
+
+.counter-input::-webkit-outer-spin-button,
+.counter-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.counter-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Activities masonry – 6-column grid with semantic span classes */
@@ -259,6 +288,8 @@
 .react-datepicker__header {
   background-color: var(--pale-blue);
   border-bottom-color: var(--pale-blue);
+  padding-top: 1em;
+  padding-bottom: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -268,16 +299,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
+}
+
+/* Portal nav arrows: base CSS has top:2px / height:32px. With padding-top:1em on the
+   header (≈16px) and portal font-size 1.44rem (≈23px line ≈28px), the month text
+   center sits at ≈30px — shift arrows down so their center matches. */
+.react-datepicker__portal .react-datepicker__navigation {
+  top: 0.875em;
 }
 
 /* Nav logo – pointer cursor on the link and every descendant */
 .logo, .logo *, .event-sitters-logo { cursor: pointer !important; }
 
-/* Date/duration row: both cells grow equally on desktop side-by-side layout */
-.event-date-wrapper,
-.event-duration-wrapper {
-  flex: 1 1 0;
-  min-width: 0;
+/* Date/duration row: both cells grow equally in the desktop side-by-side layout.
+   Scoped to min-width:768px because at ≤767px event-time-date switches to
+   flex-flow:column (webflow.css), and flex-basis:0 + overflow:hidden (also set by
+   webflow.css at that breakpoint) collapses the items to 0 height — the CSS spec
+   resolves min-height:auto to 0 when overflow!=visible. */
+@media screen and (min-width: 768px) {
+  .event-date-wrapper,
+  .event-duration-wrapper {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* Desktop button row: back on left, primary CTA on right.
+     DOM order is CTA-first so mobile (column) keeps CTA on top. */
+  .form-step-button-wrapper .form-back-button-wrapper {
+    order: -1;
+  }
 }
 
 /* React-datepicker ships with display:inline-block on its wrapper.
@@ -288,14 +339,24 @@
   flex: 1 !important;
   min-width: 0;
 }
+/* withPortal anonymous div must fill the wrapper width */
+.event-date-wrapper > div:not([class]) {
+  width: 100%;
+}
 .event-date-wrapper .react-datepicker__input-container {
   display: block !important;
   width: 100% !important;
+}
+/* Unified corner radius — overrides webflow's asymmetric desktop values (left 1em,
+   right 0) and mobile 8px value. Location input covered by the rule below. */
+.form-field-input.with-icon {
+  border-radius: .75em;
 }
 .form-field-input.with-icon.event-date {
   display: block;
   width: 100%;
   box-sizing: border-box;
+  border-radius: .75em;
 }
 
 /* ─── About Us + Packages: hero header (2 equal columns) ─── */
