@@ -627,3 +627,11 @@ main {
 .events-tile:nth-child(1) { transform: rotate(-1.8deg) translateY(12px); }
 .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(-8px); }
 .events-tile:nth-child(3) { transform: rotate(-0.7deg) translateY(16px); }
+
+/* Remove hover effect from service cards */
+.events-tile.pale-yellow,
+.events-tile.pale-turquoise,
+.events-tile.pale-purple { transition: none; }
+.events-tile.pale-yellow:hover,
+.events-tile.pale-turquoise:hover,
+.events-tile.pale-purple:hover { border-style: solid; border-color: inherit; }
