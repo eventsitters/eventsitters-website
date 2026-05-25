@@ -50,8 +50,8 @@ const offerCards = [
     color: "pale-purple",
     title: "Quality",
     paras: [
-      "We prioritise quality in everything we do by relying on high-quality, safe resources and materials, ensuring that all activities are both engaging and enjoyable for children.",
-      "Our experienced team brings a wealth of knowledge to the entertainment table, allowing us to create a quality time for the little guests at your event.",
+      "We use high-quality, safe materials across all our activities — because the best experiences don't cut corners.",
+      "Our experienced team brings real creativity and know-how to every event, making sure every child gets a genuinely good time.",
     ],
   },
   {
@@ -66,9 +66,9 @@ const offerCards = [
 ];
 
 const process = [
-  { num: "01", title: "Consultation", desc: "We'll discuss your plans for the event, the number of children attending, and your specific needs." },
-  { num: "02", title: "Custom Proposal", desc: "Based on your information, we'll create a tailor-made package that aligns with your vision for the event." },
-  { num: "03", title: "Confirmation", desc: "Once you're happy with our proposal, a 20% deposit will secure your booking, and we'll see you on the big day!" },
+  { num: "01", title: "Consultation", desc: "We have a chat about your event — the number of kids, the space, and what you have in mind." },
+  { num: "02", title: "Custom Proposal", desc: "From there, we put together a package tailored to your event and your guests." },
+  { num: "03", title: "Confirmation", desc: "Happy with the plan? A 20% deposit locks in your date and we'll take care of the rest." },
 ];
 
 export default function AboutUs() {
@@ -82,8 +82,8 @@ export default function AboutUs() {
             <div className="w-layout-cell cell-3">
               <div className="div-block-7">
                 <h2 className="super-heading all-caps">Event Sitters Hawke&apos;s Bay</h2>
-                <h1 className="headline-large">A Caring Team To Make Your Event Fun for Everyone!</h1>
-                <div className="p-large">At Event Sitters Hawke&apos;s Bay, we&apos;re passionate about keeping kids happy and engaged, so you can focus on enjoying your special day.</div>
+                <h1 className="headline-large">Kids Love Us. Their Parents Love the Break.</h1>
+                <div className="p-large">We&apos;re a small, hands-on team based in Hawke&apos;s Bay — keeping every child at your event happy, engaged, and well looked after.</div>
               </div>
             </div>
             <div className="w-layout-cell cell-2">
@@ -105,7 +105,7 @@ export default function AboutUs() {
             <div className="w-layout-cell">
               <div className="offer-header">
                 <h2 className="headline-medium">What We Offer</h2>
-                <p className="p-medium">We offer a flexible, personalised approach that adapts to the unique needs of your event, ensuring every child remains engaged and entertained. Using only high-quality, safe, and fun resources, from creative crafts to active play, we captivate children throughout the event.</p>
+                <p className="p-medium">Every event is different, and so is every child. We adapt our approach to suit your space, your guests, and your vibe — using quality resources and hands-on activities to keep kids engaged from arrival to pack-down.</p>
               </div>
             </div>
 
@@ -175,7 +175,7 @@ export default function AboutUs() {
       {/* Process */}
       <section className="section pale-blue">
         <div className="container process">
-          <h2 className="headline-medium">Our Process</h2>
+          <h2 className="headline-medium">How It Works</h2>
           <div className="w-layout-layout process-grid wf-layout-layout">
             {process.map((step) => (
               <div key={step.num} className="w-layout-cell">
@@ -206,8 +206,8 @@ export default function AboutUs() {
             <div className="w-layout-cell cell">
               <div className="festivals-markets-text-wrapper">
                 <h3 className="super-heading all-caps">Where we work</h3>
-                <h2 className="headline-medium">Located in Beautiful Hawke&apos;s Bay</h2>
-                <p className="p-medium">As a proud local business, we serve Hawke&apos;s Bay and the surrounding areas with the flexibility to travel to your venue. Our understanding of local venues and event dynamics means we can offer a seamless service that complements your event in Napier, Hastings, Havelock North and the wider Hawke&apos;s Bay region.</p>
+                <h2 className="headline-medium">Homegrown in Hawke&apos;s Bay</h2>
+                <p className="p-medium">We&apos;re a local business serving Napier, Hastings, Havelock North, and the wider Hawke&apos;s Bay region — and we&apos;re happy to travel to your venue. We know the local spaces, understand the local crowd, and love showing up for local events.</p>
               </div>
             </div>
           </div>
