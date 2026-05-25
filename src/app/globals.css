@@ -648,6 +648,9 @@ main {
 .services-masonry > .w-layout-cell:nth-child(5) { transform: rotate(-1.0deg); }
 .services-masonry > .w-layout-cell:nth-child(6) { transform: rotate(0.6deg); }
 
+/* Scattered cards effect — pricing base package card */
+.pricing-card-negative { transform: rotate(-0.8deg); }
+
 /* Scattered cards effect — pricing add-ons (child 1 is the header, skip it) */
 .pricing-addon-grid > .w-layout-cell:nth-child(2) { transform: rotate(-1.1deg); }
 .pricing-addon-grid > .w-layout-cell:nth-child(3) { transform: rotate(0.9deg); }
