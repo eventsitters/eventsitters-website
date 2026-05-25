@@ -588,8 +588,8 @@ main {
 }
 
 @media screen and (max-width: 767px) {
-  /* Hero section: let content determine height on mobile instead of filling 70vh */
-  .section.hero { min-height: auto; }
+  /* Hero section: remove min-height and rely on padding only */
+  .section.hero { min-height: 0; padding-top: 3em; padding-bottom: 2em; }
 
   /* Hero confetti: smaller circles, pushed to viewport edges */
   .confetti-header-pink      { left: -24%; width: 8em; height: 8em; }
