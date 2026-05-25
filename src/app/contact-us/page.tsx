@@ -12,7 +12,7 @@ const parallaxEls: ElConfig[] = [
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Have questions or need a quote? Get in touch with Event Sitters for tailored kids' entertainment at your event. We're here to help make it special!",
+  description: "Ready to book kids' entertainment for your event? Get in touch with Event Sitters — we'll get back to you quickly.",
   alternates: { canonical: "https://www.eventsitters.nz/contact-us" },
 };
 
@@ -26,8 +26,8 @@ export default function ContactUs() {
             <div className="w-layout-cell cell-6">
               <div className="contact-address-wrapper">
                 <div className="contact-headline-wrapper">
-                  <h1 className="headline-medium footer">Contact Us</h1>
-                  <div className="p-medium">We&apos;d love to hear from you! Whether you have questions or need more details, we&apos;re here to help. Get in touch, and we&apos;ll get back to you as soon as possible!</div>
+                  <h1 className="headline-medium footer">Let&apos;s talk.</h1>
+                  <div className="p-medium">Have a question, or ready to lock in your date? Give us a call or send a message — we&apos;ll get back to you quickly.</div>
                 </div>
                 <div className="contact-cta-wrapper">
                   <a href="tel:+642108279718" className="button static w-button">Give Us a Call</a>
@@ -38,8 +38,8 @@ export default function ContactUs() {
             <div className="w-layout-cell">
               <div className="form-wrapper">
                 <div className="contact-form-headline-wrapper">
-                  <h2 className="headline-medium copy-text">Get a quote</h2>
-                  <div className="p-medium">Tell us how we can support your event with tailored activities</div>
+                  <h2 className="headline-medium copy-text">Request a Quote</h2>
+                  <div className="p-medium">Tell us about your event and we&apos;ll put together a proposal.</div>
                 </div>
                 <QuoteForm />
               </div>

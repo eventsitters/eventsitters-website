@@ -8,9 +8,12 @@ export interface ElConfig {
   my?: number; // max translateY at full mouse Y deviation from centre
   sx?: number; // max translateX at 100% scroll progress
   sy?: number; // max translateY at 100% scroll progress
-  repulse?: number;       // max pixels to jump away when cursor is close
+  repulse?: number;       // max pixels to jump away when cursor is close (default 80)
   repulseRadius?: number; // proximity threshold in px (default 120)
 }
+
+const DEFAULT_REPULSE        = 80;
+const DEFAULT_REPULSE_RADIUS = 120;
 
 export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) {
   const elsRef = useRef(els);
@@ -26,7 +29,7 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
     const curX = new Map<string, number>();
     const curY = new Map<string, number>();
 
-    // Per-element spring state (repulsion)
+    // Per-element spring state (repulsion — applied to every element)
     const repulseTargetX = new WeakMap<HTMLElement, number>();
     const repulseTargetY = new WeakMap<HTMLElement, number>();
     const repulseCurX    = new WeakMap<HTMLElement, number>();
@@ -49,12 +52,10 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
     for (const cfg of configs) {
       for (const el of getNodes(cfg.selector)) {
         el.style.transition = 'none';
-        if (cfg.repulse != null) {
-          repulseTargetX.set(el, 0);
-          repulseTargetY.set(el, 0);
-          repulseCurX.set(el, 0);
-          repulseCurY.set(el, 0);
-        }
+        repulseTargetX.set(el, 0);
+        repulseTargetY.set(el, 0);
+        repulseCurX.set(el, 0);
+        repulseCurY.set(el, 0);
       }
     }
 
@@ -87,23 +88,21 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
           let finalX = nx;
           let finalY = ny;
 
-          if (cfg.repulse != null) {
-            const rtx = repulseTargetX.get(el) ?? 0;
-            const rty = repulseTargetY.get(el) ?? 0;
-            const rcx = repulseCurX.get(el) ?? 0;
-            const rcy = repulseCurY.get(el) ?? 0;
+          const rtx = repulseTargetX.get(el) ?? 0;
+          const rty = repulseTargetY.get(el) ?? 0;
+          const rcx = repulseCurX.get(el) ?? 0;
+          const rcy = repulseCurY.get(el) ?? 0;
 
-            const rnx = rcx + (rtx - rcx) * LERP;
-            const rny = rcy + (rty - rcy) * LERP;
+          const rnx = rcx + (rtx - rcx) * LERP;
+          const rny = rcy + (rty - rcy) * LERP;
 
-            if (Math.abs(rnx - rcx) > 0.005 || Math.abs(rny - rcy) > 0.005) dirty = true;
+          if (Math.abs(rnx - rcx) > 0.005 || Math.abs(rny - rcy) > 0.005) dirty = true;
 
-            repulseCurX.set(el, rnx);
-            repulseCurY.set(el, rny);
+          repulseCurX.set(el, rnx);
+          repulseCurY.set(el, rny);
 
-            finalX += rnx;
-            finalY += rny;
-          }
+          finalX += rnx;
+          finalY += rny;
 
           // Subtle rotation: circles tilt slightly in the direction they drift
           const rot = finalX * 0.04;
@@ -129,24 +128,24 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
         if (cfg.mx != null) mouseX.set(cfg.selector, cfg.mx * rx);
         if (cfg.my != null) mouseY.set(cfg.selector, cfg.my * ry);
 
-        if (cfg.repulse != null) {
-          const radius = cfg.repulseRadius ?? 120;
-          for (const el of getNodes(cfg.selector)) {
-            const rect = el.getBoundingClientRect();
-            const ecx  = (rect.left + rect.right)  / 2;
-            const ecy  = (rect.top  + rect.bottom) / 2;
-            const dx   = ecx - e.clientX;
-            const dy   = ecy - e.clientY;
-            const dist = Math.hypot(dx, dy);
+        const repulse = cfg.repulse ?? DEFAULT_REPULSE;
+        const radius  = cfg.repulseRadius ?? DEFAULT_REPULSE_RADIUS;
 
-            if (dist < radius && dist > 1) {
-              const strength = 1 - dist / radius;
-              repulseTargetX.set(el, (dx / dist) * cfg.repulse * strength);
-              repulseTargetY.set(el, (dy / dist) * cfg.repulse * strength);
-            } else {
-              repulseTargetX.set(el, 0);
-              repulseTargetY.set(el, 0);
-            }
+        for (const el of getNodes(cfg.selector)) {
+          const rect = el.getBoundingClientRect();
+          const ecx  = (rect.left + rect.right)  / 2;
+          const ecy  = (rect.top  + rect.bottom) / 2;
+          const dx   = ecx - e.clientX;
+          const dy   = ecy - e.clientY;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < radius && dist > 1) {
+            const strength = 1 - dist / radius;
+            repulseTargetX.set(el, (dx / dist) * repulse * strength);
+            repulseTargetY.set(el, (dy / dist) * repulse * strength);
+          } else {
+            repulseTargetX.set(el, 0);
+            repulseTargetY.set(el, 0);
           }
         }
       }
@@ -158,11 +157,9 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
       for (const cfg of configs) {
         mouseX.set(cfg.selector, 0);
         mouseY.set(cfg.selector, 0);
-        if (cfg.repulse != null) {
-          for (const el of getNodes(cfg.selector)) {
-            repulseTargetX.set(el, 0);
-            repulseTargetY.set(el, 0);
-          }
+        for (const el of getNodes(cfg.selector)) {
+          repulseTargetX.set(el, 0);
+          repulseTargetY.set(el, 0);
         }
       }
       wake();
@@ -203,11 +200,9 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
           mouseY.set(cfg.selector, 0);
           scrollX.set(cfg.selector, 0);
           scrollY.set(cfg.selector, 0);
-          if (cfg.repulse != null) {
-            for (const el of getNodes(cfg.selector)) {
-              repulseTargetX.set(el, 0);
-              repulseTargetY.set(el, 0);
-            }
+          for (const el of getNodes(cfg.selector)) {
+            repulseTargetX.set(el, 0);
+            repulseTargetY.set(el, 0);
           }
         }
         wake();

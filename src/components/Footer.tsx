@@ -61,8 +61,8 @@ export default function Footer() {
 
         <div className="confetti-footer-yellow" />
         <div className="div-block-4">
-          <div className="footer-disclaimer">© {new Date().getFullYear()}</div>
-          <div className="footer-disclaimer">All Rights Reserved</div>
+          <div className="footer-disclaimer">© {new Date().getFullYear()} Event Sitters</div>
+          <div className="footer-disclaimer">Made in Hawke&apos;s Bay, Aotearoa.</div>
         </div>
         <div className="confetti-footer-red" />
       </div>

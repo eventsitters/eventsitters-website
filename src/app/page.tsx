@@ -4,10 +4,11 @@ import Link from "next/link";
 import FAQ from "@/components/FAQ";
 import QuoteForm from "@/components/QuoteForm";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
+import SmoothAnchorLink from "@/components/SmoothAnchorLink";
 
 export const metadata: Metadata = {
-  title: "Event Sitters | On-Location Kids Entertainment",
-  description: "We create fun, engaging spaces for kids at weddings, parties, public and corporate events, with tailored activities to keep all ages happily entertained!",
+  title: "On-Location Kids' Entertainment | Event Sitters Hawke's Bay",
+  description: "We create fun, engaging spaces for kids at weddings, parties, public and corporate events in Hawke's Bay, NZ — with tailored activities to keep all ages happily entertained!",
   alternates: { canonical: "https://www.eventsitters.nz" },
 };
 
@@ -35,16 +36,15 @@ const activities = [
   { title: "Decoration",           span: "services-cell-2", color: "pale-pink",     icon: "/images/decoration.svg",   iconAlt: "Decorations icon",    iconClass: "decoration-icon",   desc: "We brighten up any space with charming touches like blankets, pillows, balloons, and other decor elements. Our goal is to create an inviting and joyful atmosphere that makes it feel special." },
 ];
 
-// Images are CSS background-images keyed by cls; span classes control the 12-col grid
 const galleryImages = [
-  { cls: "one",   span: "gallery-cell-3" },
-  { cls: "two",   span: "gallery-cell-6" },
-  { cls: "three", span: "gallery-cell-3" },
-  { cls: "four",  span: "gallery-cell-4" },
-  { cls: "five",  span: "gallery-cell-4" },
-  { cls: "six",   span: "gallery-cell-4" },
-  { cls: "seven", span: "gallery-cell-7" },
-  { cls: "eight", span: "gallery-cell-5" },
+  { cls: "one",   span: "gallery-cell-3", src: "/images/img-4506.webp",          alt: "Child carefully colouring a detailed animal illustration at an Event Sitters activity station" },
+  { cls: "two",   span: "gallery-cell-6", src: "/images/p2060103.webp",          alt: "Rainbow-coloured wooden building blocks stacked in a pyramid in front of a cosy play tent with bunting flags" },
+  { cls: "three", span: "gallery-cell-3", src: "/images/img-4012.webp",          alt: "Child's hands colouring a Christmas tree illustration with a green marker at an Event Sitters craft session" },
+  { cls: "four",  span: "gallery-cell-4", src: "/images/pc070239.webp",          alt: "Children in Santa hats doing arts and crafts at an outdoor public event, with Event Sitters signage visible" },
+  { cls: "five",  span: "gallery-cell-4", src: "/images/p2060335.webp",          alt: "Young boy in a cap concentrating on building a tower with colourful wooden blocks" },
+  { cls: "six",   span: "gallery-cell-4", src: "/images/p2060476.webp",          alt: "Young boy relaxing inside a cosy play tent surrounded by stuffed animals and soft cushions" },
+  { cls: "seven", span: "gallery-cell-7", src: "/images/corporate-functions.webp", alt: "A smiling young boy wearing a beige cap sits at a table filled with art supplies at a work function" },
+  { cls: "eight", span: "gallery-cell-5", src: "/images/pc070120.webp",          alt: "Children and parents doing Christmas crafts together at an outdoor market event" },
 ];
 
 export default function Home() {
@@ -56,16 +56,13 @@ export default function Home() {
         <div className="container hero">
           <div className="title-wrapper">
             <div className="super-heading-wrapper">
-              <div className="form-icon w-embed">
-                <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 8.04974C1.5 12.9016 5.74448 16.9138 7.62319 18.4521C7.89206 18.6723 8.02811 18.7837 8.22871 18.8401C8.38491 18.8841 8.6148 18.8841 8.771 18.8401C8.97197 18.7835 9.10707 18.6732 9.37695 18.4523C11.2557 16.914 15.4999 12.902 15.4999 8.05019C15.4999 6.21407 14.7625 4.45294 13.4497 3.15461C12.137 1.85629 10.3566 1.12689 8.50008 1.12689C6.64357 1.12689 4.86301 1.8564 3.55025 3.15472C2.2375 4.45305 1.5 6.21363 1.5 8.04974Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M6.5 7.12689C6.5 8.23146 7.39543 9.12689 8.5 9.12689C9.60457 9.12689 10.5 8.23146 10.5 7.12689C10.5 6.02232 9.60457 5.12689 8.5 5.12689C7.39543 5.12689 6.5 6.02232 6.5 7.12689Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div className="super-heading all-caps">Hawke&apos;s Bay</div>
+              <div className="super-heading all-caps">Weddings, Parties &amp; Events</div>
             </div>
-            <h1 className="title-hero">On-Location Entertainment for Your Little Guests</h1>
-            <div className="p-large hero">From birthday parties to corporate functions, we keep kids of all ages happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
+            <h1 className="title-hero">On-Location Kids&apos; Entertainment in Hawke&apos;s Bay</h1>
+            <div className="p-large hero">From weddings and birthday parties to corporate functions, we keep kids of all ages happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
           </div>
           <div className="hero-cta">
-            <Link href="#services" className="button outline w-button">Our Services</Link>
+            <SmoothAnchorLink href="#services" className="button outline w-button">Our Services</SmoothAnchorLink>
             <Link href="#quote-form" className="button w-button">Request a Quote</Link>
           </div>
           </div>
@@ -141,7 +138,9 @@ export default function Home() {
           <div className="w-layout-layout gallery wf-layout-layout">
             {galleryImages.map((img) => (
               <div key={img.cls} className={`w-layout-cell ${img.span}`}>
-                <div className={`gallery-image-container ${img.cls}`} />
+                <div className={`gallery-image-container ${img.cls}`}>
+                  <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover", objectPosition: "center" }} sizes="(max-width: 768px) 100vw, 50vw" />
+                </div>
               </div>
             ))}
           </div>
@@ -150,6 +149,21 @@ export default function Home() {
 
       {/* FAQ */}
       <FAQ />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Do you provide kids' entertainment at weddings?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, weddings are one of our most popular bookings. We set up a dedicated space that keeps children happy and engaged during both the ceremony and the reception, so parents can actually be present. Activities are tailored to the age range of the kids attending and the tone of the day." } },
+          { "@type": "Question", "name": "What kinds of events do you work with?", "acceptedAnswer": { "@type": "Answer", "text": "We work across weddings, birthday parties, corporate functions, festivals, markets, and community events. Whether it's an intimate gathering or a large public event, we tailor the setup to suit the venue, the occasion, and the children attending." } },
+          { "@type": "Question", "name": "What areas in Hawke's Bay do you service?", "acceptedAnswer": { "@type": "Answer", "text": "We're based in Hawke's Bay and regularly work across Napier, Hastings, Havelock North, and the wider region. We're happy to travel to your venue. Just get in touch and we can confirm coverage." } },
+          { "@type": "Question", "name": "How many children can you accommodate?", "acceptedAnswer": { "@type": "Answer", "text": "We can manage both small and large groups. Since kids tend to come and go throughout the event, they usually won't all be in the space at once. Capacity depends mostly on the space available. We'll work with what you've got and make sure there's plenty of room to play." } },
+          { "@type": "Question", "name": "Do parents need to stay with their children?", "acceptedAnswer": { "@type": "Answer", "text": "No. Parents and guardians are welcome to enjoy the event. We're there to keep kids entertained and happy, though parents remain responsible for their children's supervision and care throughout." } },
+          { "@type": "Question", "name": "How far in advance should I book?", "acceptedAnswer": { "@type": "Answer", "text": "As early as you can. Summer weekends and public holidays fill up fast. A 20% deposit locks in your date, with the remaining balance due 7 days before your event." } },
+          { "@type": "Question", "name": "Do you have public liability insurance?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We hold public liability insurance, so you and your venue can have peace of mind." } },
+          { "@type": "Question", "name": "Can you set up outdoors?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. We're set up for both indoor and outdoor events and adapt our activities to suit the space. For outdoor events, we also offer a gazebo option for shade and shelter." } },
+        ],
+      }) }} />
 
       {/* Quote Form */}
       <section id="quote-form" className="section form">

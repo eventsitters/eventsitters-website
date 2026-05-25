@@ -1,16 +1,41 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  useLayoutEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+
+    if (menuOpen) {
+      gsap.killTweensOf([menu, Array.from(menu.children)]);
+      gsap.fromTo(menu,
+        { opacity: 0, scale: 0.96, y: -12 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.38, ease: "back.out(1.4)", clearProps: "all" }
+      );
+      gsap.fromTo(Array.from(menu.children),
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.06, delay: 0.06, clearProps: "all" }
+      );
+    } else {
+      gsap.killTweensOf([menu, Array.from(menu.children)]);
+      gsap.set([menu, Array.from(menu.children)], { clearProps: "all" });
+    }
   }, [menuOpen]);
 
   const navLink = (href: string, label: string) => (
@@ -30,7 +55,24 @@ export default function Nav() {
           <span className="event-sitters-logo" aria-hidden="true" />
         </Link>
 
-        <nav role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
+        <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
+          {pathname === "/" ? (
+            <a
+              className="nav-item w-nav-link"
+              href="#services"
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
+              }}
+            >
+              Services
+            </a>
+          ) : (
+            <Link href="/#services" className="nav-item w-nav-link" onClick={() => setMenuOpen(false)}>
+              Services
+            </Link>
+          )}
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Pricing")}
 

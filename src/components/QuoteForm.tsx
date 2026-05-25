@@ -196,7 +196,12 @@ export default function QuoteForm() {
             </div>
           </div>
           <div className="form-step-button-wrapper first">
-            <button type="button" className="button in-form w-button" onClick={() => setStep(1)}>
+            <button
+              type="button"
+              className="button in-form w-button"
+              disabled={!form.eventType || !form.date || !form.duration || !form.location.trim()}
+              onClick={() => setStep(1)}
+            >
               Get Started
             </button>
           </div>

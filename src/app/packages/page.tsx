@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import QuoteForm from "@/components/QuoteForm";
+import FAQ from "@/components/FAQ";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
 
 export const metadata: Metadata = {
-  title: "Packages",
-  description: "Explore our flexible packages for kids' entertainment at weddings, parties, and events that make sure every child has a great time!",
+  title: "Kids' Entertainment Packages",
+  description: "Event Sitters' base package starts from $300 NZD for 4 hours of on-location kids' entertainment in Hawke's Bay, with pricing depending on your event. Flexible add-ons available for weddings, corporate functions, and public events.",
   alternates: { canonical: "https://www.eventsitters.nz/packages" },
 };
 
@@ -22,14 +23,16 @@ const parallaxEls: ElConfig[] = [
   { selector: '.confetti-festivals-markets-red',  sx:  64, sy: -32 },
   { selector: '.confetti-festivals-markets-yellow', sx: 24, sy:  24 },
   { selector: '.confetti-festivals-markets-blue', sx: -32, sy:  40 },
+  { selector: '.confetti-faq-turquoise',          sx: -64, sy:  40 },
+  { selector: '.confetti-faq-yellow',             sx:  32, sy:  32 },
 ];
 
 const included = [
-  "We will entertain your little guests for 4 hours",
+  "4 hours of hands-on entertainment for your little guests",
   "Perfect for groups of children aged 3 to 12",
   "Choose from our selection of active play, arts & crafts, badge making, story time, and more",
   "A charming, decorated play space with cozy corner, balloons, blankets, and more",
-  "An experienced team providing entertainment and supervision",
+  "Experienced team on hand to keep things fun and running smoothly",
 ];
 
 const addons = [
@@ -37,44 +40,50 @@ const addons = [
     img: "/images/all-day-package.webp",
     alt: "A cute play tent with plush toys set up at an event",
     title: "All-Day Package",
-    desc: "Enjoy full-day coverage with endless fun activities to keep kids engaged from start to finish.",
+    desc: "More hours, more fun. Ideal for longer events where the energy needs to stay high all day.",
+    color: "pale-yellow",
   },
   {
     img: "/images/larger-groups.webp",
     alt: "Children sitting on grass in an outdoor setting, engaged in drawing and crafting activities.",
     title: "Larger Groups",
-    desc: "We'll accommodate additional children with extra staff and activities to ensure everyone has a great time.",
+    desc: "More kids, no problem. Extra staff and scaled-up activities so no one gets left out.",
+    color: "pale-turquoise",
   },
   {
     img: "/images/outdoor-set-up.webp",
     alt: "Outdoor craft setup under a white canopy, featuring tables with art supplies in a lush garden environment.",
     title: "Outdoor Set-Up",
-    desc: "A durable, weather-resistant gazebo setup perfect for your outdoor events, come rain or shine.",
+    desc: "A solid, weather-proof gazebo so the forecast doesn't become your problem.",
+    color: "pale-blue",
   },
   {
     img: "/images/themed-decor-crafts.webp",
     alt: "Child colouring a detailed craft design with bright pencils, focusing on fine artistic work.",
     title: "Themed Decor & Crafts",
-    desc: "Customised decorations and creative crafts that match your event's theme in our activities.",
+    desc: "Decorations and crafts tailored to your event's theme. A small detail that makes a big difference.",
+    color: "pale-purple",
   },
   {
     img: "/images/gift-bags.webp",
     alt: "Smiling child in a yellow dress holding a gift bag at a party with pastel decorations in the background.",
     title: "Gift Bags",
-    desc: "Keep the party going for your little guests with take-home goodies that reflect the activities at your event.",
+    desc: "Something to take home. Goodies and keepsakes tied to what the kids made or did on the day.",
+    color: "pale-pink",
   },
   {
     img: "/images/face-painting.webp",
     alt: "Child's face being painted with vibrant colours, highlighting intricate details on the nose.",
     title: "Face Painting",
-    desc: "A favourite that transforms kids into a range of characters, animals, or designs. Usually not for the full time.",
+    desc: "Always a crowd-pleaser. Kids pick their look, we do the rest. Usually offered in a dedicated window, not the full duration.",
+    color: "pale-red",
   },
 ];
 
 const process = [
-  { num: "01", title: "Consultation", desc: "We'll discuss your plans for the event, the number of children attending, and your specific needs." },
-  { num: "02", title: "Proposal", desc: "Based on that, we'll create a tailor-made package that aligns with your vision for the event." },
-  { num: "03", title: "Confirmation", desc: "Once you're happy with our proposal, a 20% deposit will secure your booking, and we'll see you on the big day!" },
+  { num: "01", title: "Consultation", desc: "We chat about your event: the space, the kids attending, and what you have in mind." },
+  { num: "02", title: "Proposal", desc: "We put together a package built around your event. Tailored, not templated." },
+  { num: "03", title: "Confirmation", desc: "Happy with it? A 20% deposit locks in your date and we'll take care of the rest." },
 ];
 
 const CheckIcon = () => (
@@ -95,9 +104,9 @@ export default function Packages() {
           <div className="w-layout-layout header-grid wf-layout-layout">
             <div className="w-layout-cell cell-3">
               <div className="div-block-7">
-                <h2 className="super-heading all-caps"><strong>For Every Event</strong></h2>
+                <h2 className="super-heading all-caps">For Every Event</h2>
                 <h1 className="headline-large">Flexible Packages to Suit Your Event and Budget</h1>
-                <div className="p-large">We know that every event is unique, and so are the needs of your little guests. That&apos;s why we offer flexible packages to meet everyones needs. Explore your options and let us help make your event truly special!</div>
+                <div className="p-large">Every event is different, and so is every group of kids. Start with our base package and build from there. Add activities, extras, or special touches to match exactly what you need.</div>
               </div>
             </div>
             <div className="w-layout-cell cell-2">
@@ -117,7 +126,8 @@ export default function Packages() {
           <div className="pricing-card-negative pale-blue">
             <div className="paragraph-wrapper pricing">
               <h2 className="headline-medium">Base Package</h2>
-              <p className="p-medium">We like to keep things simple. Every event is unique, so we offer a base package that covers the most popular activities and group sizes – perfect for a fun and memorable day. From there, you can add anything you like to make it just right for you!</p>
+              <p className="package-price">From $300 <span className="package-price-range">depending on your event</span></p>
+              <p className="p-medium">One clear starting point. Four hours, a properly decorated space, and a hands-on team keeping the kids happy. Build from there however you like.</p>
             </div>
             <div className="pricing-package-calculation-wrapper">
               <div className="pricing-features-wrapper">
@@ -145,13 +155,13 @@ export default function Packages() {
           <div className="w-layout-layout pricing-addon-grid wf-layout-layout">
             <div className="w-layout-cell">
               <div className="addons-header">
-                <h2 className="headline-medium">Add-Ons &amp; Custom Activities</h2>
-                <p className="p-medium">Make our service a perfect match for your event with add-ons and custom activities! These are just a few of the most popular ideas, but we&apos;re happy to work with you to bring any request to life.</p>
+                <h2 className="headline-medium">Custom Activities</h2>
+                <p className="p-medium">The most popular extras, but we&apos;re always open to ideas. If you can dream it, we can probably make it happen.</p>
               </div>
             </div>
             {addons.map((a) => (
               <div key={a.title} className="w-layout-cell">
-                <div className="addon-card">
+                <div className={`addon-card ${a.color}`}>
                   <Image src={a.img} alt={a.alt} className="add-ons-thumbnail" width={716} height={400} />
                   <div className="paragraph-wrapper-tile pricing">
                     <h3 className="headline-small">{a.title}</h3>
@@ -167,7 +177,7 @@ export default function Packages() {
       {/* Process */}
       <section className="section pale-blue">
         <div className="container process">
-          <h2 className="headline-medium">Our Process</h2>
+          <h2 className="headline-medium">How It Works</h2>
           <div className="w-layout-layout process-grid wf-layout-layout">
             {process.map((step) => (
               <div key={step.num} className="w-layout-cell">
@@ -192,7 +202,7 @@ export default function Packages() {
             <div className="festivals-markets-text-wrapper">
               <h3 className="super-heading all-caps">Special Rates</h3>
               <h2 className="headline-medium">Festivals, Markets, and Fairs</h2>
-              <p className="p-medium">Hosting a public or community event? We specialise in engaging larger crowds of children with tailored activities that fit the vibe of your event with various models. Contact us directly for more specific pricing options and hourly rates. Let&apos;s make your event family-friendly and fun!</p>
+              <p className="p-medium">Running a festival, market, or fair? We&apos;re at home in bigger, busier settings and offer flexible rates to match. Get in touch and we&apos;ll work out what fits.</p>
               <Link href="mailto:info@eventsitters.nz?subject=Special%20Rates%20Request" className="button outline pale-blue w-button">Get in Touch</Link>
             </div>
           </div>
@@ -202,18 +212,64 @@ export default function Packages() {
         </div>
       </section>
 
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Can I customise the package for my event?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The base package is a starting point, not a fixed formula. We can swap activities, adjust the setup, and layer in extras to suit your event, your venue, and the kids attending." } },
+          { "@type": "Question", "name": "Are there travel fees?", "acceptedAnswer": { "@type": "Answer", "text": "For most venues across Napier, Hastings, and Havelock North, no. If your event is further afield, we'll let you know when we put your proposal together." } },
+          { "@type": "Question", "name": "How do the add-ons work?", "acceptedAnswer": { "@type": "Answer", "text": "Add-ons are extras you layer on top of the base package. Some, like face painting, run in a dedicated window rather than the full duration. We'll talk through what makes sense for your event during the consultation." } },
+          { "@type": "Question", "name": "What happens if I need to cancel or reschedule?", "acceptedAnswer": { "@type": "Answer", "text": "We understand things change. Get in touch as early as possible and we'll do our best to accommodate. Deposit and cancellation terms are outlined in your booking confirmation." } },
+          { "@type": "Question", "name": "Do you cater to children under 3?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If little ones under 3 will be at your event, let us know and we'll create a dedicated space for them. We do ask that parents stay close by for children that young." } },
+          { "@type": "Question", "name": "How long do you need to set up and pack down?", "acceptedAnswer": { "@type": "Answer", "text": "Usually around 30 to 45 minutes each way, depending on the setup. We'll coordinate with your venue or event manager to fit your run sheet." } },
+        ],
+      }) }} />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Kids' Entertainment — Base Package",
+        "provider": { "@type": "LocalBusiness", "name": "Event Sitters", "url": "https://www.eventsitters.nz" },
+        "areaServed": "Hawke's Bay, New Zealand",
+        "description": "Four hours of on-location kids' entertainment including a decorated play space, hands-on activities, and experienced staff. Suitable for children aged 3–12 at weddings, corporate functions, birthday parties, and public events.",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "NZD",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "300",
+            "maxPrice": "600",
+            "priceCurrency": "NZD",
+          },
+        },
+      }) }} />
+
       {/* Quote Form */}
       <section id="quote-form" className="section form">
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>
-            <h2 className="headline-medium copy-text quote-form">Know what you want already? Request your quote today!</h2>
+            <h2 className="headline-medium copy-text quote-form">Know what you&apos;re after? Let&apos;s get the details sorted.</h2>
           </div>
           <div className="quote-request-form-wrapper">
             <QuoteForm />
           </div>
         </div>
       </section>
+
+      {/* Packages FAQ */}
+      <FAQ
+        title="Questions About Packages and Pricing"
+        background="white"
+        questions={[
+          { q: "Can I customise the package for my event?", a: "Yes. The base package is a starting point, not a fixed formula. We can swap activities, adjust the setup, and layer in extras to suit your event, your venue, and the kids attending." },
+          { q: "Are there travel fees?", a: "For most venues across Napier, Hastings, and Havelock North, no. If your event is further afield, we'll let you know when we put your proposal together." },
+          { q: "How do the add-ons work?", a: "Add-ons are extras you layer on top of the base package. Some, like face painting, run in a dedicated window rather than the full duration. We'll talk through what makes sense for your event during the consultation." },
+          { q: "What happens if I need to cancel or reschedule?", a: "We understand things change. Get in touch as early as possible and we'll do our best to accommodate. Deposit and cancellation terms are outlined in your booking confirmation." },
+          { q: "Do you cater to children under 3?", a: "Yes. If little ones under 3 will be at your event, let us know and we'll create a dedicated space for them. We do ask that parents stay close by for children that young." },
+          { q: "How long do you need to set up and pack down?", a: "Usually around 30 to 45 minutes each way, depending on the setup. We'll coordinate with your venue or event manager to fit your run sheet." },
+        ]}
+      />
     </>
   );
 }

@@ -11,37 +11,50 @@
    @property makes the custom property smoothly interpolable in all modern browsers.
    ─────────────────────────────────────────────────────────────────────────── */
 
+/* ─── Custom cursor ───────────────────────────────────────────────────────────
+   Replace the system cursor with a small red circle on fine-pointer (desktop)
+   devices to echo the confetti visual language of the site.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+/* ─── Sticky footer reveal ────────────────────────────────────────────────────
+   Footer is pinned to the bottom of the viewport (z-index 0). .page-content
+   sits above it (z-index 1) with an opaque white background so sections
+   without their own background-color don't bleed through. margin-bottom
+   (not padding-bottom) creates the transparent scroll gap — backgrounds don't
+   extend into margins — so the footer is revealed as the last section scrolls
+   up past it. --footer-height is set by FooterReveal.tsx.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media screen and (min-width: 768px) {
+  .section.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    margin-bottom: var(--footer-height, 320px);
+  }
+}
+
 @property --rainbow {
   syntax: '<color>';
   inherits: true;
   initial-value: #849ed1;
 }
 
-@keyframes rainbow-cycle {
-  0%     { --rainbow: #849ed1; }  /* blue      */
-  16.67% { --rainbow: #cab6d7; }  /* purple    */
-  33.33% { --rainbow: #fd6a4c; }  /* red       */
-  50%    { --rainbow: #f2aebe; }  /* pink      */
-  66.67% { --rainbow: #fcc951; }  /* yellow    */
-  83.33% { --rainbow: #94ccb8; }  /* turquoise */
-  100%   { --rainbow: #849ed1; }  /* blue      */
-}
-
-:root {
-  animation: rainbow-cycle 24s linear infinite;
-}
+/* rainbow-cycle keyframes removed — animation now runs via RainbowAnimation.tsx (GSAP) */
 
 /* React-managed interactive states – supplements the Webflow base stylesheet */
 
-/* ─── Mobile nav keyframes ───────────────────────────────────────────────── */
-@keyframes menu-panel-in {
-  from { opacity: 0; transform: scale(0.96) translateY(-12px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0); }
-}
-@keyframes menu-item-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* mobile nav keyframes removed — animation now runs via Nav.tsx (GSAP) */
 
 /* ─── Mobile nav (≤767px) ───────────────────────────────────────────────────
    On desktop the full nav-menu is always visible and the hamburger is hidden
@@ -85,17 +98,9 @@
     background-color: var(--pale-blue);
     padding: 2.5em 1.5em;
     z-index: 999;
-    animation: menu-panel-in 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
-  /* Staggered item entrance */
-  .nav-menu.menu-open > * {
-    animation: menu-item-in 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-  .nav-menu.menu-open > *:nth-child(1) { animation-delay: 60ms; }
-  .nav-menu.menu-open > *:nth-child(2) { animation-delay: 120ms; }
-  .nav-menu.menu-open > *:nth-child(3) { animation-delay: 180ms; }
-  .nav-menu.menu-open > *:nth-child(4) { animation-delay: 240ms; }
+  /* Staggered item entrance handled by GSAP in Nav.tsx */
 
   /* Nav links: large, centered */
   .nav-menu.menu-open .nav-item {
@@ -156,6 +161,9 @@
 .dropdown-list { display: none; }
 .accordion-item.is-open .dropdown-list { display: block; }
 .accordion-item.is-open .accordion-icon { transform: rotate(180deg); }
+
+/* FAQ answers in white-background sections: clear the pale-blue dropdown bg */
+.section:not(.pale-blue) .dropdown-list { background-color: transparent; }
 
 /* Multi-step form: hide all steps then show active.
    Must restore display:flex (not block) so the flex gap and justify-content:center
@@ -413,6 +421,34 @@ main {
   grid-column: span 3;
 }
 
+/* Offer cards (Experience / Quality / Flexibility) — card-like with colored bg */
+.about-offer-grid .addon-card.pale-red,
+.about-offer-grid .addon-card.pale-purple,
+.about-offer-grid .addon-card.pale-turquoise {
+  border-radius: var(--medium-corner);
+  padding: 3.5em 2.5em;
+}
+
+/* Increased vertical row gap between offer card rows */
+.about-offer-grid { row-gap: 5em; }
+.about-offer-grid .addon-card.pale-red .card-icon-wrapper,
+.about-offer-grid .addon-card.pale-purple .card-icon-wrapper,
+.about-offer-grid .addon-card.pale-turquoise .card-icon-wrapper {
+  margin-bottom: 24px;
+}
+.about-offer-grid .addon-card.pale-red .card-icon-wrapper     { background-color: var(--red); }
+.about-offer-grid .addon-card.pale-purple .card-icon-wrapper  { background-color: var(--dark-purple); }
+.about-offer-grid .addon-card.pale-turquoise .card-icon-wrapper { background-color: var(--turquoise); }
+
+/* Offer card headline size — a touch larger than the default h3 1.5em */
+.about-offer-grid .addon-card .headline-small { font-size: 2em; }
+
+/* Offer card text colors — match background tone */
+.about-offer-grid .addon-card.pale-red       { color: var(--dark-red); }
+.about-offer-grid .addon-card.pale-purple    { color: var(--dark-purple); }
+.about-offer-grid .addon-card.pale-turquoise { color: var(--dark-green); }
+.offer-card-negative.pale-blue               { color: var(--dark-blue); }
+
 /* ─── About Us: portrait bio + Hawke's Bay location (2fr 3fr split) ─── */
 .portrait-grid,
 .hawkes-bay-grid {
@@ -437,6 +473,20 @@ main {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* ─── Packages: add-on card color variants — override the default pale-blue ─── */
+.addon-card.pale-yellow    .paragraph-wrapper-tile.pricing { background-color: var(--pale-yellow);    color: var(--dark-yellow); }
+.addon-card.pale-turquoise .paragraph-wrapper-tile.pricing { background-color: var(--pale-turquoise); color: var(--dark-green); }
+.addon-card.pale-blue      .paragraph-wrapper-tile.pricing {                                           color: var(--dark-blue); }
+.addon-card.pale-purple    .paragraph-wrapper-tile.pricing { background-color: var(--pale-purple);    color: var(--dark-purple); }
+.addon-card.pale-pink      .paragraph-wrapper-tile.pricing { background-color: var(--pale-pink);      color: var(--dark-pink); }
+.addon-card.pale-red       .paragraph-wrapper-tile.pricing { background-color: var(--pale-red);       color: var(--dark-red); }
+
+/* ─── Packages: add-on card – clip image corners so the card is evenly rounded ─── */
+.addon-card {
+  border-radius: var(--medium-corner);
+  overflow: hidden;
 }
 
 /* ─── Packages: add-on card text area – grow to fill remaining card height,
@@ -583,10 +633,11 @@ main {
   .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(12px); }
   .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 
-  /* Activities masonry, gallery + pricing add-ons: reset transforms when stacked */
+  /* Activities masonry, gallery, pricing add-ons + about offer cards: reset transforms when stacked */
   .services-masonry > .w-layout-cell,
   .gallery > .w-layout-cell,
-  .pricing-addon-grid > .w-layout-cell { transform: none; }
+  .pricing-addon-grid > .w-layout-cell,
+  .about-offer-grid > .w-layout-cell { transform: none; padding-block: 0; }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
@@ -637,7 +688,7 @@ main {
 
 /* Scattered cards effect — service event tiles */
 .events-tile:nth-child(1) { transform: rotate(-1.8deg) translateY(12px); }
-.events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(-8px); }
+.events-tile:nth-child(2) { transform: rotate(1.2deg)  translateY(-8px); }
 .events-tile:nth-child(3) { transform: rotate(-0.7deg) translateY(16px); }
 
 /* Scattered cards effect — activities masonry */
@@ -662,6 +713,12 @@ main {
 .pricing-addon-grid > .w-layout-cell:nth-child(6) { transform: rotate(-0.8deg); }
 .pricing-addon-grid > .w-layout-cell:nth-child(7) { transform: rotate(0.5deg); }
 
+/* Scattered cards effect — about us offer cards (child 1 is header, skip it) */
+.about-offer-grid > .w-layout-cell:nth-child(2) { transform: rotate(-1.1deg) translateY(20px);  padding-block: 2em; }
+.about-offer-grid > .w-layout-cell:nth-child(3) { transform: rotate(0.8deg)  translateY(-18px); padding-block: 2em; }
+.about-offer-grid > .w-layout-cell:nth-child(4) { transform: rotate(-0.6deg) translateY(28px);  padding-block: 2em; }
+.about-offer-grid > .w-layout-cell:nth-child(5) { transform: rotate(0.7deg)  translateY(-12px); padding-block: 2em; }
+
 /* Scattered cards effect — gallery */
 .gallery > .w-layout-cell:nth-child(1) { transform: rotate(-1.1deg); }
 .gallery > .w-layout-cell:nth-child(2) { transform: rotate(0.7deg); }
@@ -672,18 +729,84 @@ main {
 .gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
 .gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
 
+/* Scattered card hover handled by ScatteredCardHover.tsx (GSAP) */
+
 /* Rainbow-fill button: keep border in sync with background.
    Scoped to exclude .static/.in-form so their solid blue border isn't overridden.
    transition: all picks up --rainbow and causes border/bg to drift during hover. */
 .button:not(.outline):not(.static):not(.in-form) {
-  transition: background-color .2s, border-color .2s;
+  transition: background-color .2s, border-color .2s, transform .15s ease;
   border-color: var(--rainbow);
 }
 .button:not(.outline):not(.static):not(.in-form):hover { border-color: var(--red); }
 
 /* Static & form buttons: same transition fix, border stays solid blue from eventsitters.css */
 .button.static,
-.button.in-form { transition: background-color .2s, border-color .2s; }
+.button.in-form { transition: background-color .2s, border-color .2s, transform .15s ease; }
+
+/* Playful micro-rotation on hover — subtle enough not to be distracting */
+.button:hover { transform: rotate(1.5deg); }
+.button.outline:hover { transform: rotate(-1.5deg); }
+
+/* Disabled form button — muted blue until required fields are filled */
+.button.in-form:disabled {
+  background-color: #c4d0e8;
+  border-color: #c4d0e8;
+  color: #fff;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* pale-blue outline button hover — needs 4-class specificity to beat the 3-class base rule */
+.button.outline.pale-blue:hover {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  color: var(--white);
+}
+
+/* Service event tiles — wider horizontal gap between the three cards */
+.container.hero    { padding-bottom: 1em; }
+.container.services { column-gap: 2em; padding-top: 5em; }
+
+/* Remove all-caps transforms — display all headings in sentence case.
+   eventsitters.css sets text-transform: uppercase on h1/h2/h3 and on
+   .headline-medium, .headline-small; globals.css loads after so same-
+   specificity rules here win the cascade. */
+.headline-large,
+.headline-medium,
+.headline-small,
+.headline-small.all-caps { text-transform: none; }
+
+.headline-large { letter-spacing: -0.02em; }
+.headline-medium { letter-spacing: -0.015em; }
+
+/* Base package price indicator */
+.package-price {
+  font-size: 1.5em;
+  font-weight: 700;
+  font-family: Loose Hand Luke, Arial, sans-serif;
+  color: var(--dark-blue);
+  margin: 0;
+}
+.package-price-range {
+  font-size: 0.65em;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+/* Compact FAQ section */
+.container.faq { padding-top: 5em; padding-bottom: 5em; }
+.accordion-toggle { height: 48px; }
+
+/* Gallery: switch from CSS background-images to crawlable <Image> tags */
+.gallery-image-container {
+  position: relative;
+  background-image: none !important;
+}
+
+/* Nav active link: restore hover colour — .w--current has same specificity as :hover
+   but comes later in eventsitters.css, so it wins and suppresses the red hover state. */
+.nav-item.w--current:hover { color: var(--red); }
 
 /* Remove hover effect from service cards */
 .events-tile.pale-yellow,
