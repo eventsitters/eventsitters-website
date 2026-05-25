@@ -657,6 +657,9 @@ main {
 .gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
 .gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
 
+/* Remove border from solid buttons — border uses --rainbow which mismatches on hover */
+.button, .button:hover { border: none; }
+
 /* Remove hover effect from service cards */
 .events-tile.pale-yellow,
 .events-tile.pale-turquoise,
