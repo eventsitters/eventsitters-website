@@ -61,8 +61,8 @@ export default function Home() {
               </div>
               <div className="super-heading all-caps">Hawke&apos;s Bay</div>
             </div>
-            <h1 className="title-hero">Your Event. Their Adventure.</h1>
-            <div className="p-large hero">From birthday parties to corporate functions — we keep kids of all ages happy, active, and looked after, so the grown-ups can actually enjoy the day.</div>
+            <h1 className="title-hero">On-Location Entertainment for Your Little Guests</h1>
+            <div className="p-large hero">From birthday parties to corporate functions — we keep kids of all ages happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
           </div>
           <div className="hero-cta">
             <Link href="#services" className="button outline w-button">Our Services</Link>
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="section">
         <div className="container caption">
           <div className="caption-wrapper">
-            <div className="caption-large">From wide-eyed toddlers to too-cool tweens — for kids aged 3 to 12, there&apos;s always something to do, make, or explore.</div>
+            <div className="caption-large">Designed for kids aged 3 to 12, we offer a mix of classic games and creative activities that will delight and engage your little guests.</div>
           </div>
           <div className="confetti-caption-blue" />
           <div className="confetti-caption-yellow" />
@@ -156,7 +156,7 @@ export default function Home() {
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>
-            <h2 className="headline-medium copy-text quote-form">Tell us about your event — we&apos;ll handle the fun.</h2>
+            <h2 className="headline-medium copy-text quote-form">Tell us about your event, we&apos;ll handle the rest.</h2>
           </div>
           <div className="quote-request-form-wrapper">
             <QuoteForm />
