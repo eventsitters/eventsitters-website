@@ -575,6 +575,11 @@ main {
 
   /* Contact: single column */
   .contact-wrapper { grid-template-columns: 1fr; }
+
+  /* Scattered cards: remove vertical offset when stacked so gaps are even */
+  .events-tile:nth-child(1) { transform: rotate(-1.8deg); }
+  .events-tile:nth-child(2) { transform: rotate(1.2deg); }
+  .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
@@ -632,6 +637,6 @@ main {
 .events-tile.pale-yellow,
 .events-tile.pale-turquoise,
 .events-tile.pale-purple { transition: none; }
-.events-tile.pale-yellow:hover,
-.events-tile.pale-turquoise:hover,
-.events-tile.pale-purple:hover { border-style: solid; border-color: inherit; }
+.events-tile.pale-yellow:hover    { border-style: solid; border-color: var(--pale-yellow); }
+.events-tile.pale-turquoise:hover { border-style: solid; border-color: var(--pale-turquoise); }
+.events-tile.pale-purple:hover    { border-style: solid; border-color: var(--pale-purple); }
