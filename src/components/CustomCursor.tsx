@@ -15,6 +15,9 @@ export default function CustomCursor() {
 
     el.style.opacity = "1";
 
+    const show = () => { el.style.opacity = "1"; };
+    const hide = () => { el.style.opacity = "0"; };
+
     const move = (e: MouseEvent) => {
       el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     };
@@ -40,9 +43,13 @@ export default function CustomCursor() {
 
     window.addEventListener("mousemove", move, { passive: true });
     window.addEventListener("mouseover", over, { passive: true });
+    document.documentElement.addEventListener("mouseleave", hide);
+    document.documentElement.addEventListener("mouseenter", show);
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
+      document.documentElement.removeEventListener("mouseleave", hide);
+      document.documentElement.removeEventListener("mouseenter", show);
       el.style.opacity = "0";
     };
   }, []);

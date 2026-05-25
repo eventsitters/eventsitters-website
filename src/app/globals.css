@@ -422,6 +422,7 @@ main {
 /* ─── About Us: What We Offer (3 cols; header and negative card span full width) ─── */
 .about-offer-grid {
   grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 7.2em;
 }
 .about-offer-grid > .w-layout-cell:first-child,
 .about-offer-grid > .w-layout-cell:last-child {
@@ -558,6 +559,8 @@ main {
   .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 3; }
 
   /* Contact: stays side-by-side */
+  /* What We Offer headline: +20% space above */
+  .about-offer-grid { margin-top: 4.8em; }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -588,8 +591,11 @@ main {
 }
 
 @media screen and (max-width: 767px) {
-  /* Hero section: remove min-height and rely on padding only */
-  .section.hero { min-height: 0; padding-top: 3em; padding-bottom: 2em; }
+  /* Hero section: remove min-height (eventsitters.css sets 70vh) and tighten padding.
+     Also reduce .container.hero's desktop padding and force height:auto so the
+     flex child doesn't stretch to fill the section. */
+  .section.hero { min-height: 0 !important; padding-top: 2.7em; padding-bottom: 0.9em; }
+  .container.hero { height: auto; padding-top: 1em; padding-bottom: 0.75em; }
 
   /* Hero confetti: smaller circles, pushed to viewport edges */
   .confetti-header-pink      { left: -24%; width: 8em; height: 8em; }
@@ -613,13 +619,24 @@ main {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > .w-layout-cell:first-child { grid-column: span 2; }
 
-  /* About: offer grid 1-col (items stack) */
-  .about-offer-grid { grid-template-columns: 1fr; row-gap: 1em; }
+  /* About: offer grid 1-col (items stack); +20% space above headline */
+  .about-offer-grid { grid-template-columns: 1fr; row-gap: 1em; margin-top: 2.4em; }
 
   /* "What We Can Not Offer" card: breathing room above and below on mobile */
   .offer-card-negative.pale-blue { padding-top: 4em; padding-bottom: 4em; }
   .about-offer-grid > .w-layout-cell:first-child,
   .about-offer-grid > .w-layout-cell:last-child { grid-column: span 1; }
+
+  /* About Us offer cards: match home events-tile padding on mobile */
+  .about-offer-grid .addon-card.pale-red,
+  .about-offer-grid .addon-card.pale-purple,
+  .about-offer-grid .addon-card.pale-turquoise { padding: 2.5em 2em 2em; }
+
+  /* Offer card headlines: cap at 28px on mobile */
+  .about-offer-grid .addon-card .headline-small { font-size: 28px; }
+
+  /* Space above first offer card (Experience) on mobile */
+  .about-offer-grid > .w-layout-cell:nth-child(2) { margin-top: 2.25em; }
 
   /* Portrait: single column – portrait above text */
   .portrait-grid { grid-template-columns: 1fr; }
@@ -634,16 +651,11 @@ main {
   .pricing-addon-grid { grid-template-columns: 1fr 1fr; }
   .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 2; }
 
-  /* Contact: single column */
-  .contact-wrapper { grid-template-columns: 1fr; }
+  /* Contact: single column; reduce gap between CTA block and quote form by 30% */
+  .contact-wrapper { grid-template-columns: 1fr; row-gap: 4.2em; }
 
   /* Services section: restore top padding on mobile */
   .container.services { padding-top: 2.5em; }
-
-  /* Hero section: reduce top and bottom padding by 10% on mobile.
-     eventsitters.css sets padding-top:3em, padding-bottom:5em at this breakpoint;
-     we override both (bottom was already reduced to 1em in a prior pass). */
-  .section.hero { padding-top: 2.7em; padding-bottom: 0.9em; }
 
   /* Scattered cards: rotations only on mobile — no translateY so stacked cards
      sit naturally one after another without overlap or uneven gaps. */
@@ -651,11 +663,14 @@ main {
   .events-tile:nth-child(2) { transform: rotate(1.2deg); }
   .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 
-  /* Activities masonry, gallery, pricing add-ons + about offer cards: reset transforms when stacked */
+  /* Activities masonry, gallery, pricing add-ons + about offer cards: padding reset when stacked */
   .services-masonry > .w-layout-cell,
   .gallery > .w-layout-cell,
   .pricing-addon-grid > .w-layout-cell,
-  .about-offer-grid > .w-layout-cell { transform: none; padding-block: 0; }
+  .about-offer-grid > .w-layout-cell { padding-block: 0; }
+
+  /* Quote form headline: 10% more line-height on mobile (default normal ≈ 1.2) */
+  .headline-medium.copy-text.quote-form { line-height: 1.32; }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
@@ -700,8 +715,8 @@ main {
   .pricing-addon-grid { grid-template-columns: 1fr; }
   .pricing-addon-grid > .w-layout-cell:first-child { grid-column: span 1; }
 
-  /* Contact: single column */
-  .contact-wrapper { grid-template-columns: 1fr; }
+  /* Contact: row-gap reduced 30% from eventsitters.css's 8em at this breakpoint */
+  .contact-wrapper { row-gap: 5.6em; }
 }
 
 /* Scattered cards effect — service event tiles.
@@ -749,6 +764,12 @@ main {
 .gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
 .gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
 
+/* "What We Can Not Offer" card: no rotation on mobile. Placed after the base
+   nth-child rule above so later source order wins at equal specificity (0,2,1). */
+@media screen and (max-width: 767px) {
+  .about-offer-grid > .w-layout-cell:nth-child(5) { transform: none; }
+}
+
 /* Scattered card hover handled by ScatteredCardHover.tsx (GSAP) */
 
 /* Rainbow-fill button: keep border in sync with background.
@@ -783,7 +804,10 @@ main {
 
 /* Service event tiles — wider horizontal gap between the three cards */
 .container.hero    { padding-bottom: 1em; }
-.container.services { column-gap: 2em; padding-top: 5em; }
+.container.services { column-gap: 2em; padding-top: 3.75em; }
+
+/* Process section: 50% more space between the headline and the step cards */
+.container.process { row-gap: 2.25em; }
 
 /* Remove all-caps transforms — display all headings in sentence case.
    eventsitters.css sets text-transform: uppercase on h1/h2/h3 and on
