@@ -624,6 +624,6 @@ main {
 }
 
 /* Scattered cards effect */
-.events-tile:nth-child(1) { transform: rotate(-1.8deg); }
-.events-tile:nth-child(2) { transform: rotate(1.2deg); }
-.events-tile:nth-child(3) { transform: rotate(-0.7deg); }
+.events-tile:nth-child(1) { transform: rotate(-1.8deg) translateY(12px); }
+.events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(-8px); }
+.events-tile:nth-child(3) { transform: rotate(-0.7deg) translateY(16px); }
