@@ -672,13 +672,18 @@ main {
 .gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
 .gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
 
-/* Solid button: keep border in sync with background at all times.
+/* Rainbow-fill button: keep border in sync with background.
+   Scoped to exclude .static/.in-form so their solid blue border isn't overridden.
    transition: all picks up --rainbow and causes border/bg to drift during hover. */
-.button:not(.outline) {
+.button:not(.outline):not(.static):not(.in-form) {
   transition: background-color .2s, border-color .2s;
   border-color: var(--rainbow);
 }
-.button:not(.outline):hover { border-color: var(--red); }
+.button:not(.outline):not(.static):not(.in-form):hover { border-color: var(--red); }
+
+/* Static & form buttons: same transition fix, border stays solid blue from eventsitters.css */
+.button.static,
+.button.in-form { transition: background-color .2s, border-color .2s; }
 
 /* Remove hover effect from service cards */
 .events-tile.pale-yellow,
