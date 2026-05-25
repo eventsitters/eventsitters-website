@@ -49,7 +49,6 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
     for (const cfg of configs) {
       for (const el of getNodes(cfg.selector)) {
         el.style.transition = 'none';
-        el.style.willChange = 'transform';
         if (cfg.repulse != null) {
           repulseTargetX.set(el, 0);
           repulseTargetY.set(el, 0);
@@ -230,7 +229,6 @@ export default function ConfettiParallax({ els }: { els: readonly ElConfig[] }) 
       for (const cfg of configs) {
         for (const el of getNodes(cfg.selector)) {
           el.style.transform = '';
-          el.style.willChange = '';
         }
       }
     };

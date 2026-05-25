@@ -68,7 +68,7 @@ export default function Home() {
             <Link href="#services" className="button outline w-button">Our Services</Link>
             <Link href="#quote-form" className="button w-button">Request a Quote</Link>
           </div>
-        </div>
+          </div>
         <div className="confetti-header-pink" />
         <div className="confetti-header-turquoise" />
         <div className="confetti-header-yellow" />

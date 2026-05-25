@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Nav() {
@@ -27,15 +26,8 @@ export default function Nav() {
   return (
     <div role="banner" className={`nav-bar w-nav${menuOpen ? " menu-open" : ""}`}>
       <div className="nav-wrapper">
-        <Link href="/" className={`logo w-nav-brand${pathname === "/" ? " w--current" : ""}`} style={{ cursor: 'pointer' }}>
-          <Image
-            src="/images/event-sitters-logo.svg"
-            alt="Event Sitters logo"
-            width={160}
-            height={48}
-            className="event-sitters-logo"
-            priority
-          />
+        <Link href="/" className="logo" onClick={() => setMenuOpen(false)} aria-label="Event Sitters – home">
+          <span className="event-sitters-logo" aria-hidden="true" />
         </Link>
 
         <nav role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>

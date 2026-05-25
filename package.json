@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.4",
-    "next": "^15.3.2",
+    "next": "^16.2.6",
     "nodemailer": "^6.9.16",
     "react": "^19.0.0",
     "react-datepicker": "^8.3.0",

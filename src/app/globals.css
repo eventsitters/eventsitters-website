@@ -62,12 +62,9 @@
     z-index: 1002; /* beats nav-menu's 999 within nav-bar stacking context */
   }
 
-  /* Logo must also sit above the nav-menu overlay within the nav-bar
-     stacking context – without a z-index it paints below z-index:999 */
-  .logo {
-    position: relative;
-    z-index: 1000;
-  }
+  /* Logo sits above the nav-menu overlay (z-index:999) within the nav-bar
+     stacking context — position:relative comes from the global .logo rule */
+  .logo { z-index: 1000; }
 
   /* Nav bar: switch to pale-blue when menu is open */
   .nav-bar.menu-open {
@@ -309,8 +306,51 @@
   top: 0.875em;
 }
 
-/* Nav logo – pointer cursor on the link and every descendant */
-.logo, .logo *, .event-sitters-logo { cursor: pointer !important; }
+/* Confetti elements are purely decorative – never capture pointer events.
+   Browsers can misroute hit-testing for composited (will-change:transform)
+   elements even when z-index:-1 should place them behind the nav. */
+[class*="confetti-"] {
+  pointer-events: none;
+}
+
+/* isolation:isolate gives <main> its own stacking context so confetti (z-index:-1)
+   stay contained below nav, without putting main into the z-index ordering against
+   the nav (which caused the cursor dead zone in the top viewport area). */
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Confetti elements are purely decorative — exclude from all pointer/cursor evaluation.
+   When ConfettiParallax sets el.style.transform each frame Chrome promotes these to
+   compositor layers; without pointer-events:none those compositor layers (cursor:auto)
+   can win cursor hit-testing over the nav's z-index:1000 stacking context. */
+[class^="confetti-"],
+[class*=" confetti-"] {
+  pointer-events: none;
+}
+
+/* Nav logo link.
+   position:relative is required so the mobile media query z-index:1000 takes effect.
+   No z-index on desktop — giving the logo its own stacking context (z-index+position)
+   causes Chrome to create a compositor layer whose hit-test bounds extend below the
+   nav bar, producing a cursor dead zone in the top-left of the viewport. */
+.logo {
+  position: relative;
+  display: block;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.logo .event-sitters-logo {
+  display: block;
+  width: 180px;
+  height: 48px;
+  background-image: url('/images/event-sitters-logo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
 
 /* Date/duration row: both cells grow equally in the desktop side-by-side layout.
    Scoped to min-width:768px because at ≤767px event-time-date switches to
