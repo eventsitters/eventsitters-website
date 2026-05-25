@@ -582,6 +582,9 @@ main {
   .events-tile:nth-child(1) { transform: rotate(-1.8deg); }
   .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(12px); }
   .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
+
+  /* Activities masonry: reset transforms when stacked */
+  .services-masonry > .w-layout-cell { transform: none; }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
@@ -630,10 +633,18 @@ main {
   .contact-wrapper { grid-template-columns: 1fr; }
 }
 
-/* Scattered cards effect */
+/* Scattered cards effect — service event tiles */
 .events-tile:nth-child(1) { transform: rotate(-1.8deg) translateY(12px); }
 .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(-8px); }
 .events-tile:nth-child(3) { transform: rotate(-0.7deg) translateY(16px); }
+
+/* Scattered cards effect — activities masonry */
+.services-masonry > .w-layout-cell:nth-child(1) { transform: rotate(-1.2deg); }
+.services-masonry > .w-layout-cell:nth-child(2) { transform: rotate(0.8deg); }
+.services-masonry > .w-layout-cell:nth-child(3) { transform: rotate(-0.5deg); }
+.services-masonry > .w-layout-cell:nth-child(4) { transform: rotate(1.4deg); }
+.services-masonry > .w-layout-cell:nth-child(5) { transform: rotate(-1.0deg); }
+.services-masonry > .w-layout-cell:nth-child(6) { transform: rotate(0.6deg); }
 
 /* Remove hover effect from service cards */
 .events-tile.pale-yellow,
