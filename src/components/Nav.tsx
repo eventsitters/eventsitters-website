@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
@@ -18,6 +18,20 @@ export default function Nav() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  const closeMenu = useCallback(() => {
+    const menu = menuRef.current;
+    if (!menu) { setMenuOpen(false); return; }
+    gsap.killTweensOf([menu, Array.from(menu.children)]);
+    gsap.to(Array.from(menu.children), {
+      autoAlpha: 0, y: -8, duration: 0.15, ease: "power2.in",
+      stagger: { each: 0.03, from: "end" },
+    });
+    gsap.to(menu, {
+      autoAlpha: 0, y: -12, duration: 0.22, ease: "power2.in", delay: 0.07,
+      onComplete: () => setMenuOpen(false),
+    });
+  }, []);
+
   useLayoutEffect(() => {
     const menu = menuRef.current;
     if (!menu) return;
@@ -25,12 +39,12 @@ export default function Nav() {
     if (menuOpen) {
       gsap.killTweensOf([menu, Array.from(menu.children)]);
       gsap.fromTo(menu,
-        { opacity: 0, scale: 0.96, y: -12 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.38, ease: "back.out(1.4)", clearProps: "all" }
+        { autoAlpha: 0, y: -18 },
+        { autoAlpha: 1, y: 0, duration: 0.36, ease: "power3.out" }
       );
       gsap.fromTo(Array.from(menu.children),
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.06, delay: 0.06, clearProps: "all" }
+        { autoAlpha: 0, y: 14 },
+        { autoAlpha: 1, y: 0, duration: 0.3, ease: "power3.out", stagger: 0.05, delay: 0.1 }
       );
     } else {
       gsap.killTweensOf([menu, Array.from(menu.children)]);
@@ -42,7 +56,7 @@ export default function Nav() {
     <Link
       href={href}
       className={`nav-item w-nav-link${pathname === href ? " w--current" : ""}`}
-      onClick={() => setMenuOpen(false)}
+      onClick={closeMenu}
     >
       {label}
     </Link>
@@ -51,7 +65,7 @@ export default function Nav() {
   return (
     <div role="banner" className={`nav-bar w-nav${menuOpen ? " menu-open" : ""}`}>
       <div className="nav-wrapper">
-        <Link href="/" className="logo" onClick={() => setMenuOpen(false)} aria-label="Event Sitters – home">
+        <Link href="/" className="logo" onClick={closeMenu} aria-label="Event Sitters – home">
           <span className="event-sitters-logo" aria-hidden="true" />
         </Link>
 
@@ -62,14 +76,20 @@ export default function Nav() {
               href="#services"
               onClick={(e) => {
                 e.preventDefault();
-                setMenuOpen(false);
-                gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
+                if (menuOpen) {
+                  closeMenu();
+                  setTimeout(() => {
+                    gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
+                  }, 260);
+                } else {
+                  gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
+                }
               }}
             >
               Services
             </a>
           ) : (
-            <Link href="/#services" className="nav-item w-nav-link" onClick={() => setMenuOpen(false)}>
+            <Link href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>
               Services
             </Link>
           )}
@@ -94,7 +114,7 @@ export default function Nav() {
           </div>
 
           <div className="nav-button-wrapper">
-            <Link href="/contact-us" className="button w-button" onClick={() => setMenuOpen(false)}>
+            <Link href="/contact-us" className="button w-button" onClick={closeMenu}>
               Contact Us
             </Link>
           </div>
@@ -102,7 +122,7 @@ export default function Nav() {
 
         <div
           className={`menu-button w-nav-button${menuOpen ? " menu-open" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => menuOpen ? closeMenu() : setMenuOpen(true)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? (
