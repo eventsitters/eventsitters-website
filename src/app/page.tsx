@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import FAQ from "@/components/FAQ";
 import QuoteForm from "@/components/QuoteForm";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
@@ -63,7 +62,7 @@ export default function Home() {
           </div>
           <div className="hero-cta">
             <SmoothAnchorLink href="#services" className="button outline w-button">Our Services</SmoothAnchorLink>
-            <Link href="#quote-form" className="button w-button">Request a Quote</Link>
+            <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
           </div>
           </div>
         <div className="confetti-header-pink" />
@@ -147,6 +146,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Quote Form */}
+      <section id="quote-form" className="section form pale-blue">
+        <div className="container form">
+          <div className="home-quote-form-header-wrapper">
+            <div className="super-heading all-caps">Quote Request</div>
+            <h2 className="headline-medium copy-text quote-form">Tell us about your event, we&apos;ll handle the rest.</h2>
+          </div>
+          <div className="quote-request-form-wrapper">
+            <QuoteForm />
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <FAQ />
 
@@ -164,19 +176,6 @@ export default function Home() {
           { "@type": "Question", "name": "Can you set up outdoors?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. We're set up for both indoor and outdoor events and adapt our activities to suit the space. For outdoor events, we also offer a gazebo option for shade and shelter." } },
         ],
       }) }} />
-
-      {/* Quote Form */}
-      <section id="quote-form" className="section form">
-        <div className="container form">
-          <div className="home-quote-form-header-wrapper">
-            <div className="super-heading all-caps">Quote Request</div>
-            <h2 className="headline-medium copy-text quote-form">Tell us about your event, we&apos;ll handle the rest.</h2>
-          </div>
-          <div className="quote-request-form-wrapper">
-            <QuoteForm />
-          </div>
-        </div>
-      </section>
     </>
   );
 }

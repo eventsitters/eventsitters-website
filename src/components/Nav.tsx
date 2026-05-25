@@ -12,6 +12,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLElement>(null);
+  const hasOpenedRef = useRef(false);
 
   useEffect(() => {
     const val = menuOpen ? "hidden" : "";
@@ -24,6 +25,7 @@ export default function Nav() {
   }, [menuOpen]);
 
   const closeMenu = useCallback(() => {
+    if (!menuOpen) return;
     const menu = menuRef.current;
     if (!menu) { setMenuOpen(false); return; }
     gsap.killTweensOf(menu);
@@ -31,19 +33,20 @@ export default function Nav() {
       autoAlpha: 0, y: -12, duration: 0.22, ease: "power2.in",
       onComplete: () => setMenuOpen(false),
     });
-  }, []);
+  }, [menuOpen]);
 
   useLayoutEffect(() => {
     const menu = menuRef.current;
     if (!menu) return;
 
     if (menuOpen) {
+      hasOpenedRef.current = true;
       gsap.killTweensOf(menu);
       gsap.fromTo(menu,
         { autoAlpha: 0, y: -16 },
         { autoAlpha: 1, y: 0, duration: 0.32, ease: "power3.out", force3D: true }
       );
-    } else {
+    } else if (hasOpenedRef.current) {
       gsap.killTweensOf(menu);
       gsap.set(menu, { clearProps: "all" });
     }

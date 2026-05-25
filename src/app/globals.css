@@ -285,9 +285,12 @@ html, body { overflow-x: hidden; }
 /* react-datepicker portal – used by withPortal on mobile; z-index above everything */
 #datepicker-portal {
   position: relative;
-  z-index: 9999;
+  z-index: 9998;
 }
+/* Cap portal below the CustomCursor div (9999) so the custom cursor paints over it.
+   react-datepicker defaults to z-index:2147483647 which would bury the cursor element. */
 .react-datepicker__portal {
+  z-index: 9998 !important;
   background-color: rgba(235, 239, 248, 0.92); /* --pale-blue with slight transparency */
 }
 .react-datepicker__portal .react-datepicker {
@@ -427,6 +430,12 @@ main {
 .about-offer-grid > .w-layout-cell:first-child,
 .about-offer-grid > .w-layout-cell:last-child {
   grid-column: span 3;
+}
+.about-offer-grid > .w-layout-cell:first-child {
+  padding-bottom: 2.5em;
+}
+.about-offer-grid > .w-layout-cell:last-child {
+  margin-top: 2em;
 }
 
 /* Offer cards (Experience / Quality / Flexibility) — card-like with colored bg */
@@ -860,3 +869,37 @@ main {
 .events-tile.pale-yellow:hover    { border-style: solid; border-color: var(--pale-yellow); }
 .events-tile.pale-turquoise:hover { border-style: solid; border-color: var(--pale-turquoise); }
 .events-tile.pale-purple:hover    { border-style: solid; border-color: var(--pale-purple); }
+
+/* ─── Toast notification ────────────────────────────────────────────────────── */
+@keyframes toast-in {
+  0%   { transform: translate(-50%, 64px) scale(0.82);                   opacity: 0; }
+  50%  { transform: translate(-50%, -20px) scale(1.06) rotate(-2deg);    opacity: 1; }
+  68%  { transform: translate(-50%, 9px)  scale(0.97) rotate(1deg);               }
+  82%  { transform: translate(-50%, -5px) scale(1.02) rotate(-0.5deg);            }
+  100% { transform: translate(-50%, 0)   scale(1)    rotate(0deg);       opacity: 1; }
+}
+@keyframes toast-out {
+  0%   { transform: translate(-50%, 0);    opacity: 1; }
+  25%  { transform: translate(-50%, -8px); opacity: 1; }
+  100% { transform: translate(-50%, 56px); opacity: 0; }
+}
+.toast-notification {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: var(--dark-blue);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  animation: toast-in 0.6s linear both;
+  pointer-events: none;
+}
+.toast-notification.leaving {
+  animation: toast-out 0.45s ease-in both;
+}

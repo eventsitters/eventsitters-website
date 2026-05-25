@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
+import Confetti from "./Confetti";
 
 type FormData = {
   eventType: string;
@@ -43,6 +44,31 @@ export default function QuoteForm() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(defaultForm);
   const [status, setStatus] = useState<Status>("idle");
+  const [confettiKey, setConfettiKey] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastLeaving, setToastLeaving] = useState(false);
+  const toastT1 = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toastT2 = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const fireConfetti = () => {
+    setShowConfetti(true);
+    setConfettiKey((k) => k + 1);
+  };
+
+  const triggerToast = () => {
+    if (toastT1.current) clearTimeout(toastT1.current);
+    if (toastT2.current) clearTimeout(toastT2.current);
+    setToastLeaving(false);
+    setShowToast(true);
+    toastT1.current = setTimeout(() => {
+      setToastLeaving(true);
+      toastT2.current = setTimeout(() => {
+        setShowToast(false);
+        setToastLeaving(false);
+      }, 450);
+    }, 3800);
+  };
 
   const set = (field: keyof FormData, value: FormData[keyof FormData]) =>
     setForm((f) => ({ ...f, [field]: value }));
@@ -82,21 +108,30 @@ export default function QuoteForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        setForm(defaultForm);
+        setStep(0);
+        setStatus("idle");
+        fireConfetti();
+        triggerToast();
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
   };
 
-  if (status === "success") {
-    return (
-      <div className="success-message w-form-done" style={{ display: "block" }}>
-        <div><strong>Thank you!</strong><br />We received your request and will get back to you soon.</div>
-      </div>
-    );
-  }
-
   return (
+    <>
+    {showConfetti && (
+      <Confetti key={confettiKey} onDone={() => setShowConfetti(false)} />
+    )}
+    {showToast && (
+      <div className={`toast-notification${toastLeaving ? " leaving" : ""}`}>
+        Thank you! We&apos;ll get back to you soon.
+      </div>
+    )}
     <div className="request-form-wrapper w-form">
       <form className="request-form" onSubmit={(e) => e.preventDefault()}>
 
@@ -278,7 +313,12 @@ export default function QuoteForm() {
             <button
               type="button"
               className="button in-form w-button"
-              disabled={status === "submitting"}
+              disabled={
+                status === "submitting" ||
+                !form.firstName.trim() ||
+                !form.lastName.trim() ||
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
+              }
               onClick={handleSubmit}
             >
               {status === "submitting" ? "Please wait..." : "Submit"}
@@ -296,5 +336,6 @@ export default function QuoteForm() {
         )}
       </form>
     </div>
+    </>
   );
 }
