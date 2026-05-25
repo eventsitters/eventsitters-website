@@ -62,7 +62,7 @@ export default function Home() {
               <div className="super-heading all-caps">Hawke&apos;s Bay</div>
             </div>
             <h1 className="title-hero">On-Location Entertainment for Your Little Guests</h1>
-            <div className="p-large hero">From birthday parties to corporate functions — we keep kids of all ages happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
+            <div className="p-large hero">From birthday parties to corporate functions, we keep kids of all ages happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
           </div>
           <div className="hero-cta">
             <Link href="#services" className="button outline w-button">Our Services</Link>
@@ -82,7 +82,7 @@ export default function Home() {
             <h2 className="headline-small">Private Events</h2>
             <Image src="/images/private-events.webp" alt="A young boy in a polka-dotted shirt and beige cap is deep in concentration while playing a dice game in a wooden tray." className="event-thumbnail" width={1120} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>Weddings, birthdays, family get-togethers — we set up a dedicated kids&apos; space packed with games, crafts, and activities.</div>
+              <div>Weddings, birthdays, family get-togethers. We set up a dedicated kids&apos; space packed with games, crafts, and activities.</div>
               <div>They can dip in, take a breather, or stay all day. Either way, they&apos;re in good hands.</div>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function Home() {
             <h2 className="headline-small">Work Functions</h2>
             <Image src="/images/corporate-functions.webp" alt="A smiling young boy wearing a beige cap sits at a table filled with art supplies." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>Kids at corporate events? Sorted. We keep them close by, engaged, and entertained — so parents stay present and your event runs the way it should.</div>
+              <div>Kids at corporate events? Sorted. We keep them close by, engaged, and entertained, so parents stay present and your event runs the way it should.</div>
               <div>Because the best work events are the ones where everyone has a great time. Even the littlest attendees.</div>
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function Home() {
             <h2 className="headline-small">Public Events</h2>
             <Image src="/images/public-events.webp" alt="A group of children and adults gather around a table at an outdoor event, engaged in holiday crafts." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>Festivals, markets, community events — we show up, set up, and bring the fun. Games, crafts, and themed entertainment for every age.</div>
+              <div>Festivals, markets, community events. We show up, set up, and bring the fun. Games, crafts, and themed entertainment for every age.</div>
               <div>Flexible enough for any size, location, or theme. Just point us to the spot and we&apos;ll handle the rest.</div>
             </div>
           </div>

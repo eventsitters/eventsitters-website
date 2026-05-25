@@ -50,7 +50,7 @@ const offerCards = [
     color: "pale-purple",
     title: "Quality",
     paras: [
-      "We use high-quality, safe materials across all our activities — because the best experiences don't cut corners.",
+      "We use high-quality, safe materials across all our activities. Because the best experiences don't cut corners.",
       "Our experienced team brings real creativity and know-how to every event, making sure every child gets a genuinely good time.",
     ],
   },
@@ -66,7 +66,7 @@ const offerCards = [
 ];
 
 const process = [
-  { num: "01", title: "Consultation", desc: "We have a chat about your event — the number of kids, the space, and what you have in mind." },
+  { num: "01", title: "Consultation", desc: "We have a chat about your event: the number of kids, the space, and what you have in mind." },
   { num: "02", title: "Custom Proposal", desc: "From there, we put together a package tailored to your event and your guests." },
   { num: "03", title: "Confirmation", desc: "Happy with the plan? A 20% deposit locks in your date and we'll take care of the rest." },
 ];
@@ -83,7 +83,7 @@ export default function AboutUs() {
               <div className="div-block-7">
                 <h2 className="super-heading all-caps">Event Sitters Hawke&apos;s Bay</h2>
                 <h1 className="headline-large">Kids Love Us. Their Parents Love the Break.</h1>
-                <div className="p-large">We&apos;re a small, hands-on team based in Hawke&apos;s Bay — keeping every child at your event happy, engaged, and well looked after.</div>
+                <div className="p-large">We&apos;re a small, hands-on team based in Hawke&apos;s Bay, keeping every child at your event happy, engaged, and well looked after.</div>
               </div>
             </div>
             <div className="w-layout-cell cell-2">
@@ -105,7 +105,7 @@ export default function AboutUs() {
             <div className="w-layout-cell">
               <div className="offer-header">
                 <h2 className="headline-medium">What We Offer</h2>
-                <p className="p-medium">Every event is different, and so is every child. We adapt our approach to suit your space, your guests, and your vibe — using quality resources and hands-on activities to keep kids engaged from arrival to pack-down.</p>
+                <p className="p-medium">Every event is different, and so is every child. We adapt our approach to suit your space, your guests, and your vibe, using quality resources and hands-on activities to keep kids engaged from arrival to pack-down.</p>
               </div>
             </div>
 
@@ -207,7 +207,7 @@ export default function AboutUs() {
               <div className="festivals-markets-text-wrapper">
                 <h3 className="super-heading all-caps">Where we work</h3>
                 <h2 className="headline-medium">Homegrown in Hawke&apos;s Bay</h2>
-                <p className="p-medium">We&apos;re a local business serving Napier, Hastings, Havelock North, and the wider Hawke&apos;s Bay region — and we&apos;re happy to travel to your venue. We know the local spaces, understand the local crowd, and love showing up for local events.</p>
+                <p className="p-medium">We&apos;re a local business serving Napier, Hastings, Havelock North, and the wider Hawke&apos;s Bay region, and we&apos;re happy to travel to your venue. We know the local spaces, understand the local crowd, and love showing up for local events.</p>
               </div>
             </div>
           </div>
