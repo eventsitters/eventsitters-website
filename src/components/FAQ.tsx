@@ -87,7 +87,7 @@ export default function FAQ() {
     <section className="section pale-blue">
       <div className="container faq">
         <div className="faq-wrapper">
-          <h2 className="headline-small">Frequently Asked Questions</h2>
+          <h2 className="headline-small">Good Questions. Here Are Some Answers.</h2>
           <div className="questions-wrapper">
             {faqs.map((item, i) => (
               <AccordionItem

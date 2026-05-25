@@ -29,8 +29,8 @@ const parallaxEls: ElConfig[] = [
 const activities = [
   { title: "Active Play & Games",  span: "services-cell-2", color: "pale-red",      icon: "/images/active-play.svg",  iconAlt: "Balloon icon",        iconClass: "active-play-icon",  desc: "We offer a wide variety of fun and engaging games, tailored to suit children of all ages. From interactive group activities and classic board games for older kids to imaginative play for toddlers – we have something for everyone to enjoy!" },
   { title: "Arts & Crafts",        span: "services-cell-4", color: "pale-purple",   icon: "/images/arts-crafts.svg",  iconAlt: "Scissor cut icon",    iconClass: "arts-crafts-icon",  desc: "We offer mess-free activities that keep kids entertained with fun, hands-on projects. From simple DIY crafts to imaginative creations, children can immerse themselves in a playful and creative experience. Best of all, they get to take home their wonderful creations to cherish." },
-  { title: "Toys & Play time",     span: "services-cell-3", color: "pale-turquoise",icon: "/images/toys.svg",         iconAlt: "Stacked blocks icon", iconClass: "toys-icon",         desc: "Our curated selection of quality toys provides a variety of engaging options for meaningful play time. Children can explore, construct, and build with our collection of toys, ensuring hours of fun." },
-  { title: "Story time",           span: "services-cell-3", color: "pale-blue",     icon: "/images/storytime.svg",    iconAlt: "Book icon",           iconClass: "storytime-icon",    desc: "We offer enchanting stories to help children unwind in a relaxing setting. Alongside story time, we provide search-and-find books for them to explore, adding an extra layer of fun and engagement." },
+  { title: "Toys & Playtime",      span: "services-cell-3", color: "pale-turquoise",icon: "/images/toys.svg",         iconAlt: "Stacked blocks icon", iconClass: "toys-icon",         desc: "Our curated selection of quality toys provides a variety of engaging options for meaningful play time. Children can explore, construct, and build with our collection of toys, ensuring hours of fun." },
+  { title: "Story Time",           span: "services-cell-3", color: "pale-blue",     icon: "/images/storytime.svg",    iconAlt: "Book icon",           iconClass: "storytime-icon",    desc: "We offer enchanting stories to help children unwind in a relaxing setting. Alongside story time, we provide search-and-find books for them to explore, adding an extra layer of fun and engagement." },
   { title: "Cozy Corner",          span: "services-cell-4", color: "pale-yellow",   icon: "/images/cozy-corner.svg",  iconAlt: "Pillow icon",         iconClass: "cozy-corner-icon",  desc: "Our cozy corner provides a quiet space where children can relax and recharge. It's the perfect retreat for some downtime, offering a calming atmosphere that helps them feel refreshed and comfortable, or enjoy a bit of pretend play." },
   { title: "Decoration",           span: "services-cell-2", color: "pale-pink",     icon: "/images/decoration.svg",   iconAlt: "Decorations icon",    iconClass: "decoration-icon",   desc: "We brighten up any space with charming touches like blankets, pillows, balloons, and other decor elements. Our goal is to create an inviting and joyful atmosphere that makes it feel special." },
 ];
@@ -61,8 +61,8 @@ export default function Home() {
               </div>
               <div className="super-heading all-caps">Hawke&apos;s Bay</div>
             </div>
-            <h1 className="title-hero">On-Location Entertainment for Your Little Guests</h1>
-            <div className="p-large hero">We create fun, engaging spaces for kids at weddings, parties, public and corporate events, with tailored activities to keep all ages happily entertained!</div>
+            <h1 className="title-hero">Your Event. Their Adventure.</h1>
+            <div className="p-large hero">From birthday parties to corporate functions — we keep kids of all ages happy, active, and looked after, so the grown-ups can actually enjoy the day.</div>
           </div>
           <div className="hero-cta">
             <Link href="#services" className="button outline w-button">Our Services</Link>
@@ -82,24 +82,24 @@ export default function Home() {
             <h2 className="headline-small">Private Events</h2>
             <Image src="/images/private-events.webp" alt="A young boy in a polka-dotted shirt and beige cap is deep in concentration while playing a dice game in a wooden tray." className="event-thumbnail" width={1120} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>At weddings and birthday parties, we create a fun space just for kids! With custom activities, games and crafts, there&apos;s something for everyone.</div>
-              <div>Kids can join in, take a break, and share their fun, making the day even more special for all.</div>
+              <div>Weddings, birthdays, family get-togethers — we set up a dedicated kids&apos; space packed with games, crafts, and activities.</div>
+              <div>They can dip in, take a breather, or stay all day. Either way, they&apos;re in good hands.</div>
             </div>
           </div>
           <div className="events-tile pale-turquoise">
             <h2 className="headline-small">Work Functions</h2>
             <Image src="/images/corporate-functions.webp" alt="A smiling young boy wearing a beige cap sits at a table filled with art supplies." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>During work gatherings and corporate functions, we help increase attendance by catering to the needs of families, allowing parents to focus on their professional commitments.</div>
-              <div>Guests enjoy peace of mind their children are only a few steps away!</div>
+              <div>Kids at corporate events? Sorted. We keep them close by, engaged, and entertained — so parents stay present and your event runs the way it should.</div>
+              <div>Because the best work events are the ones where everyone has a great time. Even the littlest attendees.</div>
             </div>
           </div>
           <div className="events-tile pale-purple">
             <h2 className="headline-small">Public Events</h2>
             <Image src="/images/public-events.webp" alt="A group of children and adults gather around a table at an outdoor event, engaged in holiday crafts." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
-              <div>Hosting a festival, market, or community event? We&apos;ll bring the fun! With games, activities, and themed entertainment.</div>
-              <div>Our flexible approach means we can adapt to any event size, location, and theme, providing a fun experience for kids in a family-friendly atmosphere.</div>
+              <div>Festivals, markets, community events — we show up, set up, and bring the fun. Games, crafts, and themed entertainment for every age.</div>
+              <div>Flexible enough for any size, location, or theme. Just point us to the spot and we&apos;ll handle the rest.</div>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="section">
         <div className="container caption">
           <div className="caption-wrapper">
-            <div className="caption-large">Designed for kids aged 3 to 12, we offer a mix of classic games and creative activities that will delight and engage your little guests.</div>
+            <div className="caption-large">From wide-eyed toddlers to too-cool tweens — for kids aged 3 to 12, there&apos;s always something to do, make, or explore.</div>
           </div>
           <div className="confetti-caption-blue" />
           <div className="confetti-caption-yellow" />
@@ -156,7 +156,7 @@ export default function Home() {
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>
-            <h2 className="headline-medium copy-text quote-form">tell us how we can support your event with tailored activities</h2>
+            <h2 className="headline-medium copy-text quote-form">Tell us about your event — we&apos;ll handle the fun.</h2>
           </div>
           <div className="quote-request-form-wrapper">
             <QuoteForm />
