@@ -576,10 +576,12 @@ main {
   /* Contact: single column */
   .contact-wrapper { grid-template-columns: 1fr; }
 
-  /* Scattered cards: remove all transforms when stacked so gaps are even */
-  .events-tile:nth-child(1),
-  .events-tile:nth-child(2),
-  .events-tile:nth-child(3) { transform: none; }
+  /* Scattered cards: keep rotations; translateY on card 2 equalises the visual
+     gap — cards 1+2 lean into each other on the left, cards 2+3 lean apart,
+     so nudging card 2 down increases gap above and shrinks gap below evenly. */
+  .events-tile:nth-child(1) { transform: rotate(-1.8deg); }
+  .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(12px); }
+  .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
