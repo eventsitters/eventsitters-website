@@ -45,7 +45,7 @@
 
 /* ─── Mobile nav (≤767px) ───────────────────────────────────────────────────
    On desktop the full nav-menu is always visible and the hamburger is hidden
-   (webflow.css sets .w-nav-button { display: none }).
+   (eventsitters.css sets .w-nav-button { display: none }).
    On mobile we flip: hide the menu by default, show the hamburger.
    When menuOpen is toggled, .menu-open on .nav-menu reveals the panel.
    ───────────────────────────────────────────────────────────────────────── */
@@ -129,7 +129,7 @@
     font-size: 1.2em;
   }
 
-  /* Close button: no white background box (webflow.css sets background: white
+  /* Close button: no white background box (eventsitters.css sets background: white
      on .menu-button at this breakpoint — clear it) */
   .menu-button.menu-open {
     background-color: transparent !important;
@@ -159,7 +159,7 @@
 
 /* Multi-step form: hide all steps then show active.
    Must restore display:flex (not block) so the flex gap and justify-content:center
-   from webflow.css still apply, giving the correct spacing to the button. */
+   from eventsitters.css still apply, giving the correct spacing to the button. */
 .form-step { display: none; }
 .form-step.is-active { display: flex; }
 
@@ -188,20 +188,20 @@
 }
 
 /* Back button: <button> UA stylesheet gives it background-color:buttonface (grey).
-   webflow.css resets border but not background. */
+   eventsitters.css resets border but not background. */
 .form-back-button-wrapper {
   background: none;
   padding: 0;
 }
 
-/* webflow.css sets display:none on .age-range-wrapper (originally toggled by
+/* eventsitters.css sets display:none on .age-range-wrapper (originally toggled by
    Webflow JS). We control visibility via React conditional rendering instead,
    so override to flex when the element is present in the DOM. */
 .age-range-wrapper {
   display: flex;
 }
 
-/* Counter input: webflow.css's .w-input[readonly] rule sets background:#eee —
+/* Counter input: eventsitters.css's .w-input[readonly] rule sets background:#eee —
    the counter is read-only by design (controlled by +/- buttons) so clear it.
    Also suppress the native number-input spinner arrows.
    .w-input sets color:#333 — override to match surrounding dark-blue text. */
@@ -354,8 +354,8 @@ main {
 
 /* Date/duration row: both cells grow equally in the desktop side-by-side layout.
    Scoped to min-width:768px because at ≤767px event-time-date switches to
-   flex-flow:column (webflow.css), and flex-basis:0 + overflow:hidden (also set by
-   webflow.css at that breakpoint) collapses the items to 0 height — the CSS spec
+   flex-flow:column (eventsitters.css), and flex-basis:0 + overflow:hidden (also set by
+   eventsitters.css at that breakpoint) collapses the items to 0 height — the CSS spec
    resolves min-height:auto to 0 when overflow!=visible. */
 @media screen and (min-width: 768px) {
   .event-date-wrapper,
@@ -462,7 +462,7 @@ main {
 /* ════════════════════════════════════════════════════════════════════════════
    RESPONSIVE OVERRIDES
    All class-based grids in this file need explicit breakpoint overrides because
-   webflow.css only has responsive rules for node-ID selectors (w-node-*), not
+   eventsitters.css only has responsive rules for node-ID selectors (w-node-*), not
    for the class aliases defined above.
    Breakpoints match Webflow: 991px (tablet), 767px (landscape mobile),
    479px (portrait mobile).

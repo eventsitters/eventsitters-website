@@ -42,11 +42,11 @@ CONTACT_TO                                    # recipient address (default: info
 - **`FAQ.tsx`** — static accordion component.
 
 ### Styling
-`webflow.css` — the exported Webflow stylesheet; treat as a base reset/theme. **Do not edit lightly** — it defines all layout classes (`w-nav`, `w-layout-layout`, `w-layout-cell`, etc.), color tokens, and responsive breakpoints.
+`eventsitters.css` — the exported Webflow stylesheet; treat as a base reset/theme. **Do not edit lightly** — it defines all layout classes (`w-nav`, `w-layout-layout`, `w-layout-cell`, etc.), color tokens, and responsive breakpoints.
 
-`globals.css` — supplements `webflow.css` with React-specific overrides: the `--rainbow` CSS custom property animation (24 s linear cycle replacing the original GSAP timeline), mobile nav keyframes, datepicker overrides, and interactive states not expressible in static Webflow export.
+`globals.css` — supplements `eventsitters.css` with React-specific overrides: the `--rainbow` CSS custom property animation (24 s linear cycle replacing the original GSAP timeline), mobile nav keyframes, datepicker overrides, and interactive states not expressible in static Webflow export.
 
-CSS class names follow Webflow conventions (`w-*`, `wf-*`). Layout uses Webflow's named grid cells (`gallery-cell-3`, `services-cell-2`, etc.) controlled by `webflow.css`.
+CSS class names follow Webflow conventions (`w-*`, `wf-*`). Layout uses Webflow's named grid cells (`gallery-cell-3`, `services-cell-2`, etc.) controlled by `eventsitters.css`.
 
 ### Deployment
 Deployed on Vercel (project `eventsitters`, org `team_2OHFdm86zK2HpxKN4bmJOzRy`). The `SMTP_*` and `CONTACT_TO` env vars must be set in the Vercel project settings for the contact form to work in production.
