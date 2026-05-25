@@ -657,8 +657,13 @@ main {
 .gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
 .gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
 
-/* Remove border from solid buttons — border uses --rainbow which mismatches on hover */
-.button, .button:hover { border: none; }
+/* Solid button: keep border in sync with background at all times.
+   transition: all picks up --rainbow and causes border/bg to drift during hover. */
+.button:not(.outline) {
+  transition: background-color .2s, border-color .2s;
+  border-color: var(--rainbow);
+}
+.button:not(.outline):hover { border-color: var(--red); }
 
 /* Remove hover effect from service cards */
 .events-tile.pale-yellow,
