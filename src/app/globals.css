@@ -102,7 +102,7 @@ html, body { overflow-x: hidden; }
     position: fixed;
     inset: 0;
     background-color: var(--pale-blue);
-    padding: 5em 1.5em 2.5em;
+    padding: 5.5em 1.5em 2.5em;
     z-index: 999;
   }
 
@@ -637,9 +637,10 @@ main {
   /* Services section: restore top padding on mobile */
   .container.services { padding-top: 2.5em; }
 
-  /* Hero section: reduce the large bottom padding set by eventsitters.css at this
-     breakpoint (5em) — this is the main source of the gap below the hero on mobile */
-  .section.hero { padding-bottom: 1em; }
+  /* Hero section: reduce top and bottom padding by 10% on mobile.
+     eventsitters.css sets padding-top:3em, padding-bottom:5em at this breakpoint;
+     we override both (bottom was already reduced to 1em in a prior pass). */
+  .section.hero { padding-top: 2.7em; padding-bottom: 0.9em; }
 
   /* Scattered cards: rotations only on mobile — no translateY so stacked cards
      sit naturally one after another without overlap or uneven gaps. */

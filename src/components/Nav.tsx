@@ -21,13 +21,9 @@ export default function Nav() {
   const closeMenu = useCallback(() => {
     const menu = menuRef.current;
     if (!menu) { setMenuOpen(false); return; }
-    gsap.killTweensOf([menu, Array.from(menu.children)]);
-    gsap.to(Array.from(menu.children), {
-      autoAlpha: 0, y: -8, duration: 0.15, ease: "power2.in",
-      stagger: { each: 0.03, from: "end" },
-    });
+    gsap.killTweensOf(menu);
     gsap.to(menu, {
-      autoAlpha: 0, y: -12, duration: 0.22, ease: "power2.in", delay: 0.07,
+      autoAlpha: 0, y: -12, duration: 0.22, ease: "power2.in",
       onComplete: () => setMenuOpen(false),
     });
   }, []);
@@ -37,18 +33,14 @@ export default function Nav() {
     if (!menu) return;
 
     if (menuOpen) {
-      gsap.killTweensOf([menu, Array.from(menu.children)]);
+      gsap.killTweensOf(menu);
       gsap.fromTo(menu,
-        { autoAlpha: 0, y: -18 },
-        { autoAlpha: 1, y: 0, duration: 0.36, ease: "power3.out" }
-      );
-      gsap.fromTo(Array.from(menu.children),
-        { autoAlpha: 0, y: 14 },
-        { autoAlpha: 1, y: 0, duration: 0.3, ease: "power3.out", stagger: 0.05, delay: 0.1 }
+        { autoAlpha: 0, y: -16 },
+        { autoAlpha: 1, y: 0, duration: 0.32, ease: "power3.out", force3D: true }
       );
     } else {
-      gsap.killTweensOf([menu, Array.from(menu.children)]);
-      gsap.set([menu, Array.from(menu.children)], { clearProps: "all" });
+      gsap.killTweensOf(menu);
+      gsap.set(menu, { clearProps: "all" });
     }
   }, [menuOpen]);
 
