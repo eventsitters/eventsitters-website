@@ -583,9 +583,10 @@ main {
   .events-tile:nth-child(2) { transform: rotate(1.2deg) translateY(12px); }
   .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 
-  /* Activities masonry + gallery: reset transforms when stacked */
+  /* Activities masonry, gallery + pricing add-ons: reset transforms when stacked */
   .services-masonry > .w-layout-cell,
-  .gallery > .w-layout-cell { transform: none; }
+  .gallery > .w-layout-cell,
+  .pricing-addon-grid > .w-layout-cell { transform: none; }
 }
 
 @media screen and (min-width: 530px) and (max-width: 767px) {
@@ -646,6 +647,14 @@ main {
 .services-masonry > .w-layout-cell:nth-child(4) { transform: rotate(1.4deg); }
 .services-masonry > .w-layout-cell:nth-child(5) { transform: rotate(-1.0deg); }
 .services-masonry > .w-layout-cell:nth-child(6) { transform: rotate(0.6deg); }
+
+/* Scattered cards effect — pricing add-ons (child 1 is the header, skip it) */
+.pricing-addon-grid > .w-layout-cell:nth-child(2) { transform: rotate(-1.1deg); }
+.pricing-addon-grid > .w-layout-cell:nth-child(3) { transform: rotate(0.9deg); }
+.pricing-addon-grid > .w-layout-cell:nth-child(4) { transform: rotate(-0.6deg); }
+.pricing-addon-grid > .w-layout-cell:nth-child(5) { transform: rotate(1.3deg); }
+.pricing-addon-grid > .w-layout-cell:nth-child(6) { transform: rotate(-0.8deg); }
+.pricing-addon-grid > .w-layout-cell:nth-child(7) { transform: rotate(0.5deg); }
 
 /* Scattered cards effect — gallery */
 .gallery > .w-layout-cell:nth-child(1) { transform: rotate(-1.1deg); }
