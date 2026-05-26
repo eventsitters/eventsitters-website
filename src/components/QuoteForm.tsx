@@ -50,6 +50,14 @@ export default function QuoteForm() {
   const [toastLeaving, setToastLeaving] = useState(false);
   const toastT1 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastT2 = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const goToStep = (n: number) => {
+    setStep(n);
+    requestAnimationFrame(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   const fireConfetti = () => {
     setShowConfetti(true);
@@ -110,7 +118,7 @@ export default function QuoteForm() {
       });
       if (res.ok) {
         setForm(defaultForm);
-        setStep(0);
+        goToStep(0);
         setStatus("idle");
         fireConfetti();
         triggerToast();
@@ -132,7 +140,7 @@ export default function QuoteForm() {
         Thank you! We&apos;ll get back to you soon.
       </div>
     )}
-    <div className="request-form-wrapper w-form">
+    <div ref={formRef} className="request-form-wrapper w-form">
       <form className="request-form" onSubmit={(e) => e.preventDefault()}>
 
         {/* Step 1 – Event details */}
@@ -235,7 +243,7 @@ export default function QuoteForm() {
               type="button"
               className="button in-form w-button"
               disabled={!form.eventType || !form.date || !form.duration || !form.location.trim()}
-              onClick={() => setStep(1)}
+              onClick={() => goToStep(1)}
             >
               Get Started
             </button>
@@ -287,8 +295,8 @@ export default function QuoteForm() {
             </div>
           </div>
           <div className="form-step-button-wrapper">
-            <button type="button" className="button in-form w-button" onClick={() => setStep(2)}>Next</button>
-            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => setStep(0)}>
+            <button type="button" className="button in-form w-button" onClick={() => goToStep(2)}>Next</button>
+            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => goToStep(0)}>
               <div className="form-back-button">Back</div>
             </button>
           </div>
@@ -323,7 +331,7 @@ export default function QuoteForm() {
             >
               {status === "submitting" ? "Please wait..." : "Submit"}
             </button>
-            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => setStep(1)}>
+            <button type="button" className="form-back-button-wrapper w-inline-block" onClick={() => goToStep(1)}>
               <div className="form-back-button">Back</div>
             </button>
           </div>
