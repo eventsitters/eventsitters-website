@@ -26,6 +26,12 @@ const SERVICES: ServiceData[] = [
       "We bring, set up and pack down everything",
       "Suitable for small and large groups of children",
     ],
+    perfectFor: [
+      "Garden weddings",
+      "Winery weddings",
+      "Family-focused weddings",
+      "Multi-generational celebrations",
+    ],
     galleryImages: [
       { src: "/images/private-events.webp",  alt: "Young boy concentrating on a dice game at a private event" },
       { src: "/images/p2060476.webp",         alt: "Child relaxing inside a cosy play tent with stuffed animals" },
@@ -53,6 +59,12 @@ const SERVICES: ServiceData[] = [
       "Christmas functions and staff celebrations",
       "Conferences and family-friendly business events",
     ],
+    perfectFor: [
+      "Conferences",
+      "Christmas functions",
+      "Staff family days",
+      "Community open days",
+    ],
     galleryImages: [
       { src: "/images/corporate-functions.webp", alt: "Smiling boy with art supplies at a work function" },
       { src: "/images/p2060335.webp",             alt: "Young boy building a tower with colourful wooden blocks" },
@@ -79,6 +91,12 @@ const SERVICES: ServiceData[] = [
       "All-day engagement for young visitors",
       "Rotating programme for repeat visitors",
       "Outdoor gazebo and weather-ready setup",
+    ],
+    perfectFor: [
+      "Markets",
+      "Festivals",
+      "School fairs",
+      "Community celebrations",
     ],
     galleryImages: [
       { src: "/images/public-events.webp",  alt: "Group of children doing holiday crafts at an outdoor event" },

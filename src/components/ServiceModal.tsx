@@ -13,6 +13,7 @@ export type ServiceData = {
   imageAlt: string;
   paragraphs: string[];
   highlights: string[];
+  perfectFor?: string[];
   galleryImages: Array<{ src: string; alt: string }>;
 };
 
@@ -91,13 +92,27 @@ export default function ServiceModal({ service, onClose }: Props) {
               </div>
             </div>
 
-            {service.highlights.length > 0 && (
-              <div className="service-modal-highlights">
-                <ul className="service-modal-highlights-list">
-                  {service.highlights.map((h, i) => (
-                    <li key={i}>{h}</li>
-                  ))}
-                </ul>
+            {(service.highlights.length > 0 || service.perfectFor?.length) && (
+              <div className="service-modal-sidebar">
+                {service.highlights.length > 0 && (
+                  <div className="service-modal-highlights">
+                    <ul className="service-modal-highlights-list">
+                      {service.highlights.map((h, i) => (
+                        <li key={i}>{h}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {service.perfectFor && service.perfectFor.length > 0 && (
+                  <div className="service-modal-highlights">
+                    <p className="service-modal-section-label">Perfect for</p>
+                    <ul className="service-modal-highlights-list">
+                      {service.perfectFor.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>

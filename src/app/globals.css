@@ -1058,22 +1058,34 @@ button.events-tile:focus-visible {
    SERVICE MODALS
    Rendered via React portal at document.body so z-index is in the root
    stacking context (above nav's z-index:100).
-   Desktop: near-full-width card, two-column content, gallery below.
-   Mobile: full viewport, card scrolls, sticky close bar stays at top.
+   Desktop: Stripe-style — backdrop scrolls, card extends to full content
+   height beyond the viewport. Close bar is sticky to the backdrop scroll.
+   Mobile: full viewport, card scrolls internally, sticky close bar at top.
    ════════════════════════════════════════════════════════════════════════════ */
 
-/* Backdrop */
+/* Backdrop — desktop: the scroll container. Fixed to viewport, scrollable
+   inside so the card can extend below the fold.
+   Background: mid-tone versions of the brand palette (pale colours are too
+   washed-out; these hex values sit halfway between each pale and dark pair). */
 .service-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: linear-gradient(
+    150deg,
+    rgba(253, 232, 168, 0.78) 0%,    /* warm yellow */
+    rgba(197, 216, 240, 0.78) 30%,   /* sky blue */
+    rgba(191, 229, 220, 0.78) 58%,   /* turquoise */
+    rgba(216, 204, 237, 0.78) 82%,   /* lavender */
+    rgba(249, 208, 216, 0.78) 100%   /* soft pink */
+  );
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   z-index: 1050;
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* card anchors at top, not centred */
   justify-content: center;
-  padding: 1.5em;
+  padding: 2.5em 1.5em 6em;  /* generous bottom so card end breathes */
+  overflow-y: auto;           /* backdrop scrolls — not the card body */
   animation: modal-backdrop-in 0.2s ease both;
 }
 
@@ -1082,14 +1094,18 @@ button.events-tile:focus-visible {
   to   { opacity: 1; }
 }
 
-/* Card — near-full viewport width, matching the site container */
+/* Card — grows to its full content height; backdrop handles scrolling.
+   overflow:clip clips border-radius corners WITHOUT creating a scroll
+   container, which is essential — if the card were a scroll container,
+   position:sticky on the close-bar would be relative to the card instead
+   of the backdrop, breaking the sticky behaviour. */
 .service-modal-card {
   width: 100%;
   max-width: min(1280px, calc(100vw - 3rem));
-  max-height: 88vh;
+  /* No max-height — card extends as tall as its content */
   border-radius: 20px;
   background: #fff;
-  overflow: hidden;
+  overflow: clip;  /* clips corners, does NOT create a scroll container */
   display: flex;
   flex-direction: column;
   animation: modal-card-in 0.42s cubic-bezier(0.34, 1.3, 0.64, 1) both;
@@ -1100,21 +1116,26 @@ button.events-tile:focus-visible {
   to   { opacity: 1; transform: translateY(0)    scale(1);    }
 }
 
-/* Close bar — thin strip at top; stays above the scrollable body */
+/* Close bar — fixed to the viewport on desktop so the ✕ is always reachable
+   regardless of how far the card extends. Removed from card flow entirely
+   (position:fixed) so it floats in the top-right of the backdrop. */
 .service-modal-close-bar {
-  flex-shrink: 0;
+  position: fixed;
+  top: 1.1em;
+  right: 1.4em;
+  z-index: 1052;   /* above backdrop (1050) and card */
   display: flex;
   justify-content: flex-end;
-  padding: 0.9em 1.1em 0.4em;
-  background: #fff;
+  padding: 0;
+  background: transparent;
 }
 
-/* Close button */
+/* Close button — white circle so it reads clearly against the coloured backdrop */
 .service-modal-close {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--pale-blue);
+  background: rgba(255, 255, 255, 0.92);
   border: none;
   padding: 0;
   display: flex;
@@ -1126,16 +1147,16 @@ button.events-tile:focus-visible {
   appearance: none;
   font: inherit;
   transition: background-color 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .service-modal-close:hover {
-  background: #c8d7f0;
+  background: #fff;
   transform: scale(1.1) rotate(90deg);
 }
 
-/* Scrollable body */
+/* Body — no internal scroll on desktop; backdrop is the scroll container */
 .service-modal-body {
-  flex: 1;
-  overflow-y: auto;
+  overflow-y: visible;
   padding: 2em 3.5em 3.25em;
   display: flex;
   flex-direction: column;
@@ -1163,11 +1184,28 @@ button.events-tile:focus-visible {
   margin-top: 1em;
 }
 
-/* Right column: colored highlights box */
+/* Right column: sidebar wraps both highlight boxes */
+.service-modal-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 0.25em;
+}
+
+/* Colored highlight boxes */
 .service-modal-highlights {
   padding: 1.75em;
   border-radius: 16px;
-  margin-top: 0.25em;
+}
+
+/* "Perfect for" label above the second checklist */
+.service-modal-section-label {
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.85em;
+  opacity: 0.65;
 }
 .service-modal-card.pale-yellow    .service-modal-highlights { background-color: var(--pale-yellow);    color: var(--dark-yellow); }
 .service-modal-card.pale-turquoise .service-modal-highlights { background-color: var(--pale-turquoise); color: var(--dark-green);  }
@@ -1209,27 +1247,59 @@ button.events-tile:focus-visible {
   overflow: hidden;
 }
 
+/* ── Desktop: restore top padding lost when close bar left normal flow ──
+   The original in-flow close bar added ~3.5em of space (0.9em padding-top +
+   36px button + 0.4em padding-bottom) before the body content. */
+@media screen and (min-width: 992px) {
+  .service-modal-body { padding-top: 3.5em; }
+}
+
 /* ── Tablet: keep side-by-side but tighten padding ── */
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .service-modal-body  { padding: 1.75em 2.5em 2.75em; gap: 2.5em; }
   .service-modal-top   { grid-template-columns: 3fr 2fr; column-gap: 2.5em; }
 }
 
-/* ── Mobile: full-screen modal, single-column ── */
+/* ── Mobile: full-screen modal, internal scroll ── */
 @media screen and (max-width: 767px) {
+  /* Backdrop: no scroll — card fills viewport and scrolls internally */
   .service-modal-backdrop {
     padding: 0;
     align-items: stretch;
+    overflow-y: hidden;
   }
 
+  /* Card: fixed to full viewport height, internal overflow */
   .service-modal-card {
     max-width: 100%;
     max-height: 100dvh;
     height: 100dvh;
     border-radius: 0;
+    overflow: hidden; /* restore so body can scroll internally */
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Close bar: back in normal card flow, white bar at top */
+  .service-modal-close-bar {
+    position: static;
+    border-radius: 0;
+    background: #fff;
+    padding: 0.9em 1.1em 0.4em;
+  }
+
+  /* Close button: restore to pale-blue on white bar */
+  .service-modal-close {
+    width: 36px;
+    height: 36px;
+    background: var(--pale-blue);
+    box-shadow: none;
+  }
+
+  /* Body: fills remaining height, scrolls internally */
   .service-modal-body {
+    flex: 1;
+    overflow-y: auto;
     padding: 1em 1em 2.5em;
     gap: 2em;
   }
