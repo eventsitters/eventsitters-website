@@ -1251,7 +1251,7 @@ button.events-tile:focus-visible {
    The original in-flow close bar added ~3.5em of space (0.9em padding-top +
    36px button + 0.4em padding-bottom) before the body content. */
 @media screen and (min-width: 992px) {
-  .service-modal-body { padding-top: 3.5em; }
+  .service-modal-body { padding-top: 5.25em; }
 }
 
 /* ── Tablet: keep side-by-side but tighten padding ── */
