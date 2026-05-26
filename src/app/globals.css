@@ -1548,7 +1548,7 @@ button.addon-card .paragraph-wrapper-tile.pricing {
   .addon-modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 1.5em 1.25em 3em;
+    padding: 1.5em 1.25em max(3em, env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -1651,10 +1651,15 @@ button.addon-card .paragraph-wrapper-tile.pricing {
     border-radius: 0;
     box-shadow: none;
   }
+  /* Push close button below the status bar / notch */
+  .activity-modal-close-bar {
+    top: calc(0.75em + env(safe-area-inset-top, 0px));
+    right: calc(0.75em + env(safe-area-inset-right, 0px));
+  }
   .activity-modal-body {
     flex: 1;         /* fill card height on mobile so scroll works */
     overflow-y: auto;
-    padding: 4em 1.25em 3em;
+    padding: 4em 1.25em max(3em, env(safe-area-inset-bottom, 0px));
     gap: 1.5em;
   }
   .activity-modal-gallery {

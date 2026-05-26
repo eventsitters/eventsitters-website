@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RainbowAnimation from "@/components/RainbowAnimation";
@@ -28,6 +28,10 @@ export const metadata: Metadata = {
   verification: {
     google: "9YUzcZSn9XgTPH0SlPxpaP8SnlgOjE-xx9oCgpYeJ2M",
   },
+};
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
 };
 
 const localBusinessSchema = {
