@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useModalHeight } from "./useModalHeight";
 
 export type ActivityData = {
   id: string;
@@ -22,6 +23,8 @@ type Props = {
 };
 
 export default function ActivityModal({ activity, onClose }: Props) {
+  useModalHeight(!!activity);
+
   useEffect(() => {
     if (!activity) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };

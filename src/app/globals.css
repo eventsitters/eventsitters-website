@@ -1646,8 +1646,8 @@ button.addon-card .paragraph-wrapper-tile.pricing {
   }
   .activity-modal-card {
     max-width: 100%;
-    max-height: 100dvh;
-    height: 100dvh;
+    max-height: var(--modal-height, 100dvh);
+    height: var(--modal-height, 100dvh);
     border-radius: 0;
     box-shadow: none;
   }

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useModalHeight } from "./useModalHeight";
 
 export type AddonData = {
   id: string;
@@ -20,6 +21,8 @@ type Props = {
 };
 
 export default function AddonModal({ addon, onClose }: Props) {
+  useModalHeight(!!addon);
+
   useEffect(() => {
     if (!addon) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
