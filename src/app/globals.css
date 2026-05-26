@@ -784,8 +784,16 @@ main {
   color: #fff;
 }
 
+/* Get in Touch button fills when hovering the special rates card */
+.festivals-markets.pale-blue:hover .festivals-quote-btn {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  color: #fff;
+}
+
 @media screen and (max-width: 767px) {
-  .pricing-quote-btn {
+  .pricing-quote-btn,
+  .festivals-quote-btn {
     font-size: 0.85em;
     padding: 0.7em 1.1em;
   }

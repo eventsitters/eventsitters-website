@@ -151,7 +151,7 @@ export default function Packages() {
               <h3 className="super-heading all-caps">Special Rates</h3>
               <h2 className="headline-medium">Festivals, Markets, and Fairs</h2>
               <p className="p-medium">Running a festival, market, or fair? We&apos;re at home in bigger, busier settings and offer flexible rates to match. Get in touch and we&apos;ll work out what fits.</p>
-              <Link href="mailto:info@eventsitters.nz?subject=Special%20Rates%20Request" className="button outline pale-blue w-button">Get in Touch</Link>
+              <Link href="mailto:info@eventsitters.nz?subject=Special%20Rates%20Request" className="button outline pale-blue w-button festivals-quote-btn">Get in Touch</Link>
             </div>
           </div>
           <div className="confetti-festivals-markets-blue" />
