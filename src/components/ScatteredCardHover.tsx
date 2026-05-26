@@ -9,14 +9,21 @@ type CardConfig = {
   baseRot: number;
   hoverRot: number;
   baseY?: number;
-  hoverY?: number; // if set, move to this Y on hover (lift = hoverY < baseY)
+  hoverY?: number;   // Y on hover (lift = hoverY < baseY)
+  baseScale?: number;
+  hoverScale?: number;
 };
 
 const CARDS: CardConfig[] = [
-  // Homepage — service event tiles: straighten to 0° + lift on hover
-  { selector: ".events-tile:nth-child(1)", baseRot: -1.8, hoverRot: 0, baseY:  12, hoverY:  2 },
-  { selector: ".events-tile:nth-child(2)", baseRot:  1.2, hoverRot: 0, baseY:  -8, hoverY: -18 },
-  { selector: ".events-tile:nth-child(3)", baseRot: -0.7, hoverRot: 0, baseY:  16, hoverY:  6 },
+  // Homepage — service event tiles: straighten + scale pop.
+  // NOTE: hoverY intentionally equals baseY (no Y movement during hover).
+  // Combining rotation-to-zero with a Y translation creates a compound
+  // transform that makes the card appear to pivot from a corner rather than
+  // its center. Keeping Y fixed means the only visible motion is rotation +
+  // scale, which cleanly pivots around the card's center.
+  { selector: ".events-tile:nth-child(1)", baseRot: -1.8, hoverRot: 0, baseY:  12, hoverY:  12, hoverScale: 1.035 },
+  { selector: ".events-tile:nth-child(2)", baseRot:  1.2, hoverRot: 0, baseY:  -8, hoverY:  -8, hoverScale: 1.035 },
+  { selector: ".events-tile:nth-child(3)", baseRot: -0.7, hoverRot: 0, baseY:  16, hoverY:  16, hoverScale: 1.035 },
   // Homepage — activities masonry
   { selector: ".services-masonry > .w-layout-cell:nth-child(1)", baseRot: -1.2, hoverRot: -1.8 },
   { selector: ".services-masonry > .w-layout-cell:nth-child(2)", baseRot:  0.8, hoverRot:  1.4 },
@@ -49,10 +56,6 @@ const CARDS: CardConfig[] = [
   { selector: ".about-offer-grid > .w-layout-cell:nth-child(3)", baseRot:  0.8, hoverRot:  1.4, baseY: -18 },
   { selector: ".about-offer-grid > .w-layout-cell:nth-child(4)", baseRot: -0.6, hoverRot: -1.2, baseY:  28 },
   { selector: ".about-offer-grid > .w-layout-cell:nth-child(5)", baseRot:  0.7, hoverRot:  1.3, baseY: -12 },
-  // Services page — service type cards: straighten to 0° on hover
-  { selector: "#private-functions .service-card", baseRot: -1.2, hoverRot: 0 },
-  { selector: "#corporate-events .service-card",  baseRot:  1.0, hoverRot: 0 },
-  { selector: "#public-events .service-card",     baseRot: -0.8, hoverRot: 0 },
 ];
 
 export default function ScatteredCardHover() {
@@ -63,22 +66,44 @@ export default function ScatteredCardHover() {
 
     const cleanups: Array<() => void> = [];
 
-    for (const { selector, baseRot, hoverRot, baseY = 0, hoverY } of CARDS) {
+    for (const { selector, baseRot, hoverRot, baseY = 0, hoverY, baseScale = 1, hoverScale } of CARDS) {
       document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
-        gsap.set(el, { rotation: baseRot, y: baseY });
+        gsap.set(el, { transformOrigin: "50% 50%", rotation: baseRot, y: baseY, scale: baseScale });
+
+        // Is this an event tile? Gives it its own more playful treatment.
+        const isEventTile = el.classList.contains("events-tile");
 
         const onEnter = () => {
           gsap.killTweensOf(el);
-          gsap.to(el, {
-            rotation: hoverRot,
-            y: hoverY !== undefined ? hoverY : baseY,
-            duration: 0.55,
-            ease: "back.out(1.4)",
-          });
+          if (isEventTile) {
+            // Gentle spring: lower amplitude + looser period = one smooth overshoot
+            gsap.to(el, {
+              rotation: hoverRot,
+              y: hoverY !== undefined ? hoverY : baseY,
+              scale: hoverScale ?? 1,
+              duration: 0.6,
+              ease: "elastic.out(0.7, 0.55)",
+            });
+          } else {
+            gsap.to(el, {
+              rotation: hoverRot,
+              y: hoverY !== undefined ? hoverY : baseY,
+              scale: hoverScale ?? 1,
+              duration: 0.55,
+              ease: "back.out(1.4)",
+            });
+          }
         };
+
         const onLeave = () => {
           gsap.killTweensOf(el);
-          gsap.to(el, { rotation: baseRot, y: baseY, duration: 0.45, ease: "power3.out" });
+          gsap.to(el, {
+            rotation: baseRot,
+            y: baseY,
+            scale: baseScale,
+            duration: isEventTile ? 0.5 : 0.45,
+            ease: "power3.out",
+          });
         };
 
         el.addEventListener("mouseenter", onEnter);

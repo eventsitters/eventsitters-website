@@ -67,7 +67,7 @@ export default function Nav() {
         </Link>
 
         <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
-          {navLink("/services", "Services")}
+          <Link href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</Link>
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Pricing")}
 

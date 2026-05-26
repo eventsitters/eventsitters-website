@@ -23,6 +23,9 @@
    causing horizontal scroll on mobile. */
 html, body { overflow-x: hidden; }
 
+/* Smooth scroll for all on-page anchor navigation */
+html { scroll-behavior: smooth; }
+
 /* ─── Sticky footer reveal ────────────────────────────────────────────────────
    Footer is pinned to the bottom of the viewport (z-index 0). .page-content
    sits above it (z-index 1) with an opaque white background so sections
@@ -348,6 +351,11 @@ main {
   pointer-events: none;
 }
 
+/* Nav z-index: eventsitters.css sets .w-nav to z-index:1000. The modal portal
+   renders at body level with z-index:1050, which must beat the nav. Bring the
+   nav down to 100 so the 1050 modal always layers correctly. */
+.nav-bar { z-index: 100 !important; }
+
 /* Nav logo link.
    position:relative is required so the mobile media query z-index:1000 takes effect.
    No z-index on desktop — giving the logo its own stacking context (z-index+position)
@@ -436,6 +444,18 @@ main {
 }
 .about-offer-grid > .w-layout-cell:last-child {
   margin-top: 2em;
+}
+
+/* Desktop: halve the gap between the intro paragraph and the first row of cards.
+   eventsitters.css sets grid-row-gap:3.5em + we add padding-bottom:2.5em = 6em total.
+   Targeting ≥992px only so tablet/mobile overrides are unaffected. */
+@media screen and (min-width: 992px) {
+  .about-offer-grid {
+    row-gap: 1.75em;
+  }
+  .about-offer-grid > .w-layout-cell:first-child {
+    padding-bottom: 1.25em;
+  }
 }
 
 /* Offer cards (Experience / Quality / Flexibility) — card-like with colored bg */
@@ -663,8 +683,16 @@ main {
   /* Contact: single column; reduce gap between CTA block and quote form by 30% */
   .contact-wrapper { grid-template-columns: 1fr; row-gap: 4.2em; }
 
-  /* Services section: restore top padding on mobile */
-  .container.services { padding-top: 2.5em; }
+  /* Services section: keep grid display but force single column with auto row
+     heights so each card wraps its own content and gaps are even. */
+  .container.services {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+    grid-auto-rows: auto;
+    align-items: start;
+    row-gap: 2em;
+    padding-top: 2.5em;
+  }
 
   /* Scattered cards: rotations only on mobile — no translateY so stacked cards
      sit naturally one after another without overlap or uneven gaps. */
@@ -904,20 +932,36 @@ main {
   animation: toast-out 0.45s ease-in both;
 }
 
-/* ─── Clickable event tiles: link reset ─── */
+/* ─── Clickable event tiles: link + button reset ─── */
+a.events-tile,
+button.events-tile {
+  color: inherit;
+  /* Keep display:flex from eventsitters.css (gap + flex-direction:column).
+     GSAP owns the transform entirely — no CSS transition needed. */
+  transition: none !important;
+}
 a.events-tile {
   text-decoration: none;
-  color: inherit;
-  display: block;
-  /* GSAP owns the transform; only CSS-transition the shadow */
-  transition: box-shadow 0.35s ease !important;
 }
-
-/* Lifted shadow on hover — soft two-layer approach */
-a.events-tile:hover {
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.04),
-    0 8px 22px rgba(0, 0, 0, 0.07);
+/* Button-specific resets.
+   Specificity note: button.events-tile = (0,1,1).
+   .events-tile alone = (0,1,0) — so any property set here WINS over the
+   base .events-tile rule. Only set properties that need to beat .events-tile.
+   DO NOT set padding, margin, or background here — those come from the
+   higher-specificity .events-tile.pale-* (0,2,0) and .events-tile (0,1,0)
+   rules in eventsitters.css, and UA styles are always beaten by author rules. */
+button.events-tile {
+  -webkit-appearance: none;
+  appearance: none;
+  /* border: none here (0,1,1) is overridden by .events-tile.pale-* (0,2,0) → colored border applies */
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+button.events-tile:focus-visible {
+  outline: 2px solid var(--dark-blue);
+  outline-offset: 3px;
 }
 
 /* Services page activities section header spacing */
@@ -1008,4 +1052,195 @@ a.events-tile:hover {
 @media screen and (max-width: 479px) {
   .service-card-content { padding: 1.75em 2em 2.25em; }
   .service-card-visual  { min-height: 220px; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SERVICE MODALS
+   Rendered via React portal at document.body so z-index is in the root
+   stacking context (above nav's z-index:100).
+   Desktop: near-full-width card, two-column content, gallery below.
+   Mobile: full viewport, card scrolls, sticky close bar stays at top.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* Backdrop */
+.service-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em;
+  animation: modal-backdrop-in 0.2s ease both;
+}
+
+@keyframes modal-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Card — near-full viewport width, matching the site container */
+.service-modal-card {
+  width: 100%;
+  max-width: min(1280px, calc(100vw - 3rem));
+  max-height: 88vh;
+  border-radius: 20px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modal-card-in 0.42s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+@keyframes modal-card-in {
+  from { opacity: 0; transform: translateY(32px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* Close bar — thin strip at top; stays above the scrollable body */
+.service-modal-close-bar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.9em 1.1em 0.4em;
+  background: #fff;
+}
+
+/* Close button */
+.service-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--pale-blue);
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--dark-blue);
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.service-modal-close:hover {
+  background: #c8d7f0;
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Scrollable body */
+.service-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2em 3.5em 3.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+}
+
+/* Top section: two-column grid */
+.service-modal-top {
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  column-gap: 3.5em;
+  align-items: start;
+}
+
+/* Left column: heading + paragraphs + CTA */
+.service-modal-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.service-modal-main .headline-medium {
+  margin-bottom: 0.1em;
+}
+.service-modal-cta {
+  margin-top: 1em;
+}
+
+/* Right column: colored highlights box */
+.service-modal-highlights {
+  padding: 1.75em;
+  border-radius: 16px;
+  margin-top: 0.25em;
+}
+.service-modal-card.pale-yellow    .service-modal-highlights { background-color: var(--pale-yellow);    color: var(--dark-yellow); }
+.service-modal-card.pale-turquoise .service-modal-highlights { background-color: var(--pale-turquoise); color: var(--dark-green);  }
+.service-modal-card.pale-purple    .service-modal-highlights { background-color: var(--pale-purple);    color: var(--dark-purple); }
+
+.service-modal-highlights-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+.service-modal-highlights-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  font-size: 0.92em;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.service-modal-highlights-list li::before {
+  content: "✓";
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.05em;
+}
+
+/* Gallery: three equal-width images */
+.service-modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85em;
+}
+.service-modal-gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Tablet: keep side-by-side but tighten padding ── */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .service-modal-body  { padding: 1.75em 2.5em 2.75em; gap: 2.5em; }
+  .service-modal-top   { grid-template-columns: 3fr 2fr; column-gap: 2.5em; }
+}
+
+/* ── Mobile: full-screen modal, single-column ── */
+@media screen and (max-width: 767px) {
+  .service-modal-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .service-modal-card {
+    max-width: 100%;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .service-modal-body {
+    padding: 1em 1em 2.5em;
+    gap: 2em;
+  }
+
+  .service-modal-top {
+    grid-template-columns: 1fr;
+    row-gap: 1.5em;
+  }
+
+  .service-modal-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5em;
+  }
 }
