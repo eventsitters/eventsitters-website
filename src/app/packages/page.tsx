@@ -4,6 +4,7 @@ import Link from "next/link";
 import QuoteForm from "@/components/QuoteForm";
 import FAQ from "@/components/FAQ";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
+import AddonCards from "@/components/AddonCards";
 
 export const metadata: Metadata = {
   title: "Kids' Entertainment Packages",
@@ -35,50 +36,6 @@ const included = [
   "Experienced team on hand to keep things fun and running smoothly",
 ];
 
-const addons = [
-  {
-    img: "/images/all-day-package.webp",
-    alt: "A cute play tent with plush toys set up at an event",
-    title: "All-Day Package",
-    desc: "More hours, more fun. Ideal for longer events where the energy needs to stay high all day.",
-    color: "pale-yellow",
-  },
-  {
-    img: "/images/larger-groups.webp",
-    alt: "Children sitting on grass in an outdoor setting, engaged in drawing and crafting activities.",
-    title: "Larger Groups",
-    desc: "More kids, no problem. Extra staff and scaled-up activities so no one gets left out.",
-    color: "pale-turquoise",
-  },
-  {
-    img: "/images/outdoor-set-up.webp",
-    alt: "Outdoor craft setup under a white canopy, featuring tables with art supplies in a lush garden environment.",
-    title: "Outdoor Set-Up",
-    desc: "A solid, weather-proof gazebo so the forecast doesn't become your problem.",
-    color: "pale-blue",
-  },
-  {
-    img: "/images/themed-decor-crafts.webp",
-    alt: "Child colouring a detailed craft design with bright pencils, focusing on fine artistic work.",
-    title: "Themed Decor & Crafts",
-    desc: "Decorations and crafts tailored to your event's theme. A small detail that makes a big difference.",
-    color: "pale-purple",
-  },
-  {
-    img: "/images/gift-bags.webp",
-    alt: "Smiling child in a yellow dress holding a gift bag at a party with pastel decorations in the background.",
-    title: "Gift Bags",
-    desc: "Something to take home. Goodies and keepsakes tied to what the kids made or did on the day.",
-    color: "pale-pink",
-  },
-  {
-    img: "/images/face-painting.webp",
-    alt: "Child's face being painted with vibrant colours, highlighting intricate details on the nose.",
-    title: "Face Painting",
-    desc: "Always a crowd-pleaser. Kids pick their look, we do the rest. Usually offered in a dedicated window, not the full duration.",
-    color: "pale-red",
-  },
-];
 
 const process = [
   { num: "01", title: "Consultation", desc: "We chat about your event: the space, the kids attending, and what you have in mind." },
@@ -159,17 +116,7 @@ export default function Packages() {
                 <p className="p-medium">The most popular extras, but we&apos;re always open to ideas. If you can dream it, we can probably make it happen.</p>
               </div>
             </div>
-            {addons.map((a) => (
-              <div key={a.title} className="w-layout-cell">
-                <div className={`addon-card ${a.color}`}>
-                  <Image src={a.img} alt={a.alt} className="add-ons-thumbnail" width={716} height={400} />
-                  <div className="paragraph-wrapper-tile pricing">
-                    <h3 className="headline-small">{a.title}</h3>
-                    <p className="p-small">{a.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <AddonCards />
           </div>
         </div>
       </section>
@@ -214,6 +161,15 @@ export default function Packages() {
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eventsitters.nz" },
+          { "@type": "ListItem", "position": 2, "name": "Packages", "item": "https://www.eventsitters.nz/packages" },
+        ],
+      }) }} />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
           { "@type": "Question", "name": "Can I customise the package for my event?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The base package is a starting point, not a fixed formula. We can swap activities, adjust the setup, and layer in extras to suit your event, your venue, and the kids attending." } },
@@ -228,8 +184,8 @@ export default function Packages() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "Kids' Entertainment — Base Package",
-        "provider": { "@type": "LocalBusiness", "name": "Event Sitters", "url": "https://www.eventsitters.nz" },
+        "name": "Kids' Entertainment: Base Package",
+        "provider": { "@type": "EntertainmentBusiness", "name": "Event Sitters", "url": "https://www.eventsitters.nz" },
         "areaServed": "Hawke's Bay, New Zealand",
         "description": "Four hours of on-location kids' entertainment including a decorated play space, hands-on activities, and experienced staff. Suitable for children aged 3–12 at weddings, corporate functions, birthday parties, and public events.",
         "offers": {
@@ -238,7 +194,6 @@ export default function Packages() {
           "priceSpecification": {
             "@type": "PriceSpecification",
             "minPrice": "300",
-            "maxPrice": "600",
             "priceCurrency": "NZD",
           },
         },

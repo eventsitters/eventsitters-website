@@ -12,13 +12,27 @@ const parallaxEls: ElConfig[] = [
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Ready to book kids' entertainment for your event? Get in touch with Event Sitters — we'll get back to you quickly.",
+  description: "Ready to book kids' entertainment for your event? Get in touch with Event Sitters. We'll get back to you quickly.",
   alternates: { canonical: "https://www.eventsitters.nz/contact-us" },
 };
 
 export default function ContactUs() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contact Event Sitters",
+        "url": "https://www.eventsitters.nz/contact-us",
+        "description": "Get in touch with Event Sitters to book kids' entertainment for your event in Hawke's Bay. Call, email, or send a quote request.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eventsitters.nz" },
+            { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://www.eventsitters.nz/contact-us" },
+          ],
+        },
+      }) }} />
       <ConfettiParallax els={parallaxEls} />
       <section className="section">
         <div className="container contact">
@@ -27,7 +41,7 @@ export default function ContactUs() {
               <div className="contact-address-wrapper">
                 <div className="contact-headline-wrapper">
                   <h1 className="headline-medium footer">Let&apos;s talk.</h1>
-                  <div className="p-medium">Have a question, or ready to lock in your date? Give us a call or send a message — we&apos;ll get back to you quickly.</div>
+                  <div className="p-medium">Have a question, or ready to lock in your date? Give us a call or send a message. We&apos;ll get back to you quickly.</div>
                 </div>
                 <div className="contact-cta-wrapper">
                   <a href="tel:+642108279718" className="button static w-button">Give Us a Call</a>

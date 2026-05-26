@@ -706,6 +706,9 @@ main {
   .pricing-addon-grid > .w-layout-cell,
   .about-offer-grid > .w-layout-cell { padding-block: 0; }
 
+  /* Quote request section: reduce top padding by 50% vs desktop (8em → 4em) */
+  .container.form { padding-top: 4em; }
+
   /* Quote form headline: 10% more line-height on mobile (default normal ≈ 1.2) */
   .headline-medium.copy-text.quote-form { line-height: 1.32; }
 }
@@ -886,17 +889,104 @@ main {
   background-image: none !important;
 }
 
+/* Gallery lightbox trigger — reset button styles, hint clickability */
+button.gallery-lightbox-trigger {
+  border: none;
+  padding: 0;
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: zoom-in;
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 0;
+  transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1), filter 0.35s ease;
+}
+
+button.gallery-lightbox-trigger:hover {
+  filter: brightness(1.06);
+}
+
+/* ── Gallery Lightbox ──────────────────────────────────────────────────────── */
+@keyframes lightbox-in {
+  0%   { transform: rotate(var(--lightbox-rot, 0deg)) translateY(20px) scale(0.95); opacity: 0; }
+  60%  { opacity: 1; }
+  75%  { transform: rotate(var(--lightbox-rot, 0deg)) translateY(-4px) scale(1.01); }
+  100% { transform: rotate(var(--lightbox-rot, 0deg)) translateY(0) scale(1); }
+}
+
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    150deg,
+    rgba(253, 232, 168, 0.52) 0%,
+    rgba(197, 216, 240, 0.52) 30%,
+    rgba(191, 229, 220, 0.52) 58%,
+    rgba(216, 204, 237, 0.52) 82%,
+    rgba(249, 208, 216, 0.52) 100%
+  );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  cursor: zoom-out;
+  animation: modal-backdrop-in 0.18s ease both;
+}
+
+.lightbox-image-wrap {
+  max-width: min(94vw, 1280px);
+  cursor: default;
+  animation: lightbox-in 0.36s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 1;
+}
+
+.lightbox-image-wrap img {
+  display: block;
+  max-height: calc(100dvh - 4em);
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.1em;
+  right: 1.4em;
+  z-index: 1101;
+}
+
+@media screen and (max-width: 767px) {
+  .lightbox-backdrop { padding: 1.25em; }
+  .lightbox-image-wrap { max-width: 100%; }
+}
+
 /* Nav active link: restore hover colour — .w--current has same specificity as :hover
    but comes later in eventsitters.css, so it wins and suppresses the red hover state. */
 .nav-item.w--current:hover { color: var(--red); }
 
-/* Remove hover effect from service cards */
+/* Service tiles: suppress CSS transition (GSAP handles animation),
+   neutralise the eventsitters.css border on hover, use outline instead. */
 .events-tile.pale-yellow,
 .events-tile.pale-turquoise,
 .events-tile.pale-purple { transition: none; }
+
 .events-tile.pale-yellow:hover    { border-style: solid; border-color: var(--pale-yellow); }
 .events-tile.pale-turquoise:hover { border-style: solid; border-color: var(--pale-turquoise); }
 .events-tile.pale-purple:hover    { border-style: solid; border-color: var(--pale-purple); }
+
+.events-tile {
+  outline: 1.5px dashed transparent;
+  outline-offset: -1.5px;
+  transition: outline-color 0.2s ease;
+}
+.events-tile.pale-yellow:hover    { outline-color: var(--dark-yellow); }
+.events-tile.pale-turquoise:hover { outline-color: var(--dark-green);  }
+.events-tile.pale-purple:hover    { outline-color: var(--dark-purple); }
 
 /* ─── Toast notification ────────────────────────────────────────────────────── */
 @keyframes toast-in {
@@ -1072,14 +1162,14 @@ button.events-tile:focus-visible {
   inset: 0;
   background: linear-gradient(
     150deg,
-    rgba(253, 232, 168, 0.78) 0%,    /* warm yellow */
-    rgba(197, 216, 240, 0.78) 30%,   /* sky blue */
-    rgba(191, 229, 220, 0.78) 58%,   /* turquoise */
-    rgba(216, 204, 237, 0.78) 82%,   /* lavender */
-    rgba(249, 208, 216, 0.78) 100%   /* soft pink */
+    rgba(253, 232, 168, 0.52) 0%,    /* warm yellow */
+    rgba(197, 216, 240, 0.52) 30%,   /* sky blue */
+    rgba(191, 229, 220, 0.52) 58%,   /* turquoise */
+    rgba(216, 204, 237, 0.52) 82%,   /* lavender */
+    rgba(249, 208, 216, 0.52) 100%   /* soft pink */
   );
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 1050;
   display: flex;
   align-items: flex-start;   /* card anchors at top, not centred */
@@ -1251,7 +1341,7 @@ button.events-tile:focus-visible {
    The original in-flow close bar added ~3.5em of space (0.9em padding-top +
    36px button + 0.4em padding-bottom) before the body content. */
 @media screen and (min-width: 992px) {
-  .service-modal-body { padding-top: 5.25em; }
+  .service-modal-body { padding-top: 5em; }
 }
 
 /* ── Tablet: keep side-by-side but tighten padding ── */
@@ -1314,3 +1404,314 @@ button.events-tile:focus-visible {
     gap: 0.5em;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Activity modal
+   Compact centered dialog — white card, no checklist, no CTA.
+   Desktop: centered in viewport (both axes), max-height with internal scroll.
+   Mobile: full viewport, internal scroll.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* Button reset for activity tiles (services-tile used as <button>).
+   Only strip what browsers add to <button> — let eventsitters.css handle
+   display, flex, padding, width, and all visual properties.
+   NOTE: do NOT set background here — .pale-* classes apply the colour, and
+   specificity (0,1,1) on button.services-tile would override (0,1,0) on .pale-*. */
+button.services-tile {
+  border: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left; /* override browser button default (center) */
+  padding-bottom: 2em; /* match left padding so text sits at true bottom-left corner */
+  justify-content: flex-end; /* belt-and-suspenders: content always pinned to bottom */
+}
+
+/* Activity tiles: dashed outline on hover, themed to each tile colour.
+   outline sits exactly on the card edge, follows border-radius, no layout shift. */
+button.services-tile {
+  outline: 1.5px dashed transparent;
+  outline-offset: -1.5px;
+  transition: outline-color 0.2s ease;
+}
+button.services-tile.pale-red:hover       { outline-color: var(--dark-red);    }
+button.services-tile.pale-purple:hover    { outline-color: var(--dark-purple); }
+button.services-tile.pale-turquoise:hover { outline-color: var(--dark-green);  }
+button.services-tile.pale-blue:hover      { outline-color: var(--dark-blue);   }
+button.services-tile.pale-yellow:hover    { outline-color: var(--dark-yellow); }
+button.services-tile.pale-pink:hover      { outline-color: var(--dark-pink);   }
+button.services-tile:focus { outline: none; }
+button.services-tile:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
+
+/* Addon card — button reset + same dashed-outline hover as activity tiles */
+button.addon-card {
+  border: none;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  outline: 1.5px dashed transparent;
+  outline-offset: -1.5px;
+  transition: outline-color 0.2s ease;
+}
+button.addon-card.pale-yellow:hover    { outline-color: var(--dark-yellow); }
+button.addon-card.pale-turquoise:hover { outline-color: var(--dark-green);  }
+button.addon-card.pale-blue:hover      { outline-color: var(--dark-blue);   }
+button.addon-card.pale-purple:hover    { outline-color: var(--dark-purple); }
+button.addon-card.pale-pink:hover      { outline-color: var(--dark-pink);   }
+button.addon-card.pale-red:hover       { outline-color: var(--dark-red);    }
+button.addon-card:focus { outline: none; }
+button.addon-card:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
+
+/* Paragraph wrapper stretches to fill remaining card height so margin-top: auto works */
+button.addon-card .paragraph-wrapper-tile.pricing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+/* Always-visible CTA pill — same style as activity-tile-cta but no animation */
+.addon-card-cta {
+  display: inline-block;
+  margin-top: auto;   /* pushes to bottom; gap above guarantees minimum spacing */
+  padding: 0.35em 0.9em;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+  font-size: 0.8em;
+  font-weight: 600;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+/* Hover: fill the pill with the card's theme colour, text flips to the pale background */
+button.addon-card.pale-yellow:hover    .addon-card-cta { background-color: var(--dark-yellow);  color: var(--pale-yellow);    }
+button.addon-card.pale-turquoise:hover .addon-card-cta { background-color: var(--dark-green);   color: var(--pale-turquoise); }
+button.addon-card.pale-blue:hover      .addon-card-cta { background-color: var(--dark-blue);    color: var(--pale-blue);      }
+button.addon-card.pale-purple:hover    .addon-card-cta { background-color: var(--dark-purple);  color: var(--pale-purple);    }
+button.addon-card.pale-pink:hover      .addon-card-cta { background-color: var(--dark-pink);    color: var(--pale-pink);      }
+button.addon-card.pale-red:hover       .addon-card-cta { background-color: var(--dark-red);     color: var(--pale-red);       }
+
+/* ── Addon Modal ─────────────────────────────────────────────────────────── */
+
+/* Hero image — flush to top, card's overflow:hidden rounds the top corners */
+.addon-modal-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  flex-shrink: 0;
+}
+
+/* Text body below image */
+.addon-modal-body {
+  overflow-y: auto;
+  padding: 2.75em 2.25em 2.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+.addon-modal-body .headline-medium {
+  padding-right: 2.5em; /* keep clear of close button */
+}
+
+@media screen and (max-width: 767px) {
+  .addon-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5em 1.25em 3em;
+  }
+}
+
+/* Backdrop — centered, same palette as service modals but very translucent */
+.activity-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    150deg,
+    rgba(253, 232, 168, 0.52) 0%,
+    rgba(197, 216, 240, 0.52) 30%,
+    rgba(191, 229, 220, 0.52) 58%,
+    rgba(216, 204, 237, 0.52) 82%,
+    rgba(249, 208, 216, 0.52) 100%
+  );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;      /* vertically centered */
+  justify-content: center;  /* horizontally centered */
+  padding: 2em 1.5em;
+  overflow: hidden;
+  animation: modal-backdrop-in 0.2s ease both;
+}
+
+/* Card — coloured background matching the tile, compact, centered */
+.activity-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: min(580px, calc(100vw - 3rem));
+  max-height: calc(100dvh - 6em);
+  border-radius: 20px;
+  overflow: hidden;  /* card is its own scroll container */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.1);
+  animation: modal-card-in 0.42s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+/* Colour backgrounds + themed text — one per activity tile colour */
+.activity-modal-card.pale-red       { background-color: var(--pale-red);       color: var(--dark-red);    }
+.activity-modal-card.pale-purple    { background-color: var(--pale-purple);    color: var(--dark-purple); }
+.activity-modal-card.pale-turquoise { background-color: var(--pale-turquoise); color: var(--dark-green);  }
+.activity-modal-card.pale-blue      { background-color: var(--pale-blue);      color: var(--dark-blue);   }
+.activity-modal-card.pale-yellow    { background-color: var(--pale-yellow);    color: var(--dark-yellow); }
+.activity-modal-card.pale-pink      { background-color: var(--pale-pink);      color: var(--dark-pink);   }
+
+/* Close button — absolute in the card's top-right corner */
+.activity-modal-close-bar {
+  position: absolute;
+  top: 0.75em;
+  right: 0.75em;
+  z-index: 2;
+}
+
+/* Close button inherits the card's colour theme */
+.activity-modal-card .service-modal-close {
+  color: currentColor;
+}
+
+/* Body — auto-height so card shrinks to content, not to max-height */
+.activity-modal-body {
+  overflow-y: auto;
+  padding: 3.5em 2.25em 2.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75em;
+}
+
+/* Text content: heading + paragraphs */
+.activity-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+.activity-modal-content .headline-medium {
+  margin-bottom: 0.1em;
+  padding-right: 2.5em; /* keep clear of the absolute close button */
+}
+
+/* Gallery: two equal columns */
+.activity-modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65em;
+}
+
+
+/* Mobile: full viewport, internal scroll */
+@media screen and (max-width: 767px) {
+  .activity-modal-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+  .activity-modal-card {
+    max-width: 100%;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .activity-modal-body {
+    flex: 1;         /* fill card height on mobile so scroll works */
+    overflow-y: auto;
+    padding: 4em 1.25em 3em;
+    gap: 1.5em;
+  }
+  .activity-modal-gallery {
+    grid-template-columns: 1fr; /* stack images vertically on mobile */
+  }
+}
+
+/* ── Activity tile: outline "Learn more" CTA ─────────────────────────────
+   Wrapper uses grid-template-rows: 0fr → 1fr to animate to exactly the
+   button's natural height (no invisible extra space like max-height).
+   The -0.5em margin-top cancels the row-gap from services-tile in idle.
+   Touch devices: always fully visible. */
+
+/* Wrapper: the flex item that collapses/expands */
+.activity-tile-cta-wrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  margin-top: 0.75em;
+}
+
+/* Inner pill button */
+.activity-tile-cta {
+  min-height: 0;
+  display: inline-block;
+  padding: 0.35em 0.9em;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Idle: collapsed to zero, negative margin cancels the row-gap */
+  .activity-tile-cta-wrapper {
+    grid-template-rows: 0fr;
+    margin-top: -0.5em;
+    transition: grid-template-rows 0.35s cubic-bezier(0.34, 1.2, 0.64, 1), margin-top 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  .activity-tile-cta {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  /* Hover: expand to natural height, button rises from below */
+  .services-tile:hover .activity-tile-cta-wrapper {
+    grid-template-rows: 1fr;
+    margin-top: 0.75em;
+  }
+  .services-tile:hover .activity-tile-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: none) {
+  /* Touch: always visible, no animation needed */
+  .activity-tile-cta-wrapper {
+    grid-template-rows: 1fr;
+    margin-top: 0.75em;
+  }
+  .activity-tile-cta {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Service tile: outline "Learn more" CTA ──────────────────────────────
+   Always visible; fills with the tile's dark colour on hover. */
+.events-tile-cta {
+  display: inline-block;
+  margin-top: 0;
+  padding: 0.38em 1em;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+/* Fill on hover — one rule per tile colour so border + bg + text all update */
+.events-tile.pale-yellow:hover    .events-tile-cta { background-color: var(--dark-yellow);  border-color: var(--dark-yellow);  color: #fff; }
+.events-tile.pale-turquoise:hover .events-tile-cta { background-color: var(--dark-green);   border-color: var(--dark-green);   color: #fff; }
+.events-tile.pale-purple:hover    .events-tile-cta { background-color: var(--dark-purple);  border-color: var(--dark-purple);  color: #fff; }

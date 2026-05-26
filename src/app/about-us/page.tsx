@@ -22,7 +22,7 @@ const FlexibilityIcon = () => (
 
 export const metadata: Metadata = {
   title: "About Event Sitters",
-  description: "Meet Samantha and the Event Sitters team — Hawke's Bay specialists in on-location kids' entertainment for weddings, corporate functions, and public events.",
+  description: "Meet Samantha and the Event Sitters team, Hawke's Bay specialists in on-location kids' entertainment for weddings, corporate functions, and public events.",
   alternates: { canonical: "https://www.eventsitters.nz/about-us" },
 };
 
@@ -76,6 +76,29 @@ const process = [
 export default function AboutUs() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Samantha",
+        "jobTitle": "Founder and Team Leader",
+        "description": "Founder of Event Sitters, holding a postgraduate diploma in Early Childhood Education with years of experience working with children across kindergartens, care centres, and family homes in Hawke's Bay.",
+        "image": "https://www.eventsitters.nz/images/samantha-event-sitters-founder-hawkes-bay.webp",
+        "url": "https://www.eventsitters.nz/about-us",
+        "worksFor": {
+          "@type": "EntertainmentBusiness",
+          "name": "Event Sitters",
+          "url": "https://www.eventsitters.nz",
+        },
+      }) }} />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.eventsitters.nz" },
+          { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://www.eventsitters.nz/about-us" },
+        ],
+      }) }} />
       <ConfettiParallax els={parallaxEls} />
       {/* Hero */}
       <section className="section">
@@ -150,7 +173,7 @@ export default function AboutUs() {
             <div className="w-layout-cell cell-4">
               <div className="portrait-visual-wrapper">
                 <Image
-                  src="/images/portrait-circle.webp"
+                  src="/images/samantha-event-sitters-founder-hawkes-bay.webp"
                   alt="Portrait of Samantha"
                   className="image-portrait"
                   width={720}

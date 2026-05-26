@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import FAQ from "@/components/FAQ";
 import QuoteForm from "@/components/QuoteForm";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
 import SmoothAnchorLink from "@/components/SmoothAnchorLink";
 import ServiceTiles from "@/components/ServiceTiles";
+import ActivityTiles from "@/components/ActivityTiles";
+import GalleryGrid from "@/components/GalleryGrid";
 
 export const metadata: Metadata = {
   title: "On-Location Kids' Entertainment | Event Sitters Hawke's Bay",
-  description: "We create fun, engaging spaces for kids at weddings, parties, public and corporate events in Hawke's Bay, NZ — with tailored activities to keep all ages happily entertained!",
+  description: "We create fun, engaging spaces for kids at weddings, parties, public and corporate events in Hawke's Bay, NZ, with tailored activities to keep all ages happily entertained!",
   alternates: { canonical: "https://www.eventsitters.nz" },
 };
 
@@ -26,26 +27,6 @@ const parallaxEls: ElConfig[] = [
   { selector: '.confetti-faq-yellow',       sx:  32, sy:  32 },
 ];
 
-// Grid spans: 6-column grid (2+4, 3+3, 4+2)
-const activities = [
-  { title: "Active Play & Games",  span: "services-cell-2", color: "pale-red",      icon: "/images/active-play.svg",  iconAlt: "Balloon icon",        iconClass: "active-play-icon",  desc: "We offer a wide variety of fun and engaging games, tailored to suit children of all ages. From interactive group activities and classic board games for older kids to imaginative play for toddlers – we have something for everyone to enjoy!" },
-  { title: "Arts & Crafts",        span: "services-cell-4", color: "pale-purple",   icon: "/images/arts-crafts.svg",  iconAlt: "Scissor cut icon",    iconClass: "arts-crafts-icon",  desc: "We offer mess-free activities that keep kids entertained with fun, hands-on projects. From simple DIY crafts to imaginative creations, children can immerse themselves in a playful and creative experience. Best of all, they get to take home their wonderful creations to cherish." },
-  { title: "Toys & Playtime",      span: "services-cell-3", color: "pale-turquoise",icon: "/images/toys.svg",         iconAlt: "Stacked blocks icon", iconClass: "toys-icon",         desc: "Our curated selection of quality toys provides a variety of engaging options for meaningful play time. Children can explore, construct, and build with our collection of toys, ensuring hours of fun." },
-  { title: "Story Time",           span: "services-cell-3", color: "pale-blue",     icon: "/images/storytime.svg",    iconAlt: "Book icon",           iconClass: "storytime-icon",    desc: "We offer enchanting stories to help children unwind in a relaxing setting. Alongside story time, we provide search-and-find books for them to explore, adding an extra layer of fun and engagement." },
-  { title: "Cozy Corner",          span: "services-cell-4", color: "pale-yellow",   icon: "/images/cozy-corner.svg",  iconAlt: "Pillow icon",         iconClass: "cozy-corner-icon",  desc: "Our cozy corner provides a quiet space where children can relax and recharge. It's the perfect retreat for some downtime, offering a calming atmosphere that helps them feel refreshed and comfortable, or enjoy a bit of pretend play." },
-  { title: "Decoration",           span: "services-cell-2", color: "pale-pink",     icon: "/images/decoration.svg",   iconAlt: "Decorations icon",    iconClass: "decoration-icon",   desc: "We brighten up any space with charming touches like blankets, pillows, balloons, and other decor elements. Our goal is to create an inviting and joyful atmosphere that makes it feel special." },
-];
-
-const galleryImages = [
-  { cls: "one",   span: "gallery-cell-3", src: "/images/img-4506.webp",          alt: "Child carefully colouring a detailed animal illustration at an Event Sitters activity station" },
-  { cls: "two",   span: "gallery-cell-6", src: "/images/p2060103.webp",          alt: "Rainbow-coloured wooden building blocks stacked in a pyramid in front of a cosy play tent with bunting flags" },
-  { cls: "three", span: "gallery-cell-3", src: "/images/img-4012.webp",          alt: "Child's hands colouring a Christmas tree illustration with a green marker at an Event Sitters craft session" },
-  { cls: "four",  span: "gallery-cell-4", src: "/images/pc070239.webp",          alt: "Children in Santa hats doing arts and crafts at an outdoor public event, with Event Sitters signage visible" },
-  { cls: "five",  span: "gallery-cell-4", src: "/images/p2060335.webp",          alt: "Young boy in a cap concentrating on building a tower with colourful wooden blocks" },
-  { cls: "six",   span: "gallery-cell-4", src: "/images/p2060476.webp",          alt: "Young boy relaxing inside a cosy play tent surrounded by stuffed animals and soft cushions" },
-  { cls: "seven", span: "gallery-cell-7", src: "/images/corporate-functions.webp", alt: "A smiling young boy wearing a beige cap sits at a table filled with art supplies at a work function" },
-  { cls: "eight", span: "gallery-cell-5", src: "/images/pc070120.webp",          alt: "Children and parents doing Christmas crafts together at an outdoor market event" },
-];
 
 export default function Home() {
   return (
@@ -91,34 +72,13 @@ export default function Home() {
 
       {/* Activities */}
       <section id="activities" className="section">
-        <div className="container">
-          <div className="w-layout-layout services-masonry wf-layout-layout">
-            {activities.map((a) => (
-              <div key={a.title} className={`w-layout-cell ${a.span}`}>
-                <div className={`services-tile ${a.color}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={a.icon} alt={a.iconAlt} className={a.iconClass} />
-                  <h2 className="headline-small">{a.title}</h2>
-                  <div>{a.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ActivityTiles />
       </section>
 
       {/* Gallery */}
       <section className="section">
         <div className="container">
-          <div className="w-layout-layout gallery wf-layout-layout">
-            {galleryImages.map((img) => (
-              <div key={img.cls} className={`w-layout-cell ${img.span}`}>
-                <div className={`gallery-image-container ${img.cls}`}>
-                  <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover", objectPosition: "center" }} sizes="(max-width: 768px) 100vw, 50vw" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <GalleryGrid />
         </div>
       </section>
 
@@ -137,6 +97,19 @@ export default function Home() {
 
       {/* FAQ */}
       <FAQ />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Event Sitters",
+        "url": "https://www.eventsitters.nz",
+        "description": "On-location kids' entertainment for weddings, corporate functions, public events, and private parties in Hawke's Bay, New Zealand.",
+        "publisher": {
+          "@type": "EntertainmentBusiness",
+          "name": "Event Sitters",
+          "url": "https://www.eventsitters.nz",
+        },
+      }) }} />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",

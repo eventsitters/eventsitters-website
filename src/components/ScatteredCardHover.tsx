@@ -12,6 +12,8 @@ type CardConfig = {
   hoverY?: number;   // Y on hover (lift = hoverY < baseY)
   baseScale?: number;
   hoverScale?: number;
+  /** playful: use the same elastic spring as event tiles (straighten + scale pop) */
+  playful?: boolean;
 };
 
 const CARDS: CardConfig[] = [
@@ -24,33 +26,33 @@ const CARDS: CardConfig[] = [
   { selector: ".events-tile:nth-child(1)", baseRot: -1.8, hoverRot: 0, baseY:  12, hoverY:  12, hoverScale: 1.035 },
   { selector: ".events-tile:nth-child(2)", baseRot:  1.2, hoverRot: 0, baseY:  -8, hoverY:  -8, hoverScale: 1.035 },
   { selector: ".events-tile:nth-child(3)", baseRot: -0.7, hoverRot: 0, baseY:  16, hoverY:  16, hoverScale: 1.035 },
-  // Homepage — activities masonry
-  { selector: ".services-masonry > .w-layout-cell:nth-child(1)", baseRot: -1.2, hoverRot: -1.8 },
-  { selector: ".services-masonry > .w-layout-cell:nth-child(2)", baseRot:  0.8, hoverRot:  1.4 },
-  { selector: ".services-masonry > .w-layout-cell:nth-child(3)", baseRot: -0.5, hoverRot: -1.1 },
-  { selector: ".services-masonry > .w-layout-cell:nth-child(4)", baseRot:  1.4, hoverRot:  2.0 },
-  { selector: ".services-masonry > .w-layout-cell:nth-child(5)", baseRot: -1.0, hoverRot: -1.6 },
-  { selector: ".services-masonry > .w-layout-cell:nth-child(6)", baseRot:  0.6, hoverRot:  1.2 },
-  // Homepage — gallery
-  { selector: ".gallery > .w-layout-cell:nth-child(1)", baseRot: -1.1, hoverRot: -1.7 },
-  { selector: ".gallery > .w-layout-cell:nth-child(2)", baseRot:  0.7, hoverRot:  1.3 },
-  { selector: ".gallery > .w-layout-cell:nth-child(3)", baseRot: -0.5, hoverRot: -1.1 },
-  { selector: ".gallery > .w-layout-cell:nth-child(4)", baseRot:  1.2, hoverRot:  1.8 },
-  { selector: ".gallery > .w-layout-cell:nth-child(5)", baseRot: -0.8, hoverRot: -1.4 },
-  { selector: ".gallery > .w-layout-cell:nth-child(6)", baseRot:  0.4, hoverRot:  1.0 },
-  { selector: ".gallery > .w-layout-cell:nth-child(7)", baseRot: -0.9, hoverRot: -1.5 },
-  { selector: ".gallery > .w-layout-cell:nth-child(8)", baseRot:  1.3, hoverRot:  1.9 },
-  // Packages — base package card
-  { selector: ".pricing-card-negative",        baseRot: -0.8, hoverRot: -1.4 },
-  // Packages — festivals & markets card
-  { selector: ".festivals-markets.pale-blue",  baseRot:  0.6, hoverRot:  1.2 },
-  // Packages — add-on cards
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(2)", baseRot: -1.1, hoverRot: -1.7 },
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(3)", baseRot:  0.9, hoverRot:  1.5 },
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(4)", baseRot: -0.6, hoverRot: -1.2 },
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(5)", baseRot:  1.3, hoverRot:  1.9 },
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(6)", baseRot: -0.8, hoverRot: -1.4 },
-  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(7)", baseRot:  0.5, hoverRot:  1.1 },
+  // Homepage — activities masonry: straighten to 0 + scale pop (matches service tiles)
+  { selector: ".services-masonry > .w-layout-cell:nth-child(1)", baseRot: -1.2, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".services-masonry > .w-layout-cell:nth-child(2)", baseRot:  0.8, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".services-masonry > .w-layout-cell:nth-child(3)", baseRot: -0.5, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".services-masonry > .w-layout-cell:nth-child(4)", baseRot:  1.4, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".services-masonry > .w-layout-cell:nth-child(5)", baseRot: -1.0, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".services-masonry > .w-layout-cell:nth-child(6)", baseRot:  0.6, hoverRot: 0, hoverScale: 1.03, playful: true },
+  // Homepage — gallery: straighten to 0 + subtle scale pop
+  { selector: ".gallery > .w-layout-cell:nth-child(1)", baseRot: -1.1, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(2)", baseRot:  0.7, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(3)", baseRot: -0.5, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(4)", baseRot:  1.2, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(5)", baseRot: -0.8, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(6)", baseRot:  0.4, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(7)", baseRot: -0.9, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".gallery > .w-layout-cell:nth-child(8)", baseRot:  1.3, hoverRot: 0, hoverScale: 1.03, playful: true },
+  // Packages — base package card: straighten to 0
+  { selector: ".pricing-card-negative",        baseRot: -0.8, hoverRot: 0, hoverScale: 1.015, playful: true },
+  // Packages — festivals & markets card: straighten to 0
+  { selector: ".festivals-markets.pale-blue",  baseRot:  0.6, hoverRot: 0, hoverScale: 1.015, playful: true },
+  // Packages — add-on cards: straighten to 0 + scale pop
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(2)", baseRot: -1.1, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(3)", baseRot:  0.9, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(4)", baseRot: -0.6, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(5)", baseRot:  1.3, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(6)", baseRot: -0.8, hoverRot: 0, hoverScale: 1.03, playful: true },
+  { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(7)", baseRot:  0.5, hoverRot: 0, hoverScale: 1.03, playful: true },
   // About Us — offer cards
   { selector: ".about-offer-grid > .w-layout-cell:nth-child(2)", baseRot: -1.1, hoverRot: -1.7, baseY:  20 },
   { selector: ".about-offer-grid > .w-layout-cell:nth-child(3)", baseRot:  0.8, hoverRot:  1.4, baseY: -18 },
@@ -66,16 +68,17 @@ export default function ScatteredCardHover() {
 
     const cleanups: Array<() => void> = [];
 
-    for (const { selector, baseRot, hoverRot, baseY = 0, hoverY, baseScale = 1, hoverScale } of CARDS) {
+    for (const { selector, baseRot, hoverRot, baseY = 0, hoverY, baseScale = 1, hoverScale, playful } of CARDS) {
       document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
         gsap.set(el, { transformOrigin: "50% 50%", rotation: baseRot, y: baseY, scale: baseScale });
 
-        // Is this an event tile? Gives it its own more playful treatment.
-        const isEventTile = el.classList.contains("events-tile");
+        // Playful treatment: event tiles OR any card with playful:true
+        // (activity masonry cells use the same spring as event tiles)
+        const isPlayful = el.classList.contains("events-tile") || playful === true;
 
         const onEnter = () => {
           gsap.killTweensOf(el);
-          if (isEventTile) {
+          if (isPlayful) {
             // Gentle spring: lower amplitude + looser period = one smooth overshoot
             gsap.to(el, {
               rotation: hoverRot,
@@ -101,7 +104,7 @@ export default function ScatteredCardHover() {
             rotation: baseRot,
             y: baseY,
             scale: baseScale,
-            duration: isEventTile ? 0.5 : 0.45,
+            duration: isPlayful ? 0.5 : 0.45,
             ease: "power3.out",
           });
         };

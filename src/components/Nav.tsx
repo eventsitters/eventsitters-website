@@ -69,7 +69,7 @@ export default function Nav() {
         <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
           <Link href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</Link>
           {navLink("/about-us", "About Us")}
-          {navLink("/packages", "Pricing")}
+          {navLink("/packages", "Packages")}
 
           <div className="nav-socials-wrapper">
             <a href="https://www.instagram.com/eventsittershb" target="_blank" rel="noreferrer" className="nav-item w-inline-block">

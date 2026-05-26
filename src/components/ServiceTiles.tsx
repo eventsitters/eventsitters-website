@@ -34,8 +34,8 @@ const SERVICES: ServiceData[] = [
     ],
     galleryImages: [
       { src: "/images/private-events.webp",  alt: "Young boy concentrating on a dice game at a private event" },
-      { src: "/images/p2060476.webp",         alt: "Child relaxing inside a cosy play tent with stuffed animals" },
-      { src: "/images/img-4506.webp",         alt: "Child carefully colouring a detailed illustration at a craft station" },
+      { src: "/images/child-cozy-corner-play-tent-event-sitters.webp", alt: "Child relaxing inside a cosy play tent with stuffed animals" },
+      { src: "/images/child-colouring-craft-station-event-sitters.webp", alt: "Child carefully colouring a detailed illustration at a craft station" },
     ],
   },
   {
@@ -67,8 +67,8 @@ const SERVICES: ServiceData[] = [
     ],
     galleryImages: [
       { src: "/images/corporate-functions.webp", alt: "Smiling boy with art supplies at a work function" },
-      { src: "/images/p2060335.webp",             alt: "Young boy building a tower with colourful wooden blocks" },
-      { src: "/images/p2060103.webp",             alt: "Rainbow-coloured wooden blocks stacked in front of a play tent" },
+      { src: "/images/boy-building-wooden-block-tower-event-sitters.webp", alt: "Young boy building a tower with colourful wooden blocks" },
+      { src: "/images/kids-wooden-blocks-play-tent-event-sitters.webp",   alt: "Rainbow-coloured wooden blocks stacked in front of a play tent" },
     ],
   },
   {
@@ -100,8 +100,8 @@ const SERVICES: ServiceData[] = [
     ],
     galleryImages: [
       { src: "/images/public-events.webp",  alt: "Group of children doing holiday crafts at an outdoor event" },
-      { src: "/images/pc070239.webp",        alt: "Children in Santa hats doing arts and crafts at a public event" },
-      { src: "/images/pc070120.webp",        alt: "Children and parents doing Christmas crafts at an outdoor market" },
+      { src: "/images/kids-arts-crafts-public-event-hawkes-bay.webp",          alt: "Children in Santa hats doing arts and crafts at a public event" },
+      { src: "/images/children-christmas-crafts-outdoor-market-hawkes-bay.webp", alt: "Children and parents doing Christmas crafts at an outdoor market" },
     ],
   },
 ];
@@ -165,6 +165,7 @@ export default function ServiceTiles() {
                   <div key={i}>{line}</div>
                 ))}
               </div>
+              <span className="events-tile-cta">Learn more</span>
             </button>
           );
         })}

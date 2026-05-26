@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "We create fun, engaging spaces for kids at weddings, parties, public and corporate events, with tailored activities to keep all ages happily entertained!",
   openGraph: {
     siteName: "Event Sitters",
-    images: [{ url: "/images/webclip.png" }],
+    images: [{ url: "/images/event-sitters-graph.png" }],
   },
   icons: {
     icon: "/images/favicon.png",
@@ -32,12 +32,15 @@ export const metadata: Metadata = {
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "EntertainmentBusiness",
   "name": "Event Sitters",
   "description": "On-location kids' entertainment for weddings, corporate functions, public events, and private parties in Hawke's Bay, New Zealand. Tailored activities for children aged 3–12.",
   "url": "https://www.eventsitters.nz",
   "telephone": "+642108279718",
   "email": "info@eventsitters.nz",
+  "logo": "https://www.eventsitters.nz/images/event-sitters-logo.svg",
+  "image": "https://www.eventsitters.nz/images/public-event-christmas-market.jpg",
+  "priceRange": "From $300 NZD",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Hawke's Bay",
