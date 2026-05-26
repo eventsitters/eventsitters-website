@@ -4,9 +4,6 @@ import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-gsap.registerPlugin(ScrollToPlugin);
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,29 +67,7 @@ export default function Nav() {
         </Link>
 
         <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
-          {pathname === "/" ? (
-            <a
-              className="nav-item w-nav-link"
-              href="#services"
-              onClick={(e) => {
-                e.preventDefault();
-                if (menuOpen) {
-                  closeMenu();
-                  setTimeout(() => {
-                    gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
-                  }, 260);
-                } else {
-                  gsap.to(window, { scrollTo: { y: "#services", offsetY: 0 }, duration: 0.9, ease: "power2.inOut" });
-                }
-              }}
-            >
-              Services
-            </a>
-          ) : (
-            <Link href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>
-              Services
-            </Link>
-          )}
+          {navLink("/services", "Services")}
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Pricing")}
 

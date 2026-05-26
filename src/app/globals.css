@@ -903,3 +903,42 @@ main {
 .toast-notification.leaving {
   animation: toast-out 0.45s ease-in both;
 }
+
+/* ─── Services page: text-content column ─── */
+.service-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.service-detail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* ─── Events tiles as clickable cards ─── */
+a.events-tile {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Tile hover: subtle lift that composes with the scattered rotation */
+a.events-tile {
+  transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+a.events-tile:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+  transform: translateY(-5px) rotate(var(--tile-rotation, 0deg));
+}
+a.events-tile:nth-child(1) { --tile-rotation: -1.8deg; }
+a.events-tile:nth-child(2) { --tile-rotation:  1.2deg; }
+a.events-tile:nth-child(3) { --tile-rotation: -0.7deg; }
+
+/* Services page activities section header spacing */
+.offer-header {
+  margin-bottom: 2rem;
+}

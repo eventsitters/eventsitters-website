@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import FAQ from "@/components/FAQ";
 import QuoteForm from "@/components/QuoteForm";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
@@ -74,30 +75,30 @@ export default function Home() {
       {/* Services */}
       <section id="services" className="section">
         <div className="container services">
-          <div className="events-tile pale-yellow">
-            <h2 className="headline-small">Private Events</h2>
+          <Link href="/services#private-functions" className="events-tile pale-yellow">
+            <h2 className="headline-small">Private Functions</h2>
             <Image src="/images/private-events.webp" alt="A young boy in a polka-dotted shirt and beige cap is deep in concentration while playing a dice game in a wooden tray." className="event-thumbnail" width={1120} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
               <div>Weddings, birthdays, family get-togethers. We set up a dedicated kids&apos; space packed with games, crafts, and activities.</div>
               <div>They can dip in, take a breather, or stay all day. Either way, they&apos;re in good hands.</div>
             </div>
-          </div>
-          <div className="events-tile pale-turquoise">
-            <h2 className="headline-small">Work Functions</h2>
+          </Link>
+          <Link href="/services#corporate-events" className="events-tile pale-turquoise">
+            <h2 className="headline-small">Corporate Events</h2>
             <Image src="/images/corporate-functions.webp" alt="A smiling young boy wearing a beige cap sits at a table filled with art supplies." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
               <div>Kids at corporate events? Sorted. We keep them close by, engaged, and entertained, so parents stay present and your event runs the way it should.</div>
               <div>Because the best work events are the ones where everyone has a great time. Even the littlest attendees.</div>
             </div>
-          </div>
-          <div className="events-tile pale-purple">
+          </Link>
+          <Link href="/services#public-events" className="events-tile pale-purple">
             <h2 className="headline-small">Public Events</h2>
             <Image src="/images/public-events.webp" alt="A group of children and adults gather around a table at an outdoor event, engaged in holiday crafts." className="event-thumbnail" width={1121} height={750} style={{ width: '100%', height: 'auto' }} />
             <div className="copy-wrapper">
               <div>Festivals, markets, community events. We show up, set up, and bring the fun. Games, crafts, and themed entertainment for every age.</div>
               <div>Flexible enough for any size, location, or theme. Just point us to the spot and we&apos;ll handle the rest.</div>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
