@@ -94,54 +94,55 @@ html { scroll-behavior: smooth; }
   }
 
   /* Open panel – full-screen overlay behind the nav bar.
-     Extra top padding compensates for the nav bar covering the top ~60px,
-     keeping the content visually centred in the visible area. */
+     flex-start + max(5.5em, 35vh) top padding anchors content ~35% down the
+     screen, giving ~25% more breathing room above the links than centering did
+     while keeping everything visible on small phones. */
   .nav-menu.menu-open {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     position: fixed;
     inset: 0;
     background-color: var(--pale-blue);
-    padding: 5.5em 1.5em 2.5em;
+    padding: max(5.5em, 35vh) 1.5em 2.5em;
     z-index: 999;
   }
 
   /* Staggered item entrance handled by GSAP in Nav.tsx */
 
-  /* Nav links: large, centered */
+  /* Nav links: ~10% smaller */
   .nav-menu.menu-open .nav-item {
     justify-content: center;
     width: 100%;
     text-align: center;
-    padding: 1em;
-    font-size: 1.35em;
+    padding: 0.9em;
+    font-size: 1.2em;
   }
 
-  /* Social icons: larger, centered; push away from nav links */
+  /* Social icons: ~10% smaller; push away from nav links */
   .nav-menu.menu-open .nav-socials-wrapper {
     justify-content: center;
-    gap: 1.5em;
+    gap: 1.35em;
     padding: 0.75em 0;
     margin-top: 8vh;
   }
   .nav-menu.menu-open .nav-socials-wrapper svg {
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
   }
 
-  /* Contact Us button: full width */
+  /* Contact Us button: full width, ~10% smaller, ~10% less gap above */
   .nav-menu.menu-open .nav-button-wrapper {
     width: 100%;
-    padding-top: 1.35em;
+    padding-top: 1.2em;
   }
   .nav-menu.menu-open .nav-button-wrapper .w-button {
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.08em;
   }
 
   /* Close button: no white background box (eventsitters.css sets background: white
