@@ -17,8 +17,6 @@ const parallaxEls: ElConfig[] = [
   { selector: '.confetti-header-turquoise', mx:  24, my:  24, repulse: 120, repulseRadius: 150 },
   { selector: '.confetti-header-yellow',    mx: -64, my: -64, repulse: 120, repulseRadius: 150 },
   { selector: '.confetti-header-red',       mx:  16, my:  16, repulse: 120, repulseRadius: 150 },
-  { selector: '.confetti-footer-yellow',    mx: -40, my: -32 },
-  { selector: '.confetti-footer-red',       mx:  40, my: -24 },
   { selector: '.confetti-faq-turquoise',    sx: -64, sy:  40 },
   { selector: '.confetti-faq-yellow',       sx:  32, sy:  32 },
 ];
@@ -64,73 +62,91 @@ export default function Services() {
         <div className="confetti-header-red" />
       </section>
 
-      {/* Private Functions */}
-      <section id="private-functions" className="section pale-yellow">
+      {/* ── Private Functions ─────────────────────────────── */}
+      <section id="private-functions" className="section services-card-section">
         <div className="container">
-          <div className="service-detail-section">
-            <div className="super-heading all-caps">Weddings &amp; Birthdays</div>
-            <h2 className="headline-medium">Kids&apos; Entertainment for Private Functions</h2>
-            <Image
-              src="/images/private-events.webp"
-              alt="Children engaged in crafts and games at a private event kids' space run by Event Sitters"
-              width={1120}
-              height={750}
-              className="service-detail-image"
-            />
-            <p className="p-medium">Weddings, milestone birthdays, baby showers, anniversary celebrations — private functions are the events people plan for months. When kids are on the guest list, having the right plan for them keeps the whole thing running smoothly. Without it, you end up with a beautiful day slightly derailed by a five-year-old who&apos;s run out of patience.</p>
-            <p className="p-medium">Ceremonies can be long and quiet — not ideal for little ones. We set up in a space close to the action, close enough that parents aren&apos;t anxious, far enough that the kids aren&apos;t the loudest thing in the room. By the time the speeches start, they&apos;re settled, busy, and genuinely happy.</p>
-            <p className="p-medium">During the reception, we run a relaxed programme of crafts, games, and activities. Kids can drop in and out as they like — there&apos;s no pressure to stay, and no pressure to leave. We bring the blankets, balloons, and bunting. We handle setup and pack-down. You get on with celebrating.</p>
-            <p className="p-medium">Birthday parties and family gatherings work the same way, scaled to however many kids are coming. A handful of cousins or forty kids from the school — we&apos;ll have something for each age group. Themed crafts, badge making, and activities can all be tailored to match the occasion.</p>
-            <div>
-              <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+          <div className="service-card pale-yellow">
+            <div className="service-card-grid">
+              <div className="service-card-visual">
+                <Image
+                  src="/images/private-events.webp"
+                  alt="A young boy in a polka-dotted shirt concentrates on a dice game at a private event"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                />
+              </div>
+              <div className="service-card-content">
+                <div className="super-heading all-caps">Weddings &amp; Birthdays</div>
+                <h2 className="headline-medium">Kids&apos; Entertainment for Private Functions</h2>
+                <p className="p-medium">Weddings, milestone birthdays, baby showers, anniversary celebrations — private functions are the events people plan for months. When kids are on the guest list, having the right plan for them keeps the whole thing running smoothly. Without it, you end up with a beautiful day slightly derailed by a five-year-old who&apos;s run out of patience.</p>
+                <p className="p-medium">Ceremonies can be long and quiet — not ideal for little ones. We set up in a space close to the action, close enough that parents aren&apos;t anxious, far enough that the kids aren&apos;t the loudest thing in the room. By the time the speeches start, they&apos;re settled, busy, and genuinely happy.</p>
+                <p className="p-medium">During the reception, we run a relaxed programme of crafts, games, and activities. Kids can drop in and out as they like — no pressure to stay, no pressure to leave. We bring the blankets, balloons, and bunting. We handle setup and pack-down. You get on with celebrating.</p>
+                <p className="p-medium">Birthday parties and family gatherings work the same way, scaled to however many kids are coming. A handful of cousins or forty kids from the school — we&apos;ll have something for each age group.</p>
+                <div>
+                  <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Corporate Events */}
-      <section id="corporate-events" className="section pale-turquoise">
+      {/* ── Corporate Events ──────────────────────────────── */}
+      <section id="corporate-events" className="section services-card-section">
         <div className="container">
-          <div className="service-detail-section">
-            <div className="super-heading all-caps">Work Functions &amp; Corporate Events</div>
-            <h2 className="headline-medium">Kids&apos; Entertainment for Corporate Events</h2>
-            <Image
-              src="/images/corporate-functions.webp"
-              alt="A smiling young boy wearing a beige cap sits at a table filled with art supplies at a work function"
-              width={1121}
-              height={750}
-              className="service-detail-image"
-            />
-            <p className="p-medium">More companies are opening their events to families, and it makes sense. Staff are more likely to attend, more relaxed when they arrive, and genuinely appreciate the gesture. The catch is that kids need something to actually do — not just be tolerated.</p>
-            <p className="p-medium">We&apos;ve worked with businesses across Hawke&apos;s Bay for team family days, company picnics, and staff celebration events. We bring a proper kids&apos; setup — not a corner with a few colouring sheets — and run a programme that gives children something to genuinely look forward to. Parents can participate in the day and talk to colleagues without one eye permanently on their child.</p>
-            <p className="p-medium">End-of-year celebrations and Christmas functions are our busiest season. Kids come in running on excitement, and parents need to be able to have a conversation. We take that load off completely — keeping the energy positive, the children engaged, and the atmosphere easy for everyone in the room.</p>
-            <p className="p-medium">For conferences and awards evenings where partners and families are invited, a well-run kids&apos; space means partners can attend and stay present rather than spending the evening keeping a toddler from unravelling. It&apos;s a small detail that changes the whole dynamic of the event.</p>
-            <div>
-              <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+          <div className="service-card pale-turquoise">
+            <div className="service-card-grid reverse">
+              <div className="service-card-visual">
+                <Image
+                  src="/images/corporate-functions.webp"
+                  alt="A smiling young boy wearing a beige cap sits at a table filled with art supplies at a work function"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                />
+              </div>
+              <div className="service-card-content">
+                <div className="super-heading all-caps">Work Functions &amp; Corporate Events</div>
+                <h2 className="headline-medium">Kids&apos; Entertainment for Corporate Events</h2>
+                <p className="p-medium">More companies are opening their events to families, and it makes sense. Staff are more likely to attend, more relaxed when they arrive, and genuinely appreciate the gesture. The catch is that kids need something to actually do — not just be tolerated.</p>
+                <p className="p-medium">We&apos;ve worked with businesses across Hawke&apos;s Bay for team family days, company picnics, and staff celebration events. We bring a proper kids&apos; setup — not a corner with a few colouring sheets — and run a programme that gives children something to genuinely look forward to. Parents can participate in the day and talk to colleagues without one eye permanently on their child.</p>
+                <p className="p-medium">End-of-year celebrations and Christmas functions are our busiest season. Kids come in running on excitement, and parents need to be able to have a conversation. We take that load off completely — keeping the energy positive, the children engaged, and the atmosphere easy for everyone in the room.</p>
+                <p className="p-medium">For awards evenings and conferences where partners are invited, a well-run kids&apos; space means partners can attend and stay present rather than spending the evening keeping a toddler from unravelling. A small detail that changes the whole dynamic.</p>
+                <div>
+                  <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Public Events */}
-      <section id="public-events" className="section pale-purple">
+      {/* ── Public Events ─────────────────────────────────── */}
+      <section id="public-events" className="section services-card-section">
         <div className="container">
-          <div className="service-detail-section">
-            <div className="super-heading all-caps">Markets, Festivals &amp; Community Events</div>
-            <h2 className="headline-medium">Kids&apos; Entertainment for Public Events</h2>
-            <Image
-              src="/images/public-events.webp"
-              alt="A group of children and adults gather around a table at an outdoor event, engaged in holiday crafts"
-              width={1121}
-              height={750}
-              className="service-detail-image"
-            />
-            <p className="p-medium">Public events have a different kind of energy. Families arrive in waves, kids have already used up their patience in the car, and without something to capture their attention, they&apos;re pulling on a sleeve within minutes. A proper kids&apos; activity space changes that — and it changes how long families stick around.</p>
-            <p className="p-medium">At markets and fairs, we set up in a designated spot and run continuous activities throughout the day. Kids get properly stuck in, parents get to browse without being tugged in three directions, and families linger longer. It&apos;s good for the kids and genuinely good for the event.</p>
-            <p className="p-medium">Festivals and community events often run from morning to late afternoon, so we plan for the long haul. The programme rotates throughout the day — different activities at different times — so kids who come back always find something new. An outdoor gazebo is available for shade and shelter, so the forecast is one less thing to plan around.</p>
-            <p className="p-medium">We work directly with event organisers to fit within your layout, signage guidelines, and run sheet. We&apos;re experienced in busy outdoor environments, we bring everything we need, and we can scale up or down to match the expected crowd. Just point us to the spot and we&apos;ll take care of the rest.</p>
-            <div>
-              <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+          <div className="service-card pale-purple">
+            <div className="service-card-grid">
+              <div className="service-card-visual">
+                <Image
+                  src="/images/public-events.webp"
+                  alt="A group of children and adults gather around a table at an outdoor event, engaged in holiday crafts"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                />
+              </div>
+              <div className="service-card-content">
+                <div className="super-heading all-caps">Markets, Festivals &amp; Community Events</div>
+                <h2 className="headline-medium">Kids&apos; Entertainment for Public Events</h2>
+                <p className="p-medium">Public events have a different kind of energy. Families arrive in waves, kids have already used up their patience in the car, and without something to capture their attention, they&apos;re pulling on a sleeve within minutes. A proper kids&apos; activity space changes that — and it changes how long families stick around.</p>
+                <p className="p-medium">At markets and fairs, we set up in a designated spot and run continuous activities throughout the day. Kids get properly stuck in, parents get to browse without being tugged in three directions, and families linger longer. Good for the kids, and genuinely good for the event.</p>
+                <p className="p-medium">Festivals and community events often run from morning to late afternoon, so we plan for the long haul. The programme rotates throughout the day — different activities at different times — so kids who come back always find something new. An outdoor gazebo is available for shade and shelter, so the forecast is one less thing to plan around.</p>
+                <p className="p-medium">We work directly with event organisers to fit within your layout, signage guidelines, and run sheet. We&apos;re experienced in busy outdoor environments, we bring everything we need, and we can scale up or down to match the expected crowd.</p>
+                <div>
+                  <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+                </div>
+              </div>
             </div>
           </div>
         </div>

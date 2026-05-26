@@ -904,41 +904,108 @@ main {
   animation: toast-out 0.45s ease-in both;
 }
 
-/* ─── Services page: text-content column ─── */
-.service-detail-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.service-detail-image {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
-}
-
-/* ─── Events tiles as clickable cards ─── */
+/* ─── Clickable event tiles: link reset ─── */
 a.events-tile {
   text-decoration: none;
   color: inherit;
   display: block;
+  /* GSAP owns the transform; only CSS-transition the shadow */
+  transition: box-shadow 0.35s ease !important;
 }
 
-/* Tile hover: subtle lift that composes with the scattered rotation */
-a.events-tile {
-  transition: transform 0.22s ease, box-shadow 0.22s ease !important;
-}
+/* Lifted shadow on hover — soft two-layer approach */
 a.events-tile:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
-  transform: translateY(-5px) rotate(var(--tile-rotation, 0deg));
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 8px 22px rgba(0, 0, 0, 0.07);
 }
-a.events-tile:nth-child(1) { --tile-rotation: -1.8deg; }
-a.events-tile:nth-child(2) { --tile-rotation:  1.2deg; }
-a.events-tile:nth-child(3) { --tile-rotation: -0.7deg; }
 
 /* Services page activities section header spacing */
 .offer-header {
   margin-bottom: 2rem;
+}
+
+/* ─── Services page: large image + text content cards ─────────────────────── */
+
+/* Extra breathing room between service card sections */
+.section.services-card-section {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.service-card {
+  border-radius: 20px;
+  overflow: hidden;
+  /* Subtle ambient shadow so cards appear lifted off the page */
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+/* Text colours match each card tone */
+.service-card.pale-yellow    { color: var(--dark-yellow); }
+.service-card.pale-turquoise { color: var(--dark-green);  }
+.service-card.pale-purple    { color: var(--dark-purple); }
+
+/* Two-column grid: image | text */
+.service-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  min-height: 580px;
+}
+
+/* Reverse variant: text left, image right */
+.service-card-grid.reverse .service-card-visual  { order: 2; }
+.service-card-grid.reverse .service-card-content { order: 1; }
+
+/* Image cell: fills its grid column via fill-mode Image */
+.service-card-visual {
+  position: relative;
+  min-height: 420px;
+}
+
+/* Text cell: comfortable padding, vertically centred */
+.service-card-content {
+  padding: 3.5em 4em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  justify-content: center;
+}
+
+/* Scattered rotations — GSAP sets these on desktop, CSS provides the fallback */
+#private-functions .service-card { transform: rotate(-1.2deg); }
+#corporate-events  .service-card { transform: rotate(1.0deg);  }
+#public-events     .service-card { transform: rotate(-0.8deg); }
+
+/* Tablet: keep side-by-side, tighten padding */
+@media screen and (max-width: 991px) {
+  .service-card-content { padding: 2.75em 3em; }
+  .service-card-grid    { min-height: 480px; }
+}
+
+/* Mobile: stack image above text, no rotation */
+@media screen and (max-width: 767px) {
+  .section.services-card-section { padding-top: 1em; padding-bottom: 1em; }
+
+  .service-card-grid,
+  .service-card-grid.reverse {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .service-card-grid.reverse .service-card-visual,
+  .service-card-grid.reverse .service-card-content { order: initial; }
+
+  .service-card-visual  { min-height: 260px; }
+  .service-card-content { padding: 2.25em 2.5em 2.75em; gap: 0.85em; justify-content: flex-start; }
+
+  #private-functions .service-card,
+  #corporate-events  .service-card,
+  #public-events     .service-card { transform: none; }
+}
+
+@media screen and (max-width: 479px) {
+  .service-card-content { padding: 1.75em 2em 2.25em; }
+  .service-card-visual  { min-height: 220px; }
 }
