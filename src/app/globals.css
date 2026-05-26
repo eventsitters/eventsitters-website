@@ -777,18 +777,19 @@ main {
 /* Scattered cards effect — pricing base package card */
 .pricing-card-negative { transform: rotate(-0.8deg); }
 
-/* Quote button fills when hovering the base package card */
-.pricing-card-negative:hover .pricing-quote-btn {
-  background-color: var(--dark-blue);
-  border-color: var(--dark-blue);
-  color: #fff;
-}
+/* Quote / Get in Touch buttons fill on card hover — desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .pricing-card-negative:hover .pricing-quote-btn {
+    background-color: var(--dark-blue);
+    border-color: var(--dark-blue);
+    color: #fff;
+  }
 
-/* Get in Touch button fills when hovering the special rates card */
-.festivals-markets.pale-blue:hover .festivals-quote-btn {
-  background-color: var(--dark-blue);
-  border-color: var(--dark-blue);
-  color: #fff;
+  .festivals-markets.pale-blue:hover .festivals-quote-btn {
+    background-color: var(--dark-blue);
+    border-color: var(--dark-blue);
+    color: #fff;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1510,13 +1511,15 @@ button.addon-card .paragraph-wrapper-tile.pricing {
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
-/* Hover: fill the pill with the card's theme colour, text flips to the pale background */
-button.addon-card.pale-yellow:hover    .addon-card-cta { background-color: var(--dark-yellow);  color: var(--pale-yellow);    }
-button.addon-card.pale-turquoise:hover .addon-card-cta { background-color: var(--dark-green);   color: var(--pale-turquoise); }
-button.addon-card.pale-blue:hover      .addon-card-cta { background-color: var(--dark-blue);    color: var(--pale-blue);      }
-button.addon-card.pale-purple:hover    .addon-card-cta { background-color: var(--dark-purple);  color: var(--pale-purple);    }
-button.addon-card.pale-pink:hover      .addon-card-cta { background-color: var(--dark-pink);    color: var(--pale-pink);      }
-button.addon-card.pale-red:hover       .addon-card-cta { background-color: var(--dark-red);     color: var(--pale-red);       }
+/* Hover: fill the pill with the card's theme colour — desktop only */
+@media (hover: hover) and (pointer: fine) {
+  button.addon-card.pale-yellow:hover    .addon-card-cta { background-color: var(--dark-yellow);  color: var(--pale-yellow);    }
+  button.addon-card.pale-turquoise:hover .addon-card-cta { background-color: var(--dark-green);   color: var(--pale-turquoise); }
+  button.addon-card.pale-blue:hover      .addon-card-cta { background-color: var(--dark-blue);    color: var(--pale-blue);      }
+  button.addon-card.pale-purple:hover    .addon-card-cta { background-color: var(--dark-purple);  color: var(--pale-purple);    }
+  button.addon-card.pale-pink:hover      .addon-card-cta { background-color: var(--dark-pink);    color: var(--pale-pink);      }
+  button.addon-card.pale-red:hover       .addon-card-cta { background-color: var(--dark-red);     color: var(--pale-red);       }
+}
 
 /* ── Addon Modal ─────────────────────────────────────────────────────────── */
 
@@ -1733,7 +1736,9 @@ button.addon-card.pale-red:hover       .addon-card-cta { background-color: var(-
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
-/* Fill on hover — one rule per tile colour so border + bg + text all update */
-.events-tile.pale-yellow:hover    .events-tile-cta { background-color: var(--dark-yellow);  border-color: var(--dark-yellow);  color: #fff; }
-.events-tile.pale-turquoise:hover .events-tile-cta { background-color: var(--dark-green);   border-color: var(--dark-green);   color: #fff; }
-.events-tile.pale-purple:hover    .events-tile-cta { background-color: var(--dark-purple);  border-color: var(--dark-purple);  color: #fff; }
+/* Fill on hover — desktop only */
+@media (hover: hover) and (pointer: fine) {
+  .events-tile.pale-yellow:hover    .events-tile-cta { background-color: var(--dark-yellow);  border-color: var(--dark-yellow);  color: #fff; }
+  .events-tile.pale-turquoise:hover .events-tile-cta { background-color: var(--dark-green);   border-color: var(--dark-green);   color: #fff; }
+  .events-tile.pale-purple:hover    .events-tile-cta { background-color: var(--dark-purple);  border-color: var(--dark-purple);  color: #fff; }
+}
