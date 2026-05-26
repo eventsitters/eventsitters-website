@@ -777,6 +777,20 @@ main {
 /* Scattered cards effect — pricing base package card */
 .pricing-card-negative { transform: rotate(-0.8deg); }
 
+/* Quote button fills when hovering the base package card */
+.pricing-card-negative:hover .pricing-quote-btn {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  .pricing-quote-btn {
+    font-size: 0.85em;
+    padding: 0.7em 1.1em;
+  }
+}
+
 /* Scattered cards effect — festivals & markets card */
 .festivals-markets.pale-blue { transform: rotate(0.6deg); }
 

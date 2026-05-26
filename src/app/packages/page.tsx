@@ -85,6 +85,7 @@ export default function Packages() {
               <h2 className="headline-medium">Base Package</h2>
               <p className="package-price">From $300 <span className="package-price-range">depending on your event</span></p>
               <p className="p-medium">One clear starting point. Four hours, a properly decorated space, and a hands-on team keeping the kids happy. Build from there however you like.</p>
+              <Link href="#quote-form" className="button outline pale-blue w-button pricing-quote-btn">Get Your Custom Quote</Link>
             </div>
             <div className="pricing-package-calculation-wrapper">
               <div className="pricing-features-wrapper">
