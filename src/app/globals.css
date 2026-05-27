@@ -1840,8 +1840,14 @@ button.addon-card .paragraph-wrapper-tile.pricing {
     overflow: hidden;
   }
   .activity-modal-card {
-    max-width: 100%;
-    height: 100%; /* fills the inset:0 backdrop; avoids dvh shortfall on iOS Safari */
+    /* Absolutely fill the fixed backdrop — bypasses all dvh/flex-height
+       quirks on iOS Safari. max-height from the desktop rule is overridden
+       so the card always covers the full screen, including the status-bar
+       zone, making setThemeColor() produce a seamless colour match. */
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     box-shadow: none;
   }

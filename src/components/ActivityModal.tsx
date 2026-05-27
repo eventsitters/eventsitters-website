@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { useModalHeight } from "./useModalHeight";
 import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type ActivityData = {
@@ -24,7 +23,6 @@ type Props = {
 };
 
 export default function ActivityModal({ activity, onClose }: Props) {
-  useModalHeight(!!activity);
 
   useEffect(() => {
     if (!activity) return;
