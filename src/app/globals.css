@@ -1161,20 +1161,12 @@ button.gallery-lightbox-trigger {
 }
 
 @media screen and (max-width: 767px) {
-  /* Remove backdrop-filter on mobile — its compositor layer doesn't extend
-     into env(safe-area-inset-top/bottom), leaving white bars at the edges.
-     Use a fully opaque gradient instead so the backdrop covers the full
-     screen seamlessly without relying on the page content behind it. */
+  /* Solid pale-blue fill — same approach as activity modals. A single opaque
+     colour covers the full screen including safe-area zones without any
+     compositor-layer gaps. Desktop blur/gradient is untouched. */
   .lightbox-backdrop {
     padding: 1.25em;
-    background: linear-gradient(
-      150deg,
-      rgb(253, 232, 168) 0%,
-      rgb(197, 216, 240) 30%,
-      rgb(191, 229, 220) 58%,
-      rgb(216, 204, 237) 82%,
-      rgb(249, 208, 216) 100%
-    );
+    background: var(--pale-blue);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

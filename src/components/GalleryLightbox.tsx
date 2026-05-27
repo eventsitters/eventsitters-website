@@ -23,7 +23,7 @@ export default function GalleryLightbox({ image, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
-    setThemeColor("white"); // lightbox backdrop is white on mobile
+    setThemeColor("pale-blue"); // matches mobile backdrop colour
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
