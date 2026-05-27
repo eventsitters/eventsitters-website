@@ -17,7 +17,7 @@ export const THEME_COLORS: Record<string, string> = {
   "white":          "#ffffff",
 };
 
-const DEFAULT = "#ffffff";
+const DEFAULT = "transparent";
 
 export function setThemeColor(colorKey: string): void {
   const content = THEME_COLORS[colorKey] ?? colorKey;

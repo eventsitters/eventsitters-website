@@ -23,8 +23,13 @@
    causing horizontal scroll on mobile. */
 html, body { overflow-x: hidden; }
 
-/* Smooth scroll for all on-page anchor navigation */
-html { scroll-behavior: smooth; scroll-padding-top: 5em; }
+/* scroll-padding-top offsets anchor targets below the sticky nav.
+   scroll-behavior is intentionally NOT set on html — Next.js resets scroll
+   to the top on every page navigation and a global smooth-scroll turns that
+   into a slow animated crawl from the bottom of the old page, which makes
+   nav clicks look like they've stalled. Smooth scrolling for in-page anchors
+   (e.g. /#services) is handled explicitly in Nav.tsx via scrollIntoView. */
+html { scroll-padding-top: 5em; }
 
 /* ─── Sticky footer reveal ────────────────────────────────────────────────────
    Footer is pinned to the bottom of the viewport (z-index 0). .page-content

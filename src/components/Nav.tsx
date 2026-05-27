@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { isScrollLocked } from "@/lib/scrollLock";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,6 +18,13 @@ export default function Nav() {
     const val = menuOpen ? "hidden" : "";
     document.body.style.overflow = val;
     document.documentElement.style.overflow = val;
+    // Keep the mobile status bar in sync with the nav overlay.
+    // The overlay is var(--pale-blue); closing resets to transparent (the site default).
+    if (menuOpen) {
+      setThemeColor("pale-blue");
+    } else {
+      resetThemeColor();
+    }
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
@@ -96,7 +104,22 @@ export default function Nav() {
         </Link>
 
         <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
-          <Link href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</Link>
+          <Link
+            href="/#services"
+            className="nav-item w-nav-link"
+            onClick={(e) => {
+              closeMenu();
+              // On the home page: prevent default hash-jump and scroll smoothly instead.
+              // On other pages: let Next.js navigate normally (scroll-to-top is instant now).
+              if (pathname === "/") {
+                const target = document.getElementById("services");
+                if (target) {
+                  e.preventDefault();
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+              }
+            }}
+          >Services</Link>
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Packages")}
 
