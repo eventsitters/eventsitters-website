@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { useModalHeight } from "./useModalHeight";
 import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type AddonData = {
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export default function AddonModal({ addon, onClose }: Props) {
-  useModalHeight(!!addon);
 
   useEffect(() => {
     if (!addon) return;
@@ -44,6 +42,7 @@ export default function AddonModal({ addon, onClose }: Props) {
   return createPortal(
     <div
       className="activity-modal-backdrop"
+      style={{ "--modal-bg": `var(--${addon.color})` } as React.CSSProperties}
       onClick={onClose}
       role="dialog"
       aria-modal="true"

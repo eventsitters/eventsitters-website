@@ -44,6 +44,7 @@ export default function ActivityModal({ activity, onClose }: Props) {
   return createPortal(
     <div
       className="activity-modal-backdrop"
+      style={{ "--modal-bg": `var(--${activity.color})` } as React.CSSProperties}
       onClick={onClose}
       role="dialog"
       aria-modal="true"

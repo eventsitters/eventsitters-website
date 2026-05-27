@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type GalleryImage = { src: string; alt: string };
 
@@ -15,17 +16,19 @@ export default function GalleryLightbox({ image, onClose }: Props) {
   /* Fresh random rotation each time a new image opens */
   const rotation = useMemo(() => (Math.random() - 0.5) * 6, [image]);
 
-  /* Keyboard close + scroll lock */
+  /* Keyboard close + scroll lock + status bar colour */
   useEffect(() => {
     if (!image) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    setThemeColor("white"); // lightbox backdrop is white on mobile
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [image, onClose]);
 
