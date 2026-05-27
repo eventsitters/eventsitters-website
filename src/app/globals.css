@@ -86,11 +86,14 @@ html { scroll-behavior: smooth; scroll-padding-top: 5em; }
      stacking context — position:relative comes from the global .logo rule */
   .logo { z-index: 1000; margin-left: 0.75em; }
 
-  /* Nav bar: switch to pale-blue when menu is open; keep sticky (not relative)
-     so it stays at the top, and force transform:none so nav-hidden never
-     hides the bar while the overlay is visible. */
+  /* Nav bar: transparent when menu is open so the overlay (position:fixed;
+     inset:0; background:pale-blue) shows through it — including behind the
+     iOS status bar. The overlay fades via GSAP on close, so the colour
+     transitions naturally without waiting for a React re-render.
+     Keep sticky + transform:none so the bar never disappears while the
+     overlay is visible. */
   .nav-bar.menu-open {
-    background-color: var(--pale-blue);
+    background-color: transparent;
     position: sticky;
     z-index: 1001;
     transform: none;

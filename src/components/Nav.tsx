@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { isScrollLocked } from "@/lib/scrollLock";
-import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,8 +52,6 @@ export default function Nav() {
 
   const closeMenu = useCallback(() => {
     if (!menuOpen) return;
-    // Reset synchronously — don't wait for useEffect; iOS Safari won't see it otherwise
-    resetThemeColor();
     const menu = menuRef.current;
     if (!menu) { setMenuOpen(false); return; }
     gsap.killTweensOf(menu);
@@ -129,14 +126,7 @@ export default function Nav() {
 
         <div
           className={`menu-button w-nav-button${menuOpen ? " menu-open" : ""}`}
-          onClick={() => {
-            if (menuOpen) {
-              closeMenu(); // resetThemeColor called inside
-            } else {
-              setThemeColor("pale-blue");
-              setMenuOpen(true);
-            }
-          }}
+          onClick={() => menuOpen ? closeMenu() : setMenuOpen(true)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? (
