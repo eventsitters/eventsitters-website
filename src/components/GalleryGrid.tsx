@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import GalleryLightbox, { type GalleryImage } from "./GalleryLightbox";
 
@@ -28,6 +28,20 @@ const cells = [
 
 export default function GalleryGrid() {
   const [activeImage, setActiveImage] = useState<GalleryImage | null>(null);
+  const preloaded = useRef<Set<string>>(new Set());
+
+  const preloadLightboxImage = (src: string) => {
+    if (preloaded.current.has(src)) return;
+    preloaded.current.add(src);
+    // Match the width Next.js will serve for the lightbox sizes prop:
+    // "(max-width: 767px) 94vw, min(94vw, 1280px)" → 828 on mobile, 1920 on desktop
+    const w = window.innerWidth <= 767 ? 828 : 1920;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=75`;
+    document.head.appendChild(link);
+  };
 
   return (
     <>
@@ -38,6 +52,7 @@ export default function GalleryGrid() {
               type="button"
               className={`gallery-image-container ${cell.cls} gallery-lightbox-trigger`}
               onClick={() => setActiveImage(images[i])}
+              onMouseEnter={() => preloadLightboxImage(images[i].src)}
               aria-label={`View image: ${images[i].alt}`}
             >
               <Image

@@ -34,6 +34,7 @@ const parallaxEls: ElConfig[] = [
   { selector: '.hero-visual',                  mx:   8, my:   8 },
   { selector: '.confetti-portrait-turquoise',  mx: -20, my:  16 },
   { selector: '.confetti-hb-yellow',           mx:  20, my: -20 },
+  { selector: '.confetti-hb-purple',           mx: -20, my:  16 },
   { selector: '.confetti-footer-yellow',       mx:  -8, my:  -8 },
   { selector: '.confetti-footer-red',          mx:  32, my: -40 },
 ];

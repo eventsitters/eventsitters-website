@@ -46,6 +46,8 @@ const CARDS: CardConfig[] = [
   { selector: ".pricing-card-negative",        baseRot: -0.8, hoverRot: 0, hoverScale: 1.015, playful: true },
   // Packages — festivals & markets card: straighten to 0
   { selector: ".festivals-markets.pale-blue",  baseRot:  0.6, hoverRot: 0, hoverScale: 1.015, playful: true },
+  // About Us — Hawke's Bay region card: straighten to 0
+  { selector: ".hb-region-card",               baseRot: -0.9, hoverRot: 0, hoverScale: 1.015, playful: true },
   // Packages — add-on cards: straighten to 0 + scale pop
   { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(2)", baseRot: -1.1, hoverRot: 0, hoverScale: 1.03, playful: true },
   { selector: ".pricing-addon-grid > .w-layout-cell:nth-child(3)", baseRot:  0.9, hoverRot: 0, hoverScale: 1.03, playful: true },

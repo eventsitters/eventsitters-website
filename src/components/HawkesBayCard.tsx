@@ -49,7 +49,7 @@ export default function HawkesBayCard() {
   return (
     <>
       {/* ── Card ───────────────────────────────────────────────────────────── */}
-      <div className="hb-region-card pale-blue">
+      <div className="hb-region-card pale-blue" onClick={() => setOpen(true)} role="button" aria-label="View our service area">
         <div className="hawkes-bay-visual-wrapper hb-card-visual">
           <div className="hawkes-bay-visual" />
           <Image
@@ -63,7 +63,7 @@ export default function HawkesBayCard() {
           <Image
             src="/images/confetti-purple-outline.svg"
             alt=""
-            className="confetti-hero-turquoise"
+            className="confetti-hb-purple"
             width={80}
             height={80}
             aria-hidden="true"

@@ -519,11 +519,18 @@ main {
   grid-template-columns: 2fr 3fr;
 }
 
+/* ── Caption section (homepage) ─────────────────────────────────────────────
+   .section has overflow:hidden by default (eventsitters.css) which clips the
+   confetti shapes when the parallax/collision animation moves them toward the
+   edge. Let the caption section's confetti spill freely. */
+.section:has(.container.caption) {
+  overflow: visible;
+}
+
 /* ── Hawke's Bay Region Card ─────────────────────────────────────────────────
-   Column-oriented card matching the festivals-markets card's visual style
-   (same border-radius, same padding, same pale-blue background) but with
-   the circular image at the top and body text below. The .container.hawkes-bay
-   is a centred flex column so max-width + auto margin centres the card. */
+   Mobile: column card (centred, max-width 520px).
+   Desktop (≥992px): horizontal row matching the festivals-markets card —
+   circular visual on the left, text body on the right. */
 .container.hawkes-bay {
   min-height: 0;
 }
@@ -538,16 +545,18 @@ main {
   max-width: 520px;
   width: 100%;
   margin: 5em 0;
+  transform: rotate(-0.9deg);
+  cursor: pointer;
 }
 
-/* Constrain the circular visual so it reads as a header image, not full-width */
+/* Constrain the circular visual on mobile */
 .hb-region-card .hawkes-bay-visual-wrapper {
   width: 75%;
   max-width: 300px;
   aspect-ratio: 1;
 }
 
-/* Text body: centred, column */
+/* Text body: centred column on mobile */
 .hb-region-card-body {
   display: flex;
   flex-direction: column;
@@ -555,6 +564,40 @@ main {
   text-align: center;
   align-items: center;
   width: 100%;
+}
+
+/* Desktop: switch to horizontal row, mirroring the festivals-markets card */
+@media screen and (min-width: 992px) {
+  .hb-region-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 3.5em;
+    max-width: none;
+    margin: 10em 0;
+  }
+
+  .hb-region-card .hawkes-bay-visual-wrapper {
+    width: 38%;
+    max-width: none;
+    flex-shrink: 0;
+  }
+
+  .hb-region-card-body {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .hb-region-card-body .w-button {
+    margin-top: 1.75em;
+  }
+}
+
+/* Unique confetti decoration for the HB card (distinct from hero turquoise) */
+.confetti-hb-purple {
+  width: 9em;
+  height: 9em;
+  position: absolute;
+  inset: auto 2% 2% auto;
 }
 
 /* ── Hawke's Bay Modal: venues + FAQ sections ─────────────────────────────── */
@@ -573,7 +616,8 @@ main {
 }
 
 .hb-modal-faqs-label {
-  padding: 1.75em 0 1em;
+  padding: 1.5em 0;
+  margin-bottom: 0;  /* override the super-heading margin so both sides are equal */
 }
 
 .hb-modal-faq-item {
@@ -878,7 +922,7 @@ main {
 /* Scattered cards effect — pricing base package card */
 .pricing-card-negative { transform: rotate(-0.8deg); }
 
-/* Quote / Get in Touch buttons fill on card hover — desktop only */
+/* Quote / Get in Touch / View Service Area buttons fill on card hover — desktop only */
 @media (hover: hover) and (pointer: fine) {
   .pricing-card-negative:hover .pricing-quote-btn {
     background-color: var(--dark-blue);
@@ -887,6 +931,12 @@ main {
   }
 
   .festivals-markets.pale-blue:hover .festivals-quote-btn {
+    background-color: var(--dark-blue);
+    border-color: var(--dark-blue);
+    color: #fff;
+  }
+
+  .hb-region-card:hover .button.outline.pale-blue {
     background-color: var(--dark-blue);
     border-color: var(--dark-blue);
     color: #fff;
@@ -1297,9 +1347,9 @@ button.events-tile:focus-visible {
   -webkit-backdrop-filter: blur(5px);
   z-index: 1050;
   display: flex;
-  align-items: flex-start;   /* card anchors at top, not centred */
-  justify-content: center;
-  padding: 2.5em 1.5em 6em;  /* generous bottom so card end breathes */
+  flex-direction: column;     /* main axis = vertical so margin:auto centres the card */
+  align-items: center;        /* horizontal centering */
+  padding: 2.5em 1.5em;
   overflow-y: auto;           /* backdrop scrolls — not the card body */
   animation: modal-backdrop-in 0.2s ease both;
 }
@@ -1318,6 +1368,8 @@ button.events-tile:focus-visible {
   width: 100%;
   max-width: min(1280px, calc(100vw - 3rem));
   /* No max-height — card extends as tall as its content */
+  margin: auto;   /* auto top+bottom margins centre the card when viewport is taller;
+                     collapse to 0 when card is taller so it scrolls from the top */
   border-radius: 20px;
   background: #fff;
   overflow: clip;  /* clips corners, does NOT create a scroll container */
@@ -1414,12 +1466,14 @@ button.events-tile:focus-visible {
 
 /* "Perfect for" label above the second checklist */
 .service-modal-section-label {
-  font-size: 0.72em;
-  font-weight: 700;
+  font-family: Loose Hand Luke, Arial, sans-serif;
+  font-size: 1.25em;
+  font-weight: 400;
+  color: currentColor;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 0.85em;
-  opacity: 0.65;
+  letter-spacing: 0;
+  opacity: 1;
+  margin: 0 0 0.75em;
 }
 .service-modal-card.pale-yellow    .service-modal-highlights { background-color: var(--pale-yellow);    color: var(--dark-yellow); }
 .service-modal-card.pale-turquoise .service-modal-highlights { background-color: var(--pale-turquoise); color: var(--dark-green);  }
