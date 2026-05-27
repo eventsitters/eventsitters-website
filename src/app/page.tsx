@@ -43,7 +43,7 @@ export default function Home() {
             <div className="p-large hero">We keep kids happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
           </div>
           <div className="hero-cta">
-            <SmoothAnchorLink href="#services" className="button outline w-button">Our Services</SmoothAnchorLink>
+            <a href="#services" className="button outline w-button">Our Services</a>
             <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
           </div>
           </div>

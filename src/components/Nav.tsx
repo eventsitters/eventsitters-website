@@ -87,22 +87,7 @@ export default function Nav() {
         </Link>
 
         <nav role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
-          <Link
-            href="/#services"
-            className="nav-item w-nav-link"
-            onClick={(e) => {
-              closeMenu();
-              // On the home page: prevent the default hash-jump and scroll smoothly.
-              // On other pages: let Next.js navigate normally (scroll-to-top is instant).
-              if (pathname === "/") {
-                const target = document.getElementById("services");
-                if (target) {
-                  e.preventDefault();
-                  target.scrollIntoView({ behavior: "smooth" });
-                }
-              }
-            }}
-          >Services</Link>
+          <a href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</a>
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Packages")}
 
