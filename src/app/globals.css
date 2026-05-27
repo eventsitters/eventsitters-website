@@ -608,10 +608,19 @@ main {
 
 /* Unique confetti decoration for the HB card (distinct from hero turquoise) */
 .confetti-hb-purple {
-  width: 9em;
-  height: 9em;
+  width: 6em;
+  height: 6em;
   position: absolute;
   inset: auto 2% 2% auto;
+}
+
+@media screen and (max-width: 991px) {
+  /* Scale down in proportion with .confetti-hb-yellow (eventsitters.css drops
+     that from 10em → 6em at this breakpoint; mirror the same ratio here). */
+  .confetti-hb-purple {
+    width: 4em;
+    height: 4em;
+  }
 }
 
 /* ── Hawke's Bay Modal: venues + FAQ sections ─────────────────────────────── */
