@@ -31,6 +31,21 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
+  // Keep --nav-height in sync with the actual rendered nav height so that
+  // scroll-padding-top (which consumes the variable) is always accurate.
+  useEffect(() => {
+    const navEl = document.querySelector<HTMLElement>(".nav-bar");
+    if (!navEl) return;
+    const ro = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        "--nav-height",
+        `${navEl.offsetHeight}px`
+      );
+    });
+    ro.observe(navEl);
+    return () => ro.disconnect();
+  }, []);
+
   // Hide nav on scroll-down, reveal on scroll-up.
   // 2 px delta threshold ignores micro-jitter.
   // Nav is always visible near the top (≤ 80 px) and while the menu is open.
