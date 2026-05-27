@@ -1359,7 +1359,6 @@ button.events-tile:focus-visible {
   appearance: none;
   font: inherit;
   transition: background-color 0.15s ease, transform 0.15s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .service-modal-close:hover {
   background: #fff;
@@ -1513,7 +1512,6 @@ button.events-tile:focus-visible {
     width: 36px;
     height: 36px;
     background: var(--pale-blue);
-    box-shadow: none;
   }
   /* Activity modals: close button sits directly on the coloured card — keep white */
   .activity-modal-card .service-modal-close {
