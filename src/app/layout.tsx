@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: "#ffffff",
+  themeColor: "transparent",
 };
 
 const localBusinessSchema = {

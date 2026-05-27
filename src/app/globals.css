@@ -23,8 +23,14 @@
    causing horizontal scroll on mobile. */
 html, body { overflow-x: hidden; }
 
-/* Smooth scroll for all on-page anchor navigation */
-html { scroll-behavior: smooth; scroll-padding-top: 5em; }
+/* scroll-padding-top offsets anchor targets below the sticky nav.
+   scroll-behavior is intentionally NOT set on html — Next.js resets scroll
+   to the top on every page navigation and a global smooth-scroll turns that
+   into a slow animated crawl from the bottom of the old page, which makes
+   nav clicks look like they've stalled. Smooth scrolling for in-page anchors
+   (e.g. /#services) is handled explicitly in Nav.tsx via scrollIntoView. */
+/* --nav-height is set by Nav.tsx's ResizeObserver; 9em is the SSR fallback. */
+html { scroll-padding-top: var(--nav-height, 9em); }
 
 /* ─── Sticky footer reveal ────────────────────────────────────────────────────
    Footer is pinned to the bottom of the viewport (z-index 0). .page-content
@@ -61,7 +67,15 @@ html { scroll-behavior: smooth; scroll-padding-top: 5em; }
 
 /* React-managed interactive states – supplements the Webflow base stylesheet */
 
-/* mobile nav keyframes removed — animation now runs via Nav.tsx (GSAP) */
+/* ─── Mobile nav open animation ──────────────────────────────────────────────
+   Replaces the previous GSAP fade + slide. Pure CSS keyframe so no JS timing
+   is needed — the menu fades in and slides down from -14 px on open.
+   Close is instant (display:none is applied when menu-open class is removed).
+   ─────────────────────────────────────────────────────────────────────────── */
+@keyframes navMenuIn {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ─── Mobile nav (≤767px) ───────────────────────────────────────────────────
    On desktop the full nav-menu is always visible and the hamburger is hidden
@@ -115,6 +129,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 5em; }
     background-color: var(--pale-blue);
     padding: 5em 1.5em max(1.75em, calc(1.05em + env(safe-area-inset-bottom, 0px)));
     z-index: 999;
+    animation: navMenuIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   /* First link gets all remaining space above it (half of the free space).
@@ -594,10 +609,19 @@ main {
 
 /* Unique confetti decoration for the HB card (distinct from hero turquoise) */
 .confetti-hb-purple {
-  width: 9em;
-  height: 9em;
+  width: 6em;
+  height: 6em;
   position: absolute;
   inset: auto 2% 2% auto;
+}
+
+@media screen and (max-width: 991px) {
+  /* Scale down in proportion with .confetti-hb-yellow (eventsitters.css drops
+     that from 10em → 6em at this breakpoint; mirror the same ratio here). */
+  .confetti-hb-purple {
+    width: 4em;
+    height: 4em;
+  }
 }
 
 /* ── Hawke's Bay Modal: venues + FAQ sections ─────────────────────────────── */
@@ -1137,7 +1161,15 @@ button.gallery-lightbox-trigger {
 }
 
 @media screen and (max-width: 767px) {
-  .lightbox-backdrop { padding: 1.25em; }
+  /* Solid pale-blue fill — same approach as activity modals. A single opaque
+     colour covers the full screen including safe-area zones without any
+     compositor-layer gaps. Desktop blur/gradient is untouched. */
+  .lightbox-backdrop {
+    padding: 1.25em;
+    background: var(--pale-yellow);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .lightbox-image-wrap { max-width: 100%; }
 }
 
@@ -1538,30 +1570,39 @@ button.events-tile:focus-visible {
 
 /* ── Mobile: full-screen modal, internal scroll ── */
 @media screen and (max-width: 767px) {
-  /* Backdrop: no scroll — card fills viewport and scrolls internally */
+  /* Backdrop: solid white, no backdrop-filter.
+     backdrop-filter on iOS Safari creates a compositor layer that doesn't
+     reliably extend into env(safe-area-inset-top), leaving white page
+     content visible behind the status bar. Service modal cards are white
+     so the backdrop matches. */
   .service-modal-backdrop {
     padding: 0;
     align-items: stretch;
     overflow-y: hidden;
+    background: #fff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-  /* Card: fills the backdrop (inset:0 = layout viewport) rather than dvh,
-     which is shorter than the layout viewport on iOS Safari and leaves white gaps. */
+  /* Card: absolutely fill the fixed backdrop, same fix as activity-modal-card. */
   .service-modal-card {
-    max-width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
-    overflow: hidden; /* restore so body can scroll internally */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
   }
 
-  /* Close bar: back in normal card flow, white bar at top */
+  /* Close bar: back in normal card flow, white bar at top.
+     padding-top includes safe-area-inset-top so the ✕ button clears the notch. */
   .service-modal-close-bar {
     position: static;
     border-radius: 0;
     background: #fff;
-    padding: 0.9em 1.1em 0.4em;
+    padding: calc(0.9em + env(safe-area-inset-top, 0px)) 1.1em 0.4em;
   }
 
   /* Close button: restore to pale-blue on the white close-bar (service modals) */
@@ -1810,14 +1851,27 @@ button.addon-card .paragraph-wrapper-tile.pricing {
 
 /* Mobile: full viewport, internal scroll */
 @media screen and (max-width: 767px) {
+  /* Backdrop: solid card colour, no backdrop-filter.
+     backdrop-filter on iOS Safari doesn't reliably extend into
+     env(safe-area-inset-top), leaving white showing behind the status bar.
+     --modal-bg is set as an inline style from the component. */
   .activity-modal-backdrop {
     padding: 0;
     align-items: stretch;
     overflow: hidden;
+    background: var(--modal-bg, #fff);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .activity-modal-card {
-    max-width: 100%;
-    height: 100%; /* fills the inset:0 backdrop; avoids dvh shortfall on iOS Safari */
+    /* Absolutely fill the fixed backdrop — bypasses all dvh/flex-height
+       quirks on iOS Safari. max-height from the desktop rule is overridden
+       so the card always covers the full screen, including the status-bar
+       zone, making setThemeColor() produce a seamless colour match. */
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     box-shadow: none;
   }
