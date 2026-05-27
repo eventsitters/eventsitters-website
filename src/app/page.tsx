@@ -40,7 +40,7 @@ export default function Home() {
               <div className="super-heading all-caps">Weddings, Parties &amp; Events</div>
             </div>
             <h1 className="title-hero">On-Location Kids&apos; Entertainment in Hawke&apos;s Bay</h1>
-            <div className="p-large hero">We keep kids happy, active, and looked after, so the grown-ups can actually focus on something else.</div>
+            <div className="p-large hero">We keep kids happy, active, and looked after, so the grown-ups can actually focus, relax or just have fun.</div>
           </div>
           <div className="hero-cta">
             <SmoothAnchorLink href="#services" className="button outline w-button">Our Services</SmoothAnchorLink>
