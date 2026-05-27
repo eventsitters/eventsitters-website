@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
 import { isScrollLocked } from "@/lib/scrollLock";
 import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
@@ -11,15 +10,16 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
   const pathname = usePathname();
-  const menuRef = useRef<HTMLElement>(null);
-  const hasOpenedRef = useRef(false);
 
+  // Close the mobile menu whenever the route changes (link click navigated away).
   useEffect(() => {
-    const val = menuOpen ? "hidden" : "";
-    document.body.style.overflow = val;
-    document.documentElement.style.overflow = val;
-    // Keep the mobile status bar in sync with the nav overlay.
-    // The overlay is var(--pale-blue); closing resets to transparent (the site default).
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Body scroll lock + mobile status bar colour while menu is open.
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.documentElement.style.overflow = menuOpen ? "hidden" : "";
     if (menuOpen) {
       setThemeColor("pale-blue");
     } else {
@@ -32,59 +32,27 @@ export default function Nav() {
   }, [menuOpen]);
 
   // Hide nav on scroll-down, reveal on scroll-up.
-  // Uses a 2px delta threshold to ignore micro-jitter.
-  // Nav is always visible near the top of the page (≤80px) and
-  // whenever the mobile menu is open.
+  // 2 px delta threshold ignores micro-jitter.
+  // Nav is always visible near the top (≤ 80 px) and while the menu is open.
+  // isScrollLocked() suppresses hide-on-scroll during SmoothAnchorLink animations
+  // so the nav doesn't slide away mid-programmatic-scroll.
   useEffect(() => {
     let lastY = window.scrollY;
-
     const onScroll = () => {
       const y = window.scrollY;
       const delta = y - lastY;
-      lastY = y; // always keep current so stale delta doesn't fire on unlock
-      if (menuOpen) return;          // never hide while mobile menu is open
-      if (isScrollLocked()) return;  // never hide during a programmatic scroll
-      if (y <= 80)          setNavHidden(false);
-      else if (delta > 2)   setNavHidden(true);
-      else if (delta < -2)  setNavHidden(false);
+      lastY = y;
+      if (menuOpen) return;
+      if (isScrollLocked()) return;
+      if (y <= 80)         setNavHidden(false);
+      else if (delta > 2)  setNavHidden(true);
+      else if (delta < -2) setNavHidden(false);
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [menuOpen]);
 
-  // Ensure nav is visible whenever the menu opens or closes
-  useEffect(() => {
-    if (menuOpen) setNavHidden(false);
-  }, [menuOpen]);
-
-  const closeMenu = useCallback(() => {
-    if (!menuOpen) return;
-    const menu = menuRef.current;
-    if (!menu) { setMenuOpen(false); return; }
-    gsap.killTweensOf(menu);
-    gsap.to(menu, {
-      autoAlpha: 0, y: -12, duration: 0.22, ease: "power2.in",
-      onComplete: () => setMenuOpen(false),
-    });
-  }, [menuOpen]);
-
-  useLayoutEffect(() => {
-    const menu = menuRef.current;
-    if (!menu) return;
-
-    if (menuOpen) {
-      hasOpenedRef.current = true;
-      gsap.killTweensOf(menu);
-      gsap.fromTo(menu,
-        { autoAlpha: 0, y: -16 },
-        { autoAlpha: 1, y: 0, duration: 0.32, ease: "power3.out", force3D: true }
-      );
-    } else if (hasOpenedRef.current) {
-      gsap.killTweensOf(menu);
-      gsap.set(menu, { clearProps: "all" });
-    }
-  }, [menuOpen]);
+  const closeMenu = () => setMenuOpen(false);
 
   const navLink = (href: string, label: string) => (
     <Link
@@ -103,14 +71,14 @@ export default function Nav() {
           <span className="event-sitters-logo" aria-hidden="true" />
         </Link>
 
-        <nav ref={menuRef} role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
+        <nav role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
           <Link
             href="/#services"
             className="nav-item w-nav-link"
             onClick={(e) => {
               closeMenu();
-              // On the home page: prevent default hash-jump and scroll smoothly instead.
-              // On other pages: let Next.js navigate normally (scroll-to-top is instant now).
+              // On the home page: prevent the default hash-jump and scroll smoothly.
+              // On other pages: let Next.js navigate normally (scroll-to-top is instant).
               if (pathname === "/") {
                 const target = document.getElementById("services");
                 if (target) {
@@ -149,7 +117,7 @@ export default function Nav() {
 
         <div
           className={`menu-button w-nav-button${menuOpen ? " menu-open" : ""}`}
-          onClick={() => menuOpen ? closeMenu() : setMenuOpen(true)}
+          onClick={() => setMenuOpen(prev => !prev)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? (

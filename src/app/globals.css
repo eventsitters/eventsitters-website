@@ -66,7 +66,15 @@ html { scroll-padding-top: 5em; }
 
 /* React-managed interactive states – supplements the Webflow base stylesheet */
 
-/* mobile nav keyframes removed — animation now runs via Nav.tsx (GSAP) */
+/* ─── Mobile nav open animation ──────────────────────────────────────────────
+   Replaces the previous GSAP fade + slide. Pure CSS keyframe so no JS timing
+   is needed — the menu fades in and slides down from -14 px on open.
+   Close is instant (display:none is applied when menu-open class is removed).
+   ─────────────────────────────────────────────────────────────────────────── */
+@keyframes navMenuIn {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ─── Mobile nav (≤767px) ───────────────────────────────────────────────────
    On desktop the full nav-menu is always visible and the hamburger is hidden
@@ -120,6 +128,7 @@ html { scroll-padding-top: 5em; }
     background-color: var(--pale-blue);
     padding: 5em 1.5em max(1.75em, calc(1.05em + env(safe-area-inset-bottom, 0px)));
     z-index: 999;
+    animation: navMenuIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   /* First link gets all remaining space above it (half of the free space).
