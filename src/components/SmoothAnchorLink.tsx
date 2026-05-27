@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { lockScroll } from "@/lib/scrollLock";
 
-gsap.registerPlugin(ScrollToPlugin);
-
-const DURATION = 0.9; // seconds
+// Native smooth scroll duration is browser-controlled; lock slightly longer
+// than a typical smooth-scroll completes so the nav doesn't hide mid-travel.
+const LOCK_MS = 900;
 
 interface Props {
   href: string;
@@ -30,20 +28,22 @@ export default function SmoothAnchorLink({ href, className, onClick, children }:
     onClick?.();
     if (isSamePage) {
       e.preventDefault();
-      // Read the current nav height so the section heading lands just below it.
-      // Falls back to 72 px if the element isn't found.
+
+      const target = document.getElementById(hash);
+      if (!target) return;
+
+      // Offset by the sticky nav height so the section heading lands just below it.
       const navHeight =
         (document.querySelector(".nav-bar") as HTMLElement)?.offsetHeight ?? 72;
+      const top =
+        target.getBoundingClientRect().top + window.scrollY - navHeight;
 
-      // Lock the nav's hide-on-scroll logic for the animation duration so it
-      // doesn't slide away mid-scroll and cause visual jitter.
-      lockScroll(DURATION * 1000);
+      // Lock the nav's hide-on-scroll logic so it doesn't slide away while the
+      // browser animates. Native smooth scroll is hardware-accelerated and avoids
+      // the rAF / sticky-recalculation jitter that GSAP ScrollToPlugin caused.
+      lockScroll(LOCK_MS);
 
-      gsap.to(window, {
-        scrollTo: { y: `#${hash}`, offsetY: navHeight },
-        duration: DURATION,
-        ease: "power2.inOut",
-      });
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 
