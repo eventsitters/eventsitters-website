@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
+import { isScrollLocked } from "@/lib/scrollLock";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,13 +31,14 @@ export default function Nav() {
     let lastY = window.scrollY;
 
     const onScroll = () => {
-      if (menuOpen) return;          // never hide while mobile menu is open
       const y = window.scrollY;
       const delta = y - lastY;
+      lastY = y; // always keep current so stale delta doesn't fire on unlock
+      if (menuOpen) return;          // never hide while mobile menu is open
+      if (isScrollLocked()) return;  // never hide during a programmatic scroll
       if (y <= 80)          setNavHidden(false);
       else if (delta > 2)   setNavHidden(true);
       else if (delta < -2)  setNavHidden(false);
-      lastY = y;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });

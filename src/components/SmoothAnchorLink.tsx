@@ -4,8 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { lockScroll } from "@/lib/scrollLock";
 
 gsap.registerPlugin(ScrollToPlugin);
+
+const DURATION = 0.9; // seconds
 
 interface Props {
   href: string;
@@ -27,9 +30,18 @@ export default function SmoothAnchorLink({ href, className, onClick, children }:
     onClick?.();
     if (isSamePage) {
       e.preventDefault();
+      // Read the current nav height so the section heading lands just below it.
+      // Falls back to 72 px if the element isn't found.
+      const navHeight =
+        (document.querySelector(".nav-bar") as HTMLElement)?.offsetHeight ?? 72;
+
+      // Lock the nav's hide-on-scroll logic for the animation duration so it
+      // doesn't slide away mid-scroll and cause visual jitter.
+      lockScroll(DURATION * 1000);
+
       gsap.to(window, {
-        scrollTo: { y: `#${hash}`, offsetY: 0 },
-        duration: 0.9,
+        scrollTo: { y: `#${hash}`, offsetY: navHeight },
+        duration: DURATION,
         ease: "power2.inOut",
       });
     }
