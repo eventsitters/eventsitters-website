@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
+import HawkesBayCard from "@/components/HawkesBayCard";
 
 const StarIcon = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,25 +218,10 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Hawke's Bay */}
+      {/* Where We Work */}
       <section className="section">
         <div className="container hawkes-bay">
-          <div className="w-layout-layout hawkes-bay-grid wf-layout-layout">
-            <div className="w-layout-cell cell-4">
-              <div className="hawkes-bay-visual-wrapper">
-                <div className="hawkes-bay-visual" />
-                <Image src="/images/confetti-yellow.svg" alt="Confetti" className="confetti-hb-yellow" width={80} height={80} />
-                <Image src="/images/confetti-purple-outline.svg" alt="Confetti" className="confetti-hero-turquoise" width={80} height={80} />
-              </div>
-            </div>
-            <div className="w-layout-cell cell">
-              <div className="festivals-markets-text-wrapper">
-                <h3 className="super-heading all-caps">Where we work</h3>
-                <h2 className="headline-medium">Homegrown in Hawke&apos;s Bay</h2>
-                <p className="p-medium">We&apos;re a local business serving Napier, Hastings, Havelock North, and the wider Hawke&apos;s Bay region, and we&apos;re happy to travel to your venue. We know the local spaces, understand the local crowd, and love showing up for local events.</p>
-              </div>
-            </div>
-          </div>
+          <HawkesBayCard />
         </div>
       </section>
     </>

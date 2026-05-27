@@ -87,7 +87,7 @@ export default function Home() {
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>
-            <h2 className="headline-medium copy-text quote-form">Tell us about your event, we&apos;ll handle the rest.</h2>
+            <h2 className="headline-medium copy-text quote-form">Tell us about your event. We&apos;ll handle the rest.</h2>
           </div>
           <div className="quote-request-form-wrapper">
             <QuoteForm />
