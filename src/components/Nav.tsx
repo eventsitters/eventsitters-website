@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { isScrollLocked } from "@/lib/scrollLock";
 import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
+import SmoothAnchorLink from "@/components/SmoothAnchorLink";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -87,7 +88,7 @@ export default function Nav() {
         </Link>
 
         <nav role="navigation" className={`nav-menu w-nav-menu${menuOpen ? " menu-open" : ""}`}>
-          <a href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</a>
+          <SmoothAnchorLink href="/#services" className="nav-item w-nav-link" onClick={closeMenu}>Services</SmoothAnchorLink>
           {navLink("/about-us", "About Us")}
           {navLink("/packages", "Packages")}
 
