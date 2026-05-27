@@ -21,8 +21,14 @@ const DEFAULT = "#ffffff";
 
 export function setThemeColor(colorKey: string): void {
   const content = THEME_COLORS[colorKey] ?? colorKey;
-  const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if (meta) meta.content = content;
+  // iOS Safari does not re-read an updated content attribute — it caches the
+  // value from the first time it sees the element. Removing and re-creating
+  // the tag forces the browser to pick up the new colour immediately.
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+  const meta = document.createElement("meta");
+  meta.name = "theme-color";
+  meta.content = content;
+  document.head.appendChild(meta);
 }
 
 export function resetThemeColor(): void {
