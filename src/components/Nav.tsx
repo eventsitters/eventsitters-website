@@ -18,12 +18,9 @@ export default function Nav() {
     const val = menuOpen ? "hidden" : "";
     document.body.style.overflow = val;
     document.documentElement.style.overflow = val;
-    if (menuOpen) setThemeColor("pale-blue");
-    else resetThemeColor();
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
-      resetThemeColor();
     };
   }, [menuOpen]);
 
@@ -56,6 +53,8 @@ export default function Nav() {
 
   const closeMenu = useCallback(() => {
     if (!menuOpen) return;
+    // Reset synchronously — don't wait for useEffect; iOS Safari won't see it otherwise
+    resetThemeColor();
     const menu = menuRef.current;
     if (!menu) { setMenuOpen(false); return; }
     gsap.killTweensOf(menu);
@@ -130,7 +129,14 @@ export default function Nav() {
 
         <div
           className={`menu-button w-nav-button${menuOpen ? " menu-open" : ""}`}
-          onClick={() => menuOpen ? closeMenu() : setMenuOpen(true)}
+          onClick={() => {
+            if (menuOpen) {
+              closeMenu(); // resetThemeColor called inside
+            } else {
+              setThemeColor("pale-blue");
+              setMenuOpen(true);
+            }
+          }}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? (
