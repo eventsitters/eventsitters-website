@@ -7,6 +7,7 @@ import gsap from "gsap";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLElement>(null);
   const hasOpenedRef = useRef(false);
@@ -19,6 +20,32 @@ export default function Nav() {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
+  }, [menuOpen]);
+
+  // Hide nav on scroll-down, reveal on scroll-up.
+  // Uses a 2px delta threshold to ignore micro-jitter.
+  // Nav is always visible near the top of the page (≤80px) and
+  // whenever the mobile menu is open.
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    const onScroll = () => {
+      if (menuOpen) return;          // never hide while mobile menu is open
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (y <= 80)          setNavHidden(false);
+      else if (delta > 2)   setNavHidden(true);
+      else if (delta < -2)  setNavHidden(false);
+      lastY = y;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [menuOpen]);
+
+  // Ensure nav is visible whenever the menu opens or closes
+  useEffect(() => {
+    if (menuOpen) setNavHidden(false);
   }, [menuOpen]);
 
   const closeMenu = useCallback(() => {
@@ -60,7 +87,7 @@ export default function Nav() {
   );
 
   return (
-    <div role="banner" className={`nav-bar w-nav${menuOpen ? " menu-open" : ""}`}>
+    <div role="banner" className={`nav-bar w-nav${menuOpen ? " menu-open" : ""}${navHidden ? " nav-hidden" : ""}`}>
       <div className="nav-wrapper">
         <Link href="/" className="logo" onClick={closeMenu} aria-label="Event Sitters – home">
           <span className="event-sitters-logo" aria-hidden="true" />
