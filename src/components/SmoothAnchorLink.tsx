@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { lockScroll } from "@/lib/scrollLock";
 
-// Native smooth scroll duration is browser-controlled; lock slightly longer
-// than a typical smooth-scroll completes so the nav doesn't hide mid-travel.
+// Keep the nav visible for the scroll duration (browser-controlled).
+// This matches the UX of the nav's own hash links.
 const LOCK_MS = 900;
 
 interface Props {
@@ -24,26 +24,15 @@ export default function SmoothAnchorLink({ href, className, onClick, children }:
 
   const isSamePage = !!hash && pathname === (pagePart || "/");
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = () => {
     onClick?.();
     if (isSamePage) {
-      e.preventDefault();
-
-      const target = document.getElementById(hash);
-      if (!target) return;
-
-      // Offset by the sticky nav height so the section heading lands just below it.
-      const navHeight =
-        (document.querySelector(".nav-bar") as HTMLElement)?.offsetHeight ?? 72;
-      const top =
-        target.getBoundingClientRect().top + window.scrollY - navHeight;
-
-      // Lock the nav's hide-on-scroll logic so it doesn't slide away while the
-      // browser animates. Native smooth scroll is hardware-accelerated and avoids
-      // the rAF / sticky-recalculation jitter that GSAP ScrollToPlugin caused.
-      lockScroll(LOCK_MS);
-
-      window.scrollTo({ top, behavior: "smooth" });
+      // Let the browser handle the hash navigation natively — the same path
+      // the nav's plain <Link href="/#services"> takes. CSS scroll-behavior:smooth
+      // + scroll-padding-top on html already does the right thing; using
+      // window.scrollTo() with a manual offset caused a double-offset because
+      // the browser also applies scroll-padding-top to native smooth scrolls.
+      lockScroll(LOCK_MS); // keep nav visible while the animation runs
     }
   };
 
