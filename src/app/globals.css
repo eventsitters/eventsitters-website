@@ -24,7 +24,7 @@
 html, body { overflow-x: hidden; }
 
 /* Smooth scroll for all on-page anchor navigation */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 5em; }
 
 /* ─── Sticky footer reveal ────────────────────────────────────────────────────
    Footer is pinned to the bottom of the viewport (z-index 0). .page-content
@@ -110,7 +110,7 @@ html { scroll-behavior: smooth; }
     position: fixed;
     inset: 0;
     background-color: var(--pale-blue);
-    padding: 5em 1.5em max(2.5em, calc(1.5em + env(safe-area-inset-bottom, 0px)));
+    padding: 5em 1.5em max(1.75em, calc(1.05em + env(safe-area-inset-bottom, 0px)));
     z-index: 999;
   }
 
@@ -143,10 +143,10 @@ html { scroll-behavior: smooth; }
     height: 27px;
   }
 
-  /* Contact Us button: full width, sits just below the social icons */
+  /* Contact Us button: full width, sits below the social icons with extra breathing room */
   .nav-menu.menu-open .nav-button-wrapper {
     width: 100%;
-    padding-top: 0.75em;
+    padding-top: 1.5em;
   }
   .nav-menu.menu-open .nav-button-wrapper .w-button {
     display: block;
@@ -372,7 +372,7 @@ main {
 .nav-bar {
   position: sticky;
   top: 0;
-  transition: transform 0.3s ease, background-color 0.22s ease;
+  transition: transform 0.3s ease;
 }
 .nav-bar.nav-hidden {
   transform: translateY(-100%);
@@ -1489,11 +1489,11 @@ button.events-tile:focus-visible {
     overflow-y: hidden;
   }
 
-  /* Card: fixed to full viewport height, internal overflow */
+  /* Card: fills the backdrop (inset:0 = layout viewport) rather than dvh,
+     which is shorter than the layout viewport on iOS Safari and leaves white gaps. */
   .service-modal-card {
     max-width: 100%;
-    max-height: 100dvh;
-    height: 100dvh;
+    height: 100%;
     border-radius: 0;
     overflow: hidden; /* restore so body can scroll internally */
     display: flex;
@@ -1508,12 +1508,16 @@ button.events-tile:focus-visible {
     padding: 0.9em 1.1em 0.4em;
   }
 
-  /* Close button: restore to pale-blue on white bar */
+  /* Close button: restore to pale-blue on the white close-bar (service modals) */
   .service-modal-close {
     width: 36px;
     height: 36px;
     background: var(--pale-blue);
     box-shadow: none;
+  }
+  /* Activity modals: close button sits directly on the coloured card — keep white */
+  .activity-modal-card .service-modal-close {
+    background: rgba(255,255,255,0.92);
   }
 
   /* Body: fills remaining height, scrolls internally */
@@ -1754,11 +1758,11 @@ button.addon-card .paragraph-wrapper-tile.pricing {
   .activity-modal-backdrop {
     padding: 0;
     align-items: stretch;
+    overflow: hidden;
   }
   .activity-modal-card {
     max-width: 100%;
-    max-height: var(--modal-height, 100dvh);
-    height: var(--modal-height, 100dvh);
+    height: 100%; /* fills the inset:0 backdrop; avoids dvh shortfall on iOS Safari */
     border-radius: 0;
     box-shadow: none;
   }
