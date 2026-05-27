@@ -3,6 +3,7 @@
 import { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type ServiceData = {
   id: string;
@@ -34,13 +35,14 @@ export default function ServiceModal({ service, onClose }: Props) {
     if (!service) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
-    // Lock scroll on both html and body to cover all browsers
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    setThemeColor(service.color);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [service, onClose]);
 

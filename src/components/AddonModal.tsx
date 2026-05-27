@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useModalHeight } from "./useModalHeight";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type AddonData = {
   id: string;
@@ -29,10 +30,12 @@ export default function AddonModal({ addon, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    setThemeColor(addon.color);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [addon, onClose]);
 

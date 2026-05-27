@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 const locations = [
   "Napier",
@@ -36,10 +37,12 @@ export default function HawkesBayCard() {
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    setThemeColor("pale-purple");
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [open, close]);
 

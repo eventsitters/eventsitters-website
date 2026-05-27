@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useModalHeight } from "./useModalHeight";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export type ActivityData = {
   id: string;
@@ -31,10 +32,12 @@ export default function ActivityModal({ activity, onClose }: Props) {
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    setThemeColor(activity.color);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [activity, onClose]);
 

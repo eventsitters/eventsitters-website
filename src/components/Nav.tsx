@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { isScrollLocked } from "@/lib/scrollLock";
+import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,9 +18,12 @@ export default function Nav() {
     const val = menuOpen ? "hidden" : "";
     document.body.style.overflow = val;
     document.documentElement.style.overflow = val;
+    if (menuOpen) setThemeColor("pale-blue");
+    else resetThemeColor();
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      resetThemeColor();
     };
   }, [menuOpen]);
 
