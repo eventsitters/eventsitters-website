@@ -62,7 +62,9 @@ export default function Footer() {
         <div className="confetti-footer-yellow" />
         <div className="div-block-4">
           <div className="footer-disclaimer">© {new Date().getFullYear()} Event Sitters</div>
-          <div className="footer-disclaimer">Made in Hawke&apos;s Bay, Aotearoa.</div>
+          <a href="https://www.rcostudio.nz" target="_blank" rel="noopener noreferrer" className="footer-disclaimer footer-credit-link">
+            Made by R&amp;Co.
+          </a>
         </div>
         <div className="confetti-footer-red" />
       </div>

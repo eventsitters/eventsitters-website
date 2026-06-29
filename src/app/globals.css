@@ -1971,3 +1971,17 @@ button.addon-card .paragraph-wrapper-tile.pricing {
   .events-tile.pale-turquoise:hover .events-tile-cta { background-color: var(--dark-green);   border-color: var(--dark-green);   color: #fff; }
   .events-tile.pale-purple:hover    .events-tile-cta { background-color: var(--dark-purple);  border-color: var(--dark-purple);  color: #fff; }
 }
+
+/* Footer credit link — inherits .footer-disclaimer sizing, stays inline so it
+   sits at the end of the space-between row instead of stretching full width. */
+.footer-credit-link {
+  display: inline;
+  width: auto;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-credit-link:hover {
+  color: var(--yellow);
+}
