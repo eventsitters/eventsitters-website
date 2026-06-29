@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="footer-tagline-wrapper">
               <div className="footer-headline-wrapper">
                 <h2 className="headline-medium footer">Event Sitters</h2>
-                <div className="p-medium">Kids&apos; entertainment for weddings, work functions, public events and private celebrations across Hawke&apos;s Bay, including Napier, Hastings and Havelock North.</div>
+                <div className="p-medium footer-tagline">Kids&apos; entertainment for weddings, work functions, public events and private celebrations across Hawke&apos;s Bay, including Napier, Hastings and Havelock North.</div>
               </div>
               <div className="footer-contact-wrapper">
                 <div className="footer-link-label-wrapper">

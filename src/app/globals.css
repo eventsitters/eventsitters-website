@@ -1985,3 +1985,9 @@ button.addon-card .paragraph-wrapper-tile.pricing {
 .footer-credit-link:hover {
   color: var(--yellow);
 }
+
+/* 16px target, derived from the 16px root font-size on body (eventsitters.css)
+   that .p-medium's em values are based on: 16 / 16 = 1em at all breakpoints. */
+.footer-tagline.p-medium {
+  font-size: 1em;
+}
