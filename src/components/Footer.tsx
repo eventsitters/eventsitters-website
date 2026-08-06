@@ -63,7 +63,7 @@ export default function Footer() {
         <div className="div-block-4">
           <div className="footer-disclaimer">© {new Date().getFullYear()} Event Sitters</div>
           <a href="https://www.rcostudio.nz" target="_blank" rel="noopener noreferrer" className="footer-disclaimer footer-credit-link">
-            Made by R&amp;Co.
+            Site by R&amp;Co.
           </a>
         </div>
         <div className="confetti-footer-red" />
