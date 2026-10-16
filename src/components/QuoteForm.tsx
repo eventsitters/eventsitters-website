@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import Confetti from "./Confetti";
+import { track } from "@/lib/analytics";
 
 type FormData = {
   eventType: string;
@@ -53,6 +54,8 @@ export default function QuoteForm() {
   const formRef = useRef<HTMLDivElement>(null);
 
   const goToStep = (n: number) => {
+    // Steps are 0-indexed; report them as 1–3 to match what visitors see.
+    if (n > step) track("Quote form step", { step: n + 1 });
     setStep(n);
     requestAnimationFrame(() => {
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -117,15 +120,18 @@ export default function QuoteForm() {
         body: JSON.stringify(form),
       });
       if (res.ok) {
+        track("Quote submitted", { eventType: form.eventType || "unspecified" });
         setForm(defaultForm);
         goToStep(0);
         setStatus("idle");
         fireConfetti();
         triggerToast();
       } else {
+        track("Quote submit failed", { status: res.status });
         setStatus("error");
       }
     } catch {
+      track("Quote submit failed", { status: "network" });
       setStatus("error");
     }
   };

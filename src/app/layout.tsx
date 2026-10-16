@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RainbowAnimation from "@/components/RainbowAnimation";
@@ -79,6 +80,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
         </div>
         <Footer />
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="bf93ef88-215d-44ce-a73b-12330a9b2faf"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

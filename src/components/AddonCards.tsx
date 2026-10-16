@@ -92,6 +92,8 @@ export default function AddonCards() {
             type="button"
             className={`addon-card ${addon.color}`}
             onClick={() => setOpenId(addon.id)}
+            data-umami-event="Add-on opened"
+            data-umami-event-addon={addon.title}
           >
             <Image
               src={addon.img}

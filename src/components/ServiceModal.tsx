@@ -88,7 +88,7 @@ export default function ServiceModal({ service, onClose }: Props) {
                 <p key={i} className="p-medium">{p}</p>
               ))}
               <div className="service-modal-cta">
-                <button type="button" className="button w-button" onClick={handleQuoteClick}>
+                <button type="button" className="button w-button" onClick={handleQuoteClick} data-umami-event="Request quote" data-umami-event-location="service-modal" data-umami-event-service={service.title}>
                   Request a Quote
                 </button>
               </div>

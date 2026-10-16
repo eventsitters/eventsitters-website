@@ -44,8 +44,8 @@ export default function ContactUs() {
                   <div className="p-medium">Have a question, or ready to lock in your date? Give us a call or send a message. We&apos;ll get back to you quickly.</div>
                 </div>
                 <div className="contact-cta-wrapper">
-                  <a href="tel:+642108279718" className="button static w-button">Give Us a Call</a>
-                  <a href="mailto:info@eventsitters.nz" className="button static w-button">Send Us an Email</a>
+                  <a href="tel:+642108279718" className="button static w-button" data-umami-event="Call" data-umami-event-location="contact-page">Give Us a Call</a>
+                  <a href="mailto:info@eventsitters.nz" className="button static w-button" data-umami-event="Email" data-umami-event-location="contact-page">Send Us an Email</a>
                 </div>
               </div>
             </div>

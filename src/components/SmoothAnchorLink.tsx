@@ -12,6 +12,7 @@ interface Props {
   className?: string;
   onClick?: () => void;
   children: React.ReactNode;
+  [data: `data-${string}`]: string | undefined;
 }
 
 /**
@@ -22,7 +23,7 @@ interface Props {
  * Next.js page-transition scroll resets (window.scrollTo(0, 0)) stay instant.
  * scroll-padding-top: var(--nav-height) on <html> handles the sticky-nav offset.
  */
-export default function SmoothAnchorLink({ href, className, onClick, children }: Props) {
+export default function SmoothAnchorLink({ href, className, onClick, children, ...dataAttrs }: Props) {
   const pathname = usePathname();
 
   // Normalise href → { page, hash }
@@ -48,7 +49,7 @@ export default function SmoothAnchorLink({ href, className, onClick, children }:
   };
 
   return (
-    <a href={href} className={className} onClick={handleClick}>
+    <a href={href} className={className} onClick={handleClick} {...dataAttrs}>
       {children}
     </a>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useLayoutEffect } from "react";
+import { track } from "@/lib/analytics";
 
 const faqs = [
   {
@@ -114,7 +115,10 @@ export default function FAQ({
                 key={i}
                 item={item}
                 isOpen={open === i}
-                onToggle={() => setOpen(open === i ? null : i)}
+                onToggle={() => {
+                  if (open !== i) track("FAQ opened", { question: item.q });
+                  setOpen(open === i ? null : i);
+                }}
                 showSeparator={i < questions.length - 1}
               />
             ))}

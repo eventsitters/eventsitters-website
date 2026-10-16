@@ -86,7 +86,7 @@ export default function Packages() {
               <h2 className="headline-medium">Base Package</h2>
               <p className="package-price">From $300 <span className="package-price-range">depending on your event</span></p>
               <p className="p-medium">One clear starting point. Four hours, a properly decorated space, and a hands-on team keeping the kids happy. Build from there however you like.</p>
-              <SmoothAnchorLink href="#quote-form" className="button outline pale-blue w-button pricing-quote-btn">Get Your Custom Quote</SmoothAnchorLink>
+              <SmoothAnchorLink href="#quote-form" className="button outline pale-blue w-button pricing-quote-btn" data-umami-event="Request quote" data-umami-event-location="packages-base">Get Your Custom Quote</SmoothAnchorLink>
             </div>
             <div className="pricing-package-calculation-wrapper">
               <div className="pricing-features-wrapper">
@@ -152,7 +152,7 @@ export default function Packages() {
               <h3 className="super-heading all-caps">Special Rates</h3>
               <h2 className="headline-medium">Festivals, Markets, and Fairs</h2>
               <p className="p-medium">Running a festival, market, or fair? We&apos;re at home in bigger, busier settings and offer flexible rates to match. Get in touch and we&apos;ll work out what fits.</p>
-              <Link href="mailto:info@eventsitters.nz?subject=Special%20Rates%20Request" className="button outline pale-blue w-button festivals-quote-btn">Get in Touch</Link>
+              <Link href="mailto:info@eventsitters.nz?subject=Special%20Rates%20Request" className="button outline pale-blue w-button festivals-quote-btn" data-umami-event="Email" data-umami-event-location="packages-festivals">Get in Touch</Link>
             </div>
           </div>
           <div className="confetti-festivals-markets-blue" />

@@ -43,8 +43,8 @@ export default function Home() {
             <div className="p-large hero">We keep kids happy, active, and looked after, so the grown-ups can actually focus, relax or just have fun.</div>
           </div>
           <div className="hero-cta">
-            <SmoothAnchorLink href="#services" className="button outline w-button">Our Services</SmoothAnchorLink>
-            <SmoothAnchorLink href="#quote-form" className="button w-button">Request a Quote</SmoothAnchorLink>
+            <SmoothAnchorLink href="#services" className="button outline w-button" data-umami-event="View services" data-umami-event-location="home-hero">Our Services</SmoothAnchorLink>
+            <SmoothAnchorLink href="#quote-form" className="button w-button" data-umami-event="Request quote" data-umami-event-location="home-hero">Request a Quote</SmoothAnchorLink>
           </div>
           </div>
         <div className="confetti-header-pink" />
