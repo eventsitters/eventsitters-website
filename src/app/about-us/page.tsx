@@ -103,7 +103,7 @@ export default function AboutUs() {
       }) }} />
       <ConfettiParallax els={parallaxEls} />
       {/* Hero */}
-      <section className="section">
+      <section className="section" data-track-section="hero">
         <div className="container hero about">
           <div className="w-layout-layout header-grid wf-layout-layout">
             <div className="w-layout-cell cell-3">
@@ -126,7 +126,7 @@ export default function AboutUs() {
       </section>
 
       {/* What We Offer */}
-      <section className="section">
+      <section className="section" data-track-section="what-we-offer">
         <div className="container">
           <div className="w-layout-layout about-offer-grid wf-layout-layout">
             <div className="w-layout-cell">
@@ -169,7 +169,7 @@ export default function AboutUs() {
       </section>
 
       {/* Portrait / Bio */}
-      <section className="section">
+      <section className="section" data-track-section="bio">
         <div className="container">
           <div className="w-layout-layout portrait-grid wf-layout-layout">
             <div className="w-layout-cell cell-4">
@@ -200,7 +200,7 @@ export default function AboutUs() {
       </section>
 
       {/* Process */}
-      <section className="section pale-blue">
+      <section className="section pale-blue" data-track-section="process">
         <div className="container process">
           <h2 className="headline-medium">How It Works</h2>
           <div className="w-layout-layout process-grid wf-layout-layout">
@@ -220,7 +220,7 @@ export default function AboutUs() {
       </section>
 
       {/* Where We Work */}
-      <section className="section">
+      <section className="section" data-track-section="where-we-work">
         <div className="container hawkes-bay">
           <HawkesBayCard />
         </div>

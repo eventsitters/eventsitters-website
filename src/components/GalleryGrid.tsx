@@ -52,6 +52,8 @@ export default function GalleryGrid() {
               type="button"
               className={`gallery-image-container ${cell.cls} gallery-lightbox-trigger`}
               onClick={() => setActiveImage(images[i])}
+              data-umami-event="Gallery image opened"
+              data-umami-event-image={images[i].src.split("/").pop()}
               onMouseEnter={() => preloadLightboxImage(images[i].src)}
               aria-label={`View image: ${images[i].alt}`}
             >

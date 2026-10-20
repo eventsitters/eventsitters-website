@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { setThemeColor, resetThemeColor } from "@/lib/themeColor";
+import { track } from "@/lib/analytics";
 
 const locations = [
   "Napier",
@@ -33,6 +34,8 @@ export default function HawkesBayCard() {
 
   useEffect(() => {
     if (!open) return;
+    // Tracked here rather than per click: the card and its button both open the modal.
+    track("Service area opened");
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";

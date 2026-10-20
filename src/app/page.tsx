@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <ConfettiParallax els={parallaxEls} />
       {/* Hero */}
-      <section className="section hero">
+      <section className="section hero" data-track-section="hero">
         <div className="container hero">
           <div className="title-wrapper">
             <div className="super-heading-wrapper">
@@ -54,7 +54,7 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section id="services" className="section">
+      <section id="services" className="section" data-track-section="services">
         <ServiceTiles />
       </section>
 
@@ -71,19 +71,19 @@ export default function Home() {
       </section>
 
       {/* Activities */}
-      <section id="activities" className="section">
+      <section id="activities" className="section" data-track-section="activities">
         <ActivityTiles />
       </section>
 
       {/* Gallery */}
-      <section className="section">
+      <section className="section" data-track-section="gallery">
         <div className="container">
           <GalleryGrid />
         </div>
       </section>
 
       {/* Quote Form */}
-      <section id="quote-form" className="section form pale-blue">
+      <section id="quote-form" className="section form pale-blue" data-track-section="quote-form">
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>

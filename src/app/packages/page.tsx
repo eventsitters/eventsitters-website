@@ -57,7 +57,7 @@ export default function Packages() {
     <>
       <ConfettiParallax els={parallaxEls} />
       {/* Hero */}
-      <section className="section">
+      <section className="section" data-track-section="hero">
         <div className="container hero about">
           <div className="w-layout-layout header-grid wf-layout-layout">
             <div className="w-layout-cell cell-3">
@@ -79,7 +79,7 @@ export default function Packages() {
       </section>
 
       {/* Base Package */}
-      <section className="section">
+      <section className="section" data-track-section="base-package">
         <div className="container">
           <div className="pricing-card-negative pale-blue">
             <div className="paragraph-wrapper pricing">
@@ -109,7 +109,7 @@ export default function Packages() {
       </section>
 
       {/* Add-Ons */}
-      <section className="section">
+      <section className="section" data-track-section="add-ons">
         <div className="container">
           <div className="w-layout-layout pricing-addon-grid wf-layout-layout">
             <div className="w-layout-cell">
@@ -124,7 +124,7 @@ export default function Packages() {
       </section>
 
       {/* Process */}
-      <section className="section pale-blue">
+      <section className="section pale-blue" data-track-section="process">
         <div className="container process">
           <h2 className="headline-medium">How It Works</h2>
           <div className="w-layout-layout process-grid wf-layout-layout">
@@ -144,7 +144,7 @@ export default function Packages() {
       </section>
 
       {/* Festivals & Markets */}
-      <section className="section">
+      <section className="section" data-track-section="festivals">
         <div className="container festivals-markets">
           <div className="festivals-markets pale-blue">
             <div className="festivals-markets-image-container" />
@@ -202,7 +202,7 @@ export default function Packages() {
       }) }} />
 
       {/* Quote Form */}
-      <section id="quote-form" className="section form">
+      <section id="quote-form" className="section form" data-track-section="quote-form">
         <div className="container form">
           <div className="home-quote-form-header-wrapper">
             <div className="super-heading all-caps">Quote Request</div>

@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import Confetti from "./Confetti";
-import { track } from "@/lib/analytics";
+import { track, daysUntil, leadTimeBucket } from "@/lib/analytics";
 
 type FormData = {
   eventType: string;
@@ -52,10 +52,11 @@ export default function QuoteForm() {
   const toastT1 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastT2 = useRef<ReturnType<typeof setTimeout> | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
 
   const goToStep = (n: number) => {
     // Steps are 0-indexed; report them as 1–3 to match what visitors see.
-    if (n > step) track("Quote form step", { step: n + 1 });
+    if (n > step) track("Quote form step", { step: n + 1, eventType: form.eventType || "unspecified" });
     setStep(n);
     requestAnimationFrame(() => {
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -81,8 +82,15 @@ export default function QuoteForm() {
     }, 3800);
   };
 
-  const set = (field: keyof FormData, value: FormData[keyof FormData]) =>
+  const set = (field: keyof FormData, value: FormData[keyof FormData]) => {
+    // Fires once per visit: compare against "Section viewed: quote-form" to see
+    // how many people who reach the form actually start it.
+    if (!started.current) {
+      started.current = true;
+      track("Quote form started");
+    }
     setForm((f) => ({ ...f, [field]: value }));
+  };
 
   const counter = (field: "under3" | "age3to6" | "age7to12", label: string) => (
     <div className="form-field-counter">
@@ -120,7 +128,21 @@ export default function QuoteForm() {
         body: JSON.stringify(form),
       });
       if (res.ok) {
-        track("Quote submitted", { eventType: form.eventType || "unspecified" });
+        const kids = form.under3 + form.age3to6 + form.age7to12;
+        const leadDays = form.date ? daysUntil(form.date) : null;
+        // No contact details here — only the shape of the enquiry.
+        track("Quote submitted", {
+          eventType: form.eventType || "unspecified",
+          duration: form.duration || "unspecified",
+          kidsKnown: form.attendees === "Already know",
+          ...(form.attendees === "Already know" && { kids }),
+          ...(leadDays !== null && {
+            leadTime: leadTimeBucket(leadDays),
+            eventMonth: form.date!.toLocaleString("en-NZ", { month: "long" }),
+          }),
+          hasMessage: form.message.trim().length > 0,
+          isBusiness: form.company.trim().length > 0,
+        });
         setForm(defaultForm);
         goToStep(0);
         setStatus("idle");

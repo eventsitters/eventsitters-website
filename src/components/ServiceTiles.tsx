@@ -150,6 +150,8 @@ export default function ServiceTiles() {
               type="button"
               className={`events-tile ${svc.color}`}
               onClick={() => setOpenId(tile.id)}
+              data-umami-event="Service opened"
+              data-umami-event-service={svc.title}
             >
               <h2 className="headline-small">{tile.label}</h2>
               <Image

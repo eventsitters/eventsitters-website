@@ -7,6 +7,7 @@ import ScatteredCardHover from "@/components/ScatteredCardHover";
 import FooterReveal from "@/components/FooterReveal";
 import LetterAlternates from "@/components/LetterAlternates";
 import CustomCursor from "@/components/CustomCursor";
+import SectionViewTracker from "@/components/SectionViewTracker";
 import "./eventsitters.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "./globals.css";
@@ -80,9 +81,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
         </div>
         <Footer />
+        <SectionViewTracker />
+        {/* data-domains keeps localhost and Vercel preview traffic out of the stats.
+            NEXT_PUBLIC_UMAMI_TAG labels every event (e.g. "2026-redesign") so you can
+            compare site versions or A/B variants with the dashboard's tag filter. */}
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="bf93ef88-215d-44ce-a73b-12330a9b2faf"
+          data-domains="www.eventsitters.nz,eventsitters.nz"
+          data-tag={process.env.NEXT_PUBLIC_UMAMI_TAG}
           strategy="afterInteractive"
         />
       </body>

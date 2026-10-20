@@ -105,7 +105,7 @@ export default function FAQ({
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className={`section${background === "pale-blue" ? " pale-blue" : ""}`}>
+    <section className={`section${background === "pale-blue" ? " pale-blue" : ""}`} data-track-section="faq">
       <div className="container faq">
         <div className="faq-wrapper">
           <h2 className="headline-small">{title}</h2>

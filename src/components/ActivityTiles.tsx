@@ -134,6 +134,8 @@ export default function ActivityTiles() {
                 type="button"
                 className={`services-tile ${activity.color}`}
                 onClick={() => setOpenId(activity.id)}
+                data-umami-event="Activity opened"
+                data-umami-event-activity={activity.title}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
