@@ -33,15 +33,6 @@ const CARDS: CardConfig[] = [
   { selector: ".services-masonry > .w-layout-cell:nth-child(4)", baseRot:  1.4, hoverRot: 0, hoverScale: 1.03, playful: true },
   { selector: ".services-masonry > .w-layout-cell:nth-child(5)", baseRot: -1.0, hoverRot: 0, hoverScale: 1.03, playful: true },
   { selector: ".services-masonry > .w-layout-cell:nth-child(6)", baseRot:  0.6, hoverRot: 0, hoverScale: 1.03, playful: true },
-  // Homepage — gallery: straighten to 0 + subtle scale pop
-  { selector: ".gallery > .w-layout-cell:nth-child(1)", baseRot: -1.1, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(2)", baseRot:  0.7, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(3)", baseRot: -0.5, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(4)", baseRot:  1.2, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(5)", baseRot: -0.8, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(6)", baseRot:  0.4, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(7)", baseRot: -0.9, hoverRot: 0, hoverScale: 1.03, playful: true },
-  { selector: ".gallery > .w-layout-cell:nth-child(8)", baseRot:  1.3, hoverRot: 0, hoverScale: 1.03, playful: true },
   // Packages — base package card: straighten to 0
   { selector: ".pricing-card-negative",        baseRot: -0.8, hoverRot: 0, hoverScale: 1.015, playful: true },
   // Packages — festivals & markets card: straighten to 0

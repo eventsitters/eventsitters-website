@@ -5,7 +5,7 @@ import ConfettiParallax, { type ElConfig } from "@/components/ConfettiParallax";
 import SmoothAnchorLink from "@/components/SmoothAnchorLink";
 import ServiceTiles from "@/components/ServiceTiles";
 import ActivityTiles from "@/components/ActivityTiles";
-import GalleryGrid from "@/components/GalleryGrid";
+import GalleryMarquee from "@/components/GalleryMarquee";
 
 export const metadata: Metadata = {
   title: "On-Location Kids' Entertainment | Event Sitters Hawke's Bay",
@@ -77,9 +77,7 @@ export default function Home() {
 
       {/* Gallery */}
       <section className="section" data-track-section="gallery">
-        <div className="container">
-          <GalleryGrid />
-        </div>
+        <GalleryMarquee />
       </section>
 
       {/* Quote Form */}

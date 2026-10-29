@@ -283,17 +283,50 @@ html { scroll-padding-top: var(--nav-height, 9em); }
   grid-template-columns: 2fr 1fr 1fr;
 }
 
-/* Gallery – 12-column grid */
-.gallery {
-  grid-template-columns: repeat(12, 1fr);
+/* Gallery – endless drifting strip with mixed frame shapes (from the redesign) */
+.gallery-marquee {
+  overflow: hidden;
+  width: 100%;
+  padding-block: 2rem;
 }
-.gallery-cell-3 { grid-column: span 3; }
-.gallery-cell-4 { grid-column: span 4; }
-.gallery-cell-5 { grid-column: span 5; }
-.gallery-cell-6 { grid-column: span 6; }
-.gallery-cell-7 { grid-column: span 7; }
-/* Cells must fill their row so background-image containers get a real height */
-.gallery .w-layout-cell { height: 100%; }
+@media screen and (min-width: 992px) {
+  .gallery-marquee { padding-block: 4rem; }
+}
+.gallery-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: gallery-drift 70s linear infinite;
+}
+.gallery-marquee:hover .gallery-marquee-track,
+.gallery-marquee:focus-within .gallery-marquee-track {
+  animation-play-state: paused;
+}
+.gallery-marquee-list {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  padding: 0 clamp(1rem, 2vw, 1.75rem) 0 0;
+  margin: 0;
+  list-style: none;
+}
+.gallery-marquee-item {
+  flex: none;
+  width: clamp(14rem, 26vw, 24rem);
+}
+.gallery-marquee-item.s1 { width: clamp(11rem, 20vw, 18rem); }
+.gallery-marquee-item.s2 { width: clamp(12rem, 22vw, 20rem); transform: translateY(8%); }
+.gallery-marquee-item.s3 { transform: translateY(-6%); }
+.gallery-marquee-frame { position: relative; overflow: hidden; }
+.gallery-marquee-item.rounded .gallery-marquee-frame { border-radius: 1.5rem; }
+.gallery-marquee-item.circle .gallery-marquee-frame { border-radius: 50%; }
+@keyframes gallery-drift {
+  to { transform: translateX(-50%); }
+}
+/* No auto-drift for reduced motion: let people scroll the strip themselves */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee { overflow-x: auto; }
+  .gallery-marquee-track { animation: none; }
+}
 
 /* Services tile needs a positioning context for absolutely-placed icons */
 .services-tile { position: relative; }
@@ -730,18 +763,6 @@ main {
   .services-masonry { grid-template-columns: 1fr 1fr; }
   .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
 
-  /* Gallery: halve to 6-col.
-     Spans must add to exactly 6 per row so no wrapping occurs:
-     Row 1: one(cell-3=2) + two(cell-6=2) + three(cell-3=2) = 6
-     Row 2: four(cell-4=2) + five(cell-4=2) + six(cell-4=2)  = 6
-     Row 3: seven(cell-7=3) + eight(cell-5=3)                = 6 */
-  .gallery { grid-template-columns: repeat(6, 1fr); }
-  .gallery-cell-3 { grid-column: span 2; }
-  .gallery-cell-4 { grid-column: span 2; }
-  .gallery-cell-5 { grid-column: span 3; }
-  .gallery-cell-6 { grid-column: span 2; }
-  .gallery-cell-7 { grid-column: span 3; }
-
   /* Footer: 3-col stays same */
   .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
 
@@ -808,11 +829,6 @@ main {
   .services-masonry { grid-template-columns: 1fr 1fr; }
   .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
 
-  /* Gallery: 2-col at 767px */
-  .gallery { grid-template-columns: 1fr 1fr; }
-  .gallery-cell-3, .gallery-cell-4, .gallery-cell-5,
-  .gallery-cell-6, .gallery-cell-7 { grid-column: span 1; }
-
   /* Footer: 2-col; branding cell spans full width, nav + socials share the row below */
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > .w-layout-cell:first-child { grid-column: span 2; }
@@ -869,9 +885,8 @@ main {
   .events-tile:nth-child(2) { transform: rotate(1.2deg); }
   .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
 
-  /* Activities masonry, gallery, pricing add-ons + about offer cards: padding reset when stacked */
+  /* Activities masonry, pricing add-ons + about offer cards: padding reset when stacked */
   .services-masonry > .w-layout-cell,
-  .gallery > .w-layout-cell,
   .pricing-addon-grid > .w-layout-cell,
   .about-offer-grid > .w-layout-cell { padding-block: 0; }
 
@@ -897,11 +912,6 @@ main {
 
   /* Services: single column */
   .services-masonry { grid-template-columns: 1fr; }
-
-  /* Gallery: 2 columns at mobile */
-  .gallery { grid-template-columns: 1fr 1fr; }
-  .gallery-cell-3, .gallery-cell-4, .gallery-cell-5,
-  .gallery-cell-6, .gallery-cell-7 { grid-column: span 1; }
 
   /* Footer: single column */
   .footer-grid { grid-template-columns: 1fr; }
@@ -992,16 +1002,6 @@ main {
 .about-offer-grid > .w-layout-cell:nth-child(4) { transform: rotate(-0.6deg); }
 .about-offer-grid > .w-layout-cell:nth-child(5) { transform: rotate(0.7deg);  }
 
-/* Scattered cards effect — gallery */
-.gallery > .w-layout-cell:nth-child(1) { transform: rotate(-1.1deg); }
-.gallery > .w-layout-cell:nth-child(2) { transform: rotate(0.7deg); }
-.gallery > .w-layout-cell:nth-child(3) { transform: rotate(-0.5deg); }
-.gallery > .w-layout-cell:nth-child(4) { transform: rotate(1.2deg); }
-.gallery > .w-layout-cell:nth-child(5) { transform: rotate(-0.8deg); }
-.gallery > .w-layout-cell:nth-child(6) { transform: rotate(0.4deg); }
-.gallery > .w-layout-cell:nth-child(7) { transform: rotate(-0.9deg); }
-.gallery > .w-layout-cell:nth-child(8) { transform: rotate(1.3deg); }
-
 /* "What We Can Not Offer" card: no rotation on mobile. Placed after the base
    nth-child rule above so later source order wins at equal specificity (0,2,1). */
 @media screen and (max-width: 767px) {
@@ -1080,98 +1080,6 @@ main {
 /* Replace fixed height with padding so multi-line questions breathe evenly.
    padding-right gives the absolutely-positioned chevron clear space. */
 .accordion-toggle { height: auto; padding: 0.5em 3.5em 0.5em 0; }
-
-/* Gallery: switch from CSS background-images to crawlable <Image> tags */
-.gallery-image-container {
-  position: relative;
-  background-image: none !important;
-}
-
-/* Gallery lightbox trigger — reset button styles, hint clickability */
-button.gallery-lightbox-trigger {
-  border: none;
-  padding: 0;
-  background: none;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: zoom-in;
-  display: block;
-  width: 100%;
-  position: relative;
-  z-index: 0;
-  transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1), filter 0.35s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  button.gallery-lightbox-trigger:hover {
-    filter: brightness(1.06);
-  }
-}
-
-/* ── Gallery Lightbox ──────────────────────────────────────────────────────── */
-@keyframes lightbox-in {
-  0%   { transform: rotate(var(--lightbox-rot, 0deg)) translateY(20px) scale(0.95); opacity: 0; }
-  60%  { opacity: 1; }
-  75%  { transform: rotate(var(--lightbox-rot, 0deg)) translateY(-4px) scale(1.01); }
-  100% { transform: rotate(var(--lightbox-rot, 0deg)) translateY(0) scale(1); }
-}
-
-.lightbox-backdrop {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(
-    150deg,
-    rgba(253, 232, 168, 0.52) 0%,
-    rgba(197, 216, 240, 0.52) 30%,
-    rgba(191, 229, 220, 0.52) 58%,
-    rgba(216, 204, 237, 0.52) 82%,
-    rgba(249, 208, 216, 0.52) 100%
-  );
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  z-index: 1100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2em;
-  cursor: zoom-out;
-  animation: modal-backdrop-in 0.18s ease both;
-}
-
-.lightbox-image-wrap {
-  max-width: min(94vw, 1280px);
-  cursor: default;
-  animation: lightbox-in 0.36s cubic-bezier(0.34, 1.2, 0.64, 1) both;
-  border-radius: 14px;
-  overflow: hidden;
-  flex-shrink: 1;
-}
-
-.lightbox-image-wrap img {
-  display: block;
-  max-height: calc(100dvh - 4em);
-  object-fit: contain;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 1.1em;
-  right: 1.4em;
-  z-index: 1101;
-}
-
-@media screen and (max-width: 767px) {
-  /* Solid pale-blue fill — same approach as activity modals. A single opaque
-     colour covers the full screen including safe-area zones without any
-     compositor-layer gaps. Desktop blur/gradient is untouched. */
-  .lightbox-backdrop {
-    padding: 1.25em;
-    background: var(--pale-yellow);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-  .lightbox-image-wrap { max-width: 100%; }
-}
 
 /* Nav active link: restore hover colour — .w--current has same specificity as :hover
    but comes later in eventsitters.css, so it wins and suppresses the red hover state. */
