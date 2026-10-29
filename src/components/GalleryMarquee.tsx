@@ -24,7 +24,7 @@ function frameStyle(i: number): CSSProperties {
   return { aspectRatio: ratio, mask, WebkitMask: mask };
 }
 
-/** An endless, slowly drifting strip of photos. Pauses on hover. */
+/** An endless, slowly drifting strip of photos. */
 export default function GalleryMarquee() {
   return (
     <div className="gallery-marquee">

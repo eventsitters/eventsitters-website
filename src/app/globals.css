@@ -297,15 +297,11 @@ html { scroll-padding-top: var(--nav-height, 9em); }
   width: max-content;
   animation: gallery-drift 70s linear infinite;
 }
-.gallery-marquee:hover .gallery-marquee-track,
-.gallery-marquee:focus-within .gallery-marquee-track {
-  animation-play-state: paused;
-}
 .gallery-marquee-list {
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 2vw, 1.75rem);
-  padding: 0 clamp(1rem, 2vw, 1.75rem) 0 0;
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  padding: 0 clamp(1.25rem, 2.5vw, 2.25rem) 0 0;
   margin: 0;
   list-style: none;
 }
