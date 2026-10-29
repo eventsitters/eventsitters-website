@@ -871,15 +871,13 @@ main {
     grid-template-rows: unset;
     grid-auto-rows: auto;
     align-items: start;
-    row-gap: 2em;
+    row-gap: 1.25em;
     padding-top: 2.5em;
   }
 
-  /* Scattered cards: rotations only on mobile — no translateY so stacked cards
-     sit naturally one after another without overlap or uneven gaps. */
-  .events-tile:nth-child(1) { transform: rotate(-1.8deg); }
-  .events-tile:nth-child(2) { transform: rotate(1.2deg); }
-  .events-tile:nth-child(3) { transform: rotate(-0.7deg); }
+  /* Stacked event tiles: straight and more compact for legibility.
+     .container.services prefix outranks the base rotation rules further down. */
+  .container.services .events-tile { transform: none; row-gap: 1.25em; padding: 1.75em 1.25em 1.5em; }
 
   /* Activities masonry, pricing add-ons + about offer cards: padding reset when stacked */
   .services-masonry > .w-layout-cell,
@@ -1039,6 +1037,38 @@ main {
 /* Service event tiles — wider horizontal gap between the three cards */
 .container.hero    { padding-bottom: 1em; }
 .container.services { column-gap: 2em; padding-top: 3.75em; }
+
+/* Large viewports: let the three tiles grow past the 1280px container */
+@media screen and (min-width: 1280px) {
+  .container.services { max-width: 1440px; }
+}
+
+/* Medium viewports: three columns get too narrow, so switch to two tiles side
+   by side with the third spanning the full row, image beside its copy. */
+@media screen and (min-width: 768px) and (max-width: 1099px) {
+  .container.services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5em;
+    row-gap: 2.5em;
+    align-items: stretch;
+  }
+  .events-tile:nth-child(3) {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 2em;
+    row-gap: 1.25em;
+  }
+  .events-tile:nth-child(3) .event-thumbnail {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: center;
+  }
+  .events-tile:nth-child(3) > :not(.event-thumbnail) { grid-column: 2; }
+  .events-tile:nth-child(3) .events-tile-cta { align-self: end; justify-self: start; }
+}
 
 /* Process section: 50% more space between the headline and the step cards */
 .container.process { row-gap: 2.25em; }
