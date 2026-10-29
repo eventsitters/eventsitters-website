@@ -110,13 +110,14 @@ const ACTIVITIES: ActivityData[] = [
 ];
 
 /* ── Grid span config ────────────────────────────────────────────────── */
+// Each row adds to 24: 8 + 9 + 7, then 9 + 7 + 8
 const SPANS: Record<string, string> = {
-  "active-play":   "services-cell-2",
-  "arts-crafts":   "services-cell-4",
-  "toys-playtime": "services-cell-3",
-  "story-time":    "services-cell-3",
-  "cozy-corner":   "services-cell-4",
-  "decoration":    "services-cell-2",
+  "active-play":   "services-cell-8",
+  "arts-crafts":   "services-cell-9",
+  "toys-playtime": "services-cell-7",
+  "story-time":    "services-cell-9",
+  "cozy-corner":   "services-cell-7",
+  "decoration":    "services-cell-8",
 };
 
 export default function ActivityTiles() {

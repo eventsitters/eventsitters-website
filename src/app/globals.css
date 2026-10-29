@@ -270,13 +270,13 @@ html { scroll-padding-top: var(--nav-height, 9em); }
   appearance: textfield;
 }
 
-/* Activities masonry – 6-column grid with semantic span classes */
+/* Activities masonry – 24-column grid: two rows of three uneven tiles on desktop */
 .services-masonry {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(24, 1fr);
 }
-.services-cell-2 { grid-column: span 2; }
-.services-cell-3 { grid-column: span 3; }
-.services-cell-4 { grid-column: span 4; }
+.services-cell-7 { grid-column: span 7; }
+.services-cell-8 { grid-column: span 8; }
+.services-cell-9 { grid-column: span 9; }
 
 /* Footer – 3-column grid: branding (2fr) + nav links (1fr) + socials (1fr) */
 .footer-grid {
@@ -757,7 +757,7 @@ main {
 
   /* Services: 2-col at tablet */
   .services-masonry { grid-template-columns: 1fr 1fr; }
-  .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
+  .services-cell-7, .services-cell-8, .services-cell-9 { grid-column: span 1; }
 
   /* Footer: 3-col stays same */
   .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
@@ -823,7 +823,7 @@ main {
 
   /* Services: 2-col at 767px (matches original) */
   .services-masonry { grid-template-columns: 1fr 1fr; }
-  .services-cell-2, .services-cell-3, .services-cell-4 { grid-column: span 1; }
+  .services-cell-7, .services-cell-8, .services-cell-9 { grid-column: span 1; }
 
   /* Footer: 2-col; branding cell spans full width, nav + socials share the row below */
   .footer-grid { grid-template-columns: 1fr 1fr; }
